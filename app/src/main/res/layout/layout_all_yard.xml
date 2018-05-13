@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layoutYard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_border_yard">
+
+        <ImageView
+            android:id="@+id/imageviewYard"
+            android:layout_width="160dp"
+            android:layout_height="140dp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/txtyardName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@id/imageviewYard"
+            android:text="Tên sân bóng"
+            android:textColor="#0059ff"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtyardName"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@id/imageviewYard"
+            android:drawableLeft="@drawable/location"
+            android:textColor="#ff0000"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtviewNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtAddress"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@id/imageviewYard"
+            android:text="Số lượng sân:"
+            android:textColor="#000000"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/txtnumberYard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtAddress"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@id/txtviewNum"
+            android:text="number"
+            android:textColor="#05c42b"
+            android:textSize="13dp" />
+
+        <Button
+            android:id="@+id/btnBookYard"
+            android:layout_width="100dp"
+            android:layout_height="26dp"
+            android:layout_below="@id/txtnumberYard"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/imageviewYard"
+            android:background="#12c63f"
+            android:text="Book Yard"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="13dp" />
+
+    </RelativeLayout>
+</RelativeLayout>
