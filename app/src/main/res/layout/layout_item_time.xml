@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/txtviewYard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="San:"/>
+    <Button
+        android:layout_marginLeft="15dp"
+        android:id="@+id/btnTime1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btnTime1"
+        android:id="@+id/btnTime2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btnTime2"
+        android:id="@+id/btnTime3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btnTime3"
+        android:id="@+id/btnTime4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btnTime4"
+        android:id="@+id/btnTime5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btnTime5"
+        android:id="@+id/btnTime6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtviewYard"
+        android:background="#67bbf4"/>
+
+</RelativeLayout>

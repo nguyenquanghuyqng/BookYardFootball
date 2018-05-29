@@ -1,6 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nguyenquanghuy605.bookyardfootball.Model.Yard;
 import com.nguyenquanghuy605.bookyardfootball.R;
+import com.nguyenquanghuy605.bookyardfootball.View.ListAllYard;
+import com.nguyenquanghuy605.bookyardfootball.View.SearchYard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +70,7 @@ public class YardAdapter  extends BaseAdapter{
             //
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            view = inflater.inflate(layout,null);
+            view = inflater.inflate(R.layout.layout_item_yard,null);
 
             holder = new ViewHolder();
 

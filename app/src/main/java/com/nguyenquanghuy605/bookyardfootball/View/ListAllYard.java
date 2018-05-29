@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,7 +26,7 @@ public class ListAllYard extends AppCompatActivity {
 
         AnhXa();
 
-        yardAdapter = new YardAdapter(this, R.layout.layout_all_yard, yardArrayList);
+        yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList);
         lvYard.setAdapter(yardAdapter);
     }
     private void AnhXa(){

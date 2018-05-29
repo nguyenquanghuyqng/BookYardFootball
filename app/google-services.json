@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "805723398020",
+    "firebase_url": "https://bookyardfootball.firebaseio.com",
+    "project_id": "bookyardfootball",
+    "storage_bucket": "bookyardfootball.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805723398020:android:b1dc6836b99290ac",
+        "android_client_info": {
+          "package_name": "com.nguyenquanghuy605.bookyardfootball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805723398020-73ebrg03umfq1p9darkp5e2d94l2iodv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nguyenquanghuy605.bookyardfootball",
+            "certificate_hash": "81f7f88ce5c39792d170ff0e0a6bd1ebc9af505d"
+          }
+        },
+        {
+          "client_id": "805723398020-rjm94d5lltv9u2ln3pp8i4sgk2vrqhhj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "805723398020-rjm94d5lltv9u2ln3pp8i4sgk2vrqhhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzmkizTSGPfAhURDnflgumQdU0OlvnjL0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805723398020-rjm94d5lltv9u2ln3pp8i4sgk2vrqhhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
