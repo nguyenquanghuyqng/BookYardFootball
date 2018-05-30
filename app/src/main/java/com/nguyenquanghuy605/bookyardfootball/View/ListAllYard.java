@@ -15,9 +15,13 @@ import com.nguyenquanghuy605.bookyardfootball.R;
 import java.util.ArrayList;
 
 public class ListAllYard extends AppCompatActivity {
+
     ListView lvYard;
     ArrayList<Yard> yardArrayList;
     YardAdapter yardAdapter;
+
+//    private DatabaseReference mDatabase;
+
     //Button btnBookYard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
