@@ -1,6 +1,9 @@
 package com.nguyenquanghuy605.bookyardfootball.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
@@ -21,10 +28,17 @@ import java.util.List;
 
 public class YardAdapter  extends BaseAdapter{
 
+
     private Context context;
     private int layout;
     private List<Yards> yardList;
     private List<Owners> ownerList;
+
+    // Create a storage reference from our app
+//    FirebaseStorage storage1 = FirebaseStorage.getInstance();
+//    StorageReference storageRef = storage1.getReference();
+    // Biến image
+    private StorageReference imageRef;
 
     public YardAdapter(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
         this.context = context;
@@ -62,7 +76,7 @@ public class YardAdapter  extends BaseAdapter{
     // Trả về mỗi dòng trên Item
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
+        final ViewHolder holder;
 
         // Thường thì lần đầu khởi tạo chạy thì biến view sẽ bằng null
         if(view == null){
@@ -93,10 +107,29 @@ public class YardAdapter  extends BaseAdapter{
         Log.d("Gia  tri i ",i+"");
         Owners owners = ownerList.get(i);
 
+//        StorageReference islandRef = storageRef.child("images/island.jpg");
+
+//        imageRef = storageRef.child(yard.getImage());
+        Log.d("Image" ,imageRef.toString());
+
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                holder.imgYard.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("Error ", exception.getMessage());
+            }
+        });
+
         holder.txtyardName.setText(yard.getNameyard());
         holder.txtAddress.setText(owners.getAddress());
         holder.txtNumberYard.setText(owners.getNumberyard());
-//        holder.imgYard.setImageResource(Integer.parseInt(yard.getImage())); 
+//        holder.imgYard.setImageBitmap();
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
