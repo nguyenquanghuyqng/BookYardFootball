@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.nguyenquanghuy605.bookyardfootball.R;
 import com.nguyenquanghuy605.bookyardfootball.Model.Time;
 
 import java.util.List;
