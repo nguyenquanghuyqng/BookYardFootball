@@ -1,6 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.Model;
 
 public class Owners {
+
     private long id;
     private String address;
     private String idcard;

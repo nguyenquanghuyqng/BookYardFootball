@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
@@ -21,9 +22,9 @@ public class ListAllYard extends AppCompatActivity {
     ListView lvYard;
     ArrayList<Yards> yardArrayList;
     YardAdapter yardAdapter;
-    ArrayList<Owners> ownerArrayList;
+    ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
 
-    private  DatabaseReference databaseReferenceYard;
+    private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceOwner;
 
     //Button btnBookYard;
@@ -71,10 +72,32 @@ public class ListAllYard extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("Error",databaseError.getMessage());
+                Log.d("Error Yard",databaseError.getMessage());
             }
         });
 
+        Query query = databaseReferenceOwner.orderByChild("id");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data1 : dataSnapshot.getChildren()){
+                        Owners owners = data1.getValue(Owners.class);
+
+                        Log.d("Owners",data1.getValue().toString());
+
+                        ownerArrayList.add(owners);
+
+                        yardAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error Owner",databaseError.getMessage());
+            }
+        });
 
 //        databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -84,12 +107,12 @@ public class ListAllYard extends AppCompatActivity {
 //                for(DataSnapshot data : nodeChild){
 //
 //                    // Lấy dữ liệu từ firebase xuống đưa vào model
-//                    Owners owner = data.getValue(Owners.class);
+//                    Owners owners = data.getValue(Owners.class);
 //
-//                    Log.d("Owner", owner.toString());
-//                    Log.d("Data",data.getValue().toString());
+//                    Log.d("Yard",owners.toString());
+//                    Log.d("DataYard", data.getValue().toString());
 //                    // Add vào List
-//                    ownerArrayList.add(owner);
+//                    ownerArrayList.add(owners);
 //
 //                    yardAdapter.notifyDataSetChanged();
 //                }

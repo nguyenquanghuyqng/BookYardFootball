@@ -91,12 +91,12 @@ public class YardAdapter  extends BaseAdapter{
         // gán giá trị
         Yards  yard = yardList.get(i);
         Log.d("Gia  tri i ",i+"");
-//        Owner owner = ownerList.get(i);
+        Owners owners = ownerList.get(i);
 
         holder.txtyardName.setText(yard.getNameyard());
-//        holder.txtAddress.setText(owner.getAddress());
-//        holder.txtNumberYard.setText(owner.getNumberYard());
-//        holder.imgYard.setImageResource(Integer.parseInt(yard.getImage())); // sai giồi
+        holder.txtAddress.setText(owners.getAddress());
+        holder.txtNumberYard.setText(owners.getNumberyard());
+//        holder.imgYard.setImageResource(Integer.parseInt(yard.getImage())); 
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
