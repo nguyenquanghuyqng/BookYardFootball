@@ -35,6 +35,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".View.ListYardOwner">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+        </activity>
+        <activity android:name=".View.Login">
+            <action android:name="android.intent.action.MAIN"></action>
+
+            <category android:name="android.intent.category.LAUNCHER"></category>
+        </activity>
+        <activity android:name=".View.InformationYardOwner">
+            <action android:name="android.intent.action.MAIN"></action>
+
+            <category android:name="android.intent.category.LAUNCHER"></category>
+        </activity>
     </application>
 
 </manifest>
