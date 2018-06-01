@@ -43,14 +43,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Login">
-            <action android:name="android.intent.action.MAIN"></action>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
 
-            <category android:name="android.intent.category.LAUNCHER"></category>
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+
         </activity>
         <activity android:name=".View.InformationYardOwner">
-            <action android:name="android.intent.action.MAIN"></action>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
 
-            <category android:name="android.intent.category.LAUNCHER"></category>
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+
         </activity>
     </application>
 

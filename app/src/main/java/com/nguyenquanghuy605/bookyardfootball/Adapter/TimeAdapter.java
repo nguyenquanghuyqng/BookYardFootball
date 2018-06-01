@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nguyenquanghuy605.bookyardfootball.Model.Time;
-import com.nguyenquanghuy605.bookyardfootball.R;
 
 import java.util.List;
 
