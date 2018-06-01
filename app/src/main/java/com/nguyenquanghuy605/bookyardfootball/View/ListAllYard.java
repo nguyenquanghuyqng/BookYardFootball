@@ -3,24 +3,34 @@ package com.nguyenquanghuy605.bookyardfootball.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
-import com.nguyenquanghuy605.bookyardfootball.Model.Yard;
+import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 
 public class ListAllYard extends AppCompatActivity {
 
     ListView lvYard;
-    ArrayList<Yard> yardArrayList;
+    ArrayList<Yards> yardArrayList;
     YardAdapter yardAdapter;
+    ArrayList<Owners> ownerArrayList;
 
-//    private DatabaseReference mDatabase;
+    private  DatabaseReference databaseReferenceYard;
+    private DatabaseReference databaseReferenceOwner;
 
     //Button btnBookYard;
     @Override
@@ -30,38 +40,72 @@ public class ListAllYard extends AppCompatActivity {
 
         AnhXa();
 
-        yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList);
-        lvYard.setAdapter(yardAdapter);
+        Initialize();
+
     }
     private void AnhXa(){
         lvYard = (ListView) findViewById(R.id.listviewYard);
-        //btnBookYard  = (Button) findViewById(R.id.btnBookYard);
-        yardArrayList  = new ArrayList<>();
+    }
 
-        yardArrayList.add(new Yard("001", "Sân SPKT", R.drawable.sandaihoc,"Ho Chi Minh", "6"));
-        yardArrayList.add(new Yard("002", "Sân Hiệp Phú", R.drawable.sanbong,"Ho Chi Minh", "4"));
-        yardArrayList.add(new Yard("003", "Sân Thiếu Nhi", R.drawable.santhieunhi,"Ho Chi Minh", "3"));
-        yardArrayList.add(new Yard("004", "Sân Quốc Tế", R.drawable.santruong,"Ho Chi Minh", "8"));
-        yardArrayList.add(new Yard("005", "Sân Bóng AT", R.drawable.sanat,"Ho Chi Minh", "3"));
-        yardArrayList.add(new Yard("006", "Sân Việt Thắng", R.drawable.sanvietthang,"Ho Chi Minh", "2"));
-        yardArrayList.add(new Yard("007", "Sân Cao Đẳng", R.drawable.sanbonghiepphu,"Ho Chi Minh", "3"));
+    // Phương thức xử lý
+    private void Initialize() {
+        databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
+        databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
-        lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        yardArrayList = new ArrayList<>();
+        yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList , ownerArrayList);
+        lvYard.setAdapter(yardAdapter);
+
+        databaseReferenceYard.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ListAllYard.this, "Huy ", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ListAllYard.this, SearchYard.class);
-                startActivity(intent);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+
+                for(DataSnapshot data : nodeChild){
+
+                    // Lấy dữ liệu từ firebase xuống đưa vào model
+                    Yards yard = data.getValue(Yards.class);
+
+                    Log.d("Yard",yard.toString());
+                    Log.d("DataYard", data.getValue().toString());
+                    // Add vào List
+                    yardArrayList.add(yard);
+
+                    yardAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error",databaseError.getMessage());
             }
         });
 
-//        btnBookYard.setOnClickListener(new View.OnClickListener() {
+
+//        databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
 //            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(ListAllYard.this, "Huy ", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(ListAllYard.this, SearchYard.class);
-//                startActivity(intent);
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+//
+//                for(DataSnapshot data : nodeChild){
+//
+//                    // Lấy dữ liệu từ firebase xuống đưa vào model
+//                    Owners owner = data.getValue(Owners.class);
+//
+//                    Log.d("Owner", owner.toString());
+//                    Log.d("Data",data.getValue().toString());
+//                    // Add vào List
+//                    ownerArrayList.add(owner);
+//
+//                    yardAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d("Error",databaseError.getMessage());
 //            }
 //        });
     }
+
 }

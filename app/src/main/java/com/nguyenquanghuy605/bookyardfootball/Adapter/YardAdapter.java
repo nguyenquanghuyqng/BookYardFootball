@@ -1,7 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,28 +10,27 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nguyenquanghuy605.bookyardfootball.Model.Yard;
+import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
-import com.nguyenquanghuy605.bookyardfootball.View.ListAllYard;
-import com.nguyenquanghuy605.bookyardfootball.View.SearchYard;
 
-import java.util.ArrayList;
+import java.security.acl.Owner;
 import java.util.List;
 
 public class YardAdapter  extends BaseAdapter{
 
     private Context context;
     private int layout;
-    private List<Yard> yardList;
+    private List<Yards> yardList;
+    private List<Owners> ownerList;
 
-    public YardAdapter(Context context, int layout, List<Yard> yardList) {
+    public YardAdapter(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
         this.context = context;
         this.layout = layout;
         this.yardList = yardList;
+        this.ownerList = ownerList;
     }
 
     // Trả về số dòng trong listview
@@ -90,12 +89,14 @@ public class YardAdapter  extends BaseAdapter{
             holder = (ViewHolder) view.getTag();
         }
         // gán giá trị
-        Yard  yard = yardList.get(i);
+        Yards  yard = yardList.get(i);
+        Log.d("Gia  tri i ",i+"");
+//        Owner owner = ownerList.get(i);
 
-        holder.txtyardName.setText(yard.getYardName());
-        holder.txtAddress.setText(yard.getAddress());
-        holder.txtNumberYard.setText(yard.getNumberYard());
-        holder.imgYard.setImageResource(yard.getImage());
+        holder.txtyardName.setText(yard.getNameyard());
+//        holder.txtAddress.setText(owner.getAddress());
+//        holder.txtNumberYard.setText(owner.getNumberYard());
+//        holder.imgYard.setImageResource(Integer.parseInt(yard.getImage())); // sai giồi
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
