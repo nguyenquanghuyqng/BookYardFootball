@@ -65,7 +65,7 @@ public class Account extends AppCompatActivity {
         });*/
 
 
-    }ad
+    }
     private void AnhXa(){
         lvUser = (ListView) findViewById(R.id.listviewAccount);
         addAcconut = (Button) findViewById(R.id.addAcconut);
