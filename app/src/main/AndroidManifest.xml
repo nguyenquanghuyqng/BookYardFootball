@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nguyenquanghuy605.bookyardfootball">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -18,25 +20,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".View.DetailScheduleYard">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
 
-                <category android:name="android.intent.category.LAUNCHER"></category>
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
-
         <activity android:name=".View.SearchYard">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
 
-                <category android:name="android.intent.category.LAUNCHER"></category>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+
+        <activity android:name=".View.listyard_owner">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.ListYardOwner"/>
-        <activity android:name=".View.Login"/>
-        <activity android:name=".View.InformationYardOwner"/>
+
+        <activity android:name=".View.ListYardOwner" />
+        <activity android:name=".View.Login" />
+        <activity android:name=".View.InformationYardOwner" />
+        <activity android:name=".View.subyard_owner"></activity>
     </application>
 
 </manifest>
