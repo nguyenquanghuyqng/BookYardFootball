@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/imageviewYard"
-            android:layout_width="160dp"
+            android:layout_width="146dp"
             android:layout_height="140dp"
             android:padding="10dp" />
 

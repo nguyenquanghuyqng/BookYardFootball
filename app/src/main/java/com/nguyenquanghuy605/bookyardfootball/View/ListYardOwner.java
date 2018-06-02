@@ -18,7 +18,7 @@ public class ListYardOwner extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_list_yardowner);
+        setContentView(R.layout.layout_list_yard_owner_information);
 
     }
 }
