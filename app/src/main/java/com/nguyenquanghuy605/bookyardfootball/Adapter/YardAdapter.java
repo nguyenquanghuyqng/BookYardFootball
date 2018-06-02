@@ -35,8 +35,8 @@ public class YardAdapter  extends BaseAdapter{
     private List<Owners> ownerList;
 
     // Create a storage reference from our app
-//    FirebaseStorage storage1 = FirebaseStorage.getInstance();
-//    StorageReference storageRef = storage1.getReference();
+    FirebaseStorage storage1 = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage1.getReference();
     // Biến image
     private StorageReference imageRef;
 
@@ -109,13 +109,28 @@ public class YardAdapter  extends BaseAdapter{
 
 //        StorageReference islandRef = storageRef.child("images/island.jpg");
 
-//        imageRef = storageRef.child(yard.getImage());
+        imageRef = storageRef.child(yard.getImage());
         Log.d("Image" ,imageRef.toString());
 
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//        final long ONE_MEGABYTE = 1024 * 1024;
+//        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Log.d("Error ", exception.getMessage());
+//            }
+//        });
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-
+                Log.d("OnSuccess ",imageRef.toString());
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 holder.imgYard.setImageBitmap(bitmap);
             }
