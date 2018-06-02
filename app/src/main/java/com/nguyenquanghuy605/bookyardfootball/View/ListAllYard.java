@@ -1,8 +1,11 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -52,6 +55,15 @@ public class ListAllYard extends AppCompatActivity {
         yardArrayList = new ArrayList<>();
         yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
+
+        lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListAllYard.this, DetailScheduleYard.class);
+                Log.d("Intent page","Huy");
+                startActivity(intent);
+            }
+        });
 
         databaseReferenceYard.addValueEventListener(new ValueEventListener() {
             @Override
