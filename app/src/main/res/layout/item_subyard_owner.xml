@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+        <TextView
+            android:id="@+id/nameyard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sân 1"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="#246a2b"
+            android:textStyle="bold"
+            />
+        <ImageView
+            android:id="@+id/imgyard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameyard"
+            android:src="@drawable/field"
+            />
+        <TextView
+            android:id="@+id/yardkind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameyard"
+            android:text="Sân 5 người"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/imgyard"
+            android:textAlignment="inherit"
+            android:textSize="18sp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/yardkind"
+            android:orientation="vertical"
+            android:weightSum="3"
+            android:layout_marginTop="10dp"
+            >
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <CheckBox
+                    android:id="@+id/time01"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+
+                <CheckBox
+                    android:id="@+id/time02"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/normal"
+                    android:text="0h-1h"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time03"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time04"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time05"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <CheckBox
+                    android:id="@+id/time06"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time07"
+                    android:button="@null"
+
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time08"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time09"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time10"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <CheckBox
+                    android:id="@+id/time11"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time12"
+                    android:button="@null"
+
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time13"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time14"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+                <CheckBox
+                    android:id="@+id/time15"
+                    android:button="@null"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h-1h"
+                    android:drawableLeft="@drawable/normal"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

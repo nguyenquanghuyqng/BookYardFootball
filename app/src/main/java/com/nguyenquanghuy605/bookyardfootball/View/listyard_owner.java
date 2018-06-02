@@ -62,7 +62,8 @@ public class listyard_owner extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(listyard_owner.this, DetailScheduleYard.class);
-                Log.d("Intent page","Huy");
+                String message = "abc";
+                intent.putExtra("EXTRA_MESSAGE", message);
                 startActivity(intent);
             }
         });
