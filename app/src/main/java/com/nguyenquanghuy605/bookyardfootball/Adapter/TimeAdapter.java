@@ -76,8 +76,8 @@ public class TimeAdapter  extends BaseAdapter{
 
         Log.d("Hello1",time.getTimestart()+time.getTimeend());
 
-        holder.btnTime.setText(time.getTimestart() +"->"+ time.getTimeend());
-        holder.txtviewYard.setText("1");
+        //holder.btnTime.setText(time.getTimestart() +"->"+ time.getTimeend());
+        //holder.txtviewYard.setText("1");
 
         Log.d("Hello2",time.getTimestart()+time.getTimeend());
 
