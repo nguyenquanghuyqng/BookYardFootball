@@ -53,10 +53,10 @@
             />
         <ImageView
             android:id="@+id/lich"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_below="@id/listtime"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/date"
             android:layout_alignParentLeft="true"
 
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="chọn ngày"
+            android:text="Chọn ngày"
             android:layout_below="@id/listtime"
             android:layout_toRightOf="@id/lich"
             android:layout_marginTop="40dp"

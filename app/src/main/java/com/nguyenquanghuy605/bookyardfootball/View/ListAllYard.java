@@ -58,6 +58,7 @@ public class ListAllYard extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
+
                 Log.d("Intent page","Huy");
                 startActivity(intent);
             }

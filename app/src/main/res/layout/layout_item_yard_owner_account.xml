@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_border_yard">
+    android:background="@drawable/subyardboderitem">
 
     <LinearLayout
         android:id="@+id/layoutAccountYardOwner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#585857"
         android:orientation="vertical"
         android:weightSum="4">
 
@@ -30,15 +29,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_weight="4"
                 android:text="Sân thiếu nhi"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="25dp" />
 
-            <Button
-                android:id="@+id/btnDeleteAccount"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/ic_delete_account" />
+
         </LinearLayout>
 
         <RelativeLayout
@@ -52,7 +46,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:text="UserName : "
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
 
@@ -63,7 +57,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:text="santhieunhi"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <TextView
@@ -72,7 +66,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:text="Email : "
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 android:layout_marginBottom="5dp"/>
 
@@ -83,11 +77,18 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:text="santhieunhi"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 android:layout_marginBottom="5dp"/>
 
 
         </RelativeLayout>
     </LinearLayout>
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_delete_account" />
 </RelativeLayout>
