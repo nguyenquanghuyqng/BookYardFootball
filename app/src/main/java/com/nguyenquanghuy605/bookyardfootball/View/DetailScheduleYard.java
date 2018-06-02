@@ -26,9 +26,9 @@ public class DetailScheduleYard extends AppCompatActivity {
 
         AnhXa();
 
-        timeAdapter = new TimeAdapter(this, timeArrayList, R.layout.layout_listview_time);
-        Toast.makeText(this, "Huy", Toast.LENGTH_SHORT).show();
-        lvTime.setAdapter(timeAdapter);
+//        timeAdapter = new TimeAdapter(this, timeArrayList, R.layout.layout_listview_time);
+//        Toast.makeText(this, "Huy", Toast.LENGTH_SHORT).show();
+//        lvTime.setAdapter(timeAdapter);
     }
 
     private void AnhXa(){

@@ -16,8 +16,7 @@
             android:layout_height="28dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/back" />
-
+            android:background="@drawable/menuborder" />
         <Button
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
@@ -38,6 +37,8 @@
         </SearchView>
 
 
+
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@id/layoutSearch"
@@ -49,6 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+
+            />
     </RelativeLayout>
 </RelativeLayout>

@@ -21,14 +21,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 
-import java.security.acl.Owner;
 import java.util.List;
 
-public class YardAdapter  extends BaseAdapter{
-
-
+public class YardAdapterowner extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Yards> yardList;
@@ -40,12 +38,13 @@ public class YardAdapter  extends BaseAdapter{
     // Biến image
     private StorageReference imageRef;
 
-    public YardAdapter(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
+    public YardAdapterowner(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
         this.context = context;
         this.layout = layout;
         this.yardList = yardList;
         this.ownerList = ownerList;
     }
+
 
     // Trả về số dòng trong listview
     @Override
@@ -83,7 +82,7 @@ public class YardAdapter  extends BaseAdapter{
             //
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            view = inflater.inflate(R.layout.layout_item_yard,null);
+            view = inflater.inflate(R.layout.item_yard_owner,null);
 
             holder = new ViewHolder();
 
@@ -110,7 +109,6 @@ public class YardAdapter  extends BaseAdapter{
 
         imageRef = storageRef.child(yard.getImage());
         Log.d("Image" ,imageRef.toString());
-
         final long ONE_MEGABYTE = 1024 * 1024;
         imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -129,7 +127,6 @@ public class YardAdapter  extends BaseAdapter{
         holder.txtyardName.setText(yard.getNameyard());
         holder.txtAddress.setText(owners.getAddress());
         holder.txtNumberYard.setText(owners.getNumberyard());
-//        holder.imgYard.setImageBitmap();
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
