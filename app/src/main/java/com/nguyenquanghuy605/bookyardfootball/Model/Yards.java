@@ -7,15 +7,17 @@ public class Yards {
     private String nameyard;
     private long owner;
     private long star;
+    private long comment;
 
     public Yards(){}
 
-    public Yards(long id, String image, String nameyard, long owner, long star) {
+    public Yards(long id, String image, String nameyard, long owner, long star, long comment) {
         this.id = id;
         this.image = image;
         this.nameyard = nameyard;
         this.owner = owner;
         this.star = star;
+        this.comment = comment;
     }
 
     public long getId() {
@@ -56,5 +58,13 @@ public class Yards {
 
     public void setStar(long star) {
         this.star = star;
+    }
+
+    public long getComment() {
+        return comment;
+    }
+
+    public void setComment(long comment) {
+        this.comment = comment;
     }
 }
