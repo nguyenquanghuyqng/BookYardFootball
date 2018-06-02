@@ -1,9 +1,12 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.SubYardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Model.OptionYard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
@@ -27,6 +31,7 @@ public class ListSubYard extends AppCompatActivity {
 
     ListView listviewSubYard;
     TextView txtNameYard, txtNameOwner;
+    Button btnBack;
     ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
     ArrayList<Owners> ownersArrayList = new ArrayList<Owners>();
     ArrayList<SubYards> subYardsArrayList = new ArrayList<SubYards>();
@@ -52,9 +57,20 @@ public class ListSubYard extends AppCompatActivity {
         listviewSubYard = (ListView)findViewById(R.id.listviewSubYard);
         txtNameYard = (TextView)findViewById(R.id.nameyard);
         txtNameOwner = (TextView)findViewById(R.id.nameowner);
+        btnBack = (Button)findViewById(R.id.btnBack);
     }
 
     private void Initialize() {
+
+        // Bắt sự kiện trở về list sân
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListSubYard.this, ListAllYard.class);
+                Container.getInstance().idyard = 0;
+                startActivity(intent);
+            }
+        });
 
         // Gọi tới node cha
         databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
@@ -92,7 +108,7 @@ public class ListSubYard extends AppCompatActivity {
         });
 
         Query queryOwner = databaseReferenceOwner.orderByChild("id");
-        queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryOwner.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -114,17 +130,20 @@ public class ListSubYard extends AppCompatActivity {
             }
         });
 
+        Log.d("Container",Container.getInstance().idyard+"");
         Query querySubYard = databaseReferenceSubYard.orderByChild("id");
-        queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
+        querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("Hahaha","error");
                 if(dataSnapshot.exists()){
                     for(DataSnapshot data : dataSnapshot.getChildren()){
                         SubYards subYards = data.getValue(SubYards.class);
 
                         Log.d("DataSubYard",data.getValue().toString());
-
-                        subYardsArrayList.add(subYards);
+                        if(data.child("yard").getValue().equals(Container.getInstance().idyard)){
+                            subYardsArrayList.add(subYards);
+                        }
 
                         subYardAdapter.notifyDataSetChanged();
                     }
@@ -138,7 +157,7 @@ public class ListSubYard extends AppCompatActivity {
         });
 
         Query queryOption = databaseReferenceOptionYard.orderByChild("id");
-        queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryOption.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -159,7 +178,6 @@ public class ListSubYard extends AppCompatActivity {
                 Log.d("Error Get data Yard",databaseError.getMessage());
             }
         });
-
 
     }
 

@@ -1,7 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.Adapter;
 
 public class Container {
-    private long idyard;
+    public long idyard;
     private static Container instance =null;
     private void Container() {
 

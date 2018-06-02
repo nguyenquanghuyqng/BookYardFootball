@@ -1,6 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
 import android.content.Intent;
+import android.icu.text.LocaleDisplayNames;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 public class ListAllYard extends AppCompatActivity {
 
     ListView lvYard;
-    ArrayList<Yards> yardArrayList;
+    ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
     YardAdapter yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
 
@@ -47,10 +50,10 @@ public class ListAllYard extends AppCompatActivity {
 
     // Phương thức xử lý
     private void Initialize() {
+
         databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
-        yardArrayList = new ArrayList<>();
         yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
 
@@ -58,8 +61,8 @@ public class ListAllYard extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
-
-                Log.d("Intent page","Huy");
+                Container.getInstance().idyard = position + 1;
+                Log.d("YardPage",(position +1)+"");
                 startActivity(intent);
             }
         });
@@ -69,17 +72,22 @@ public class ListAllYard extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
 
-                for(DataSnapshot data : nodeChild){
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data : nodeChild){
 
-                    // Lấy dữ liệu từ firebase xuống đưa vào model
-                    Yards yard = data.getValue(Yards.class);
+                        // Lấy dữ liệu từ firebase xuống đưa vào model
+                        Yards yard = data.getValue(Yards.class);
 
-                    Log.d("Yard",yard.toString());
-                    Log.d("DataYard", data.getValue().toString());
-                    // Add vào List
-                    yardArrayList.add(yard);
+                        Log.d("Yard",yard.toString());
+                        Log.d("DataYard", data.getValue().toString());
+                        // Add vào List
+                        yardArrayList.add(yard);
 
-                    yardAdapter.notifyDataSetChanged();
+                        yardAdapter.notifyDataSetChanged();
+                    }
+                }
+                else {
+                    Log.d("Not have data yard" ,"Haha");
                 }
             }
 
@@ -103,9 +111,10 @@ public class ListAllYard extends AppCompatActivity {
 
                         yardAdapter.notifyDataSetChanged();
                     }
+                }else{
+                    Log.d("Not have data" ,"Haha");
                 }
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
