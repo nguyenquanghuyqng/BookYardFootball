@@ -49,12 +49,12 @@ public class Account extends AppCompatActivity {
 
         Initialize();
 
-//        addAcconut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                callDialog();
-//            }
-//        });
+        addAcconut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callDialog();
+            }
+        });
         /*btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,41 +129,41 @@ public class Account extends AppCompatActivity {
             }
         });*/
     }
-//    private void callDialog()
-//    {
-//        final Dialog myDialog = new Dialog(this);
-//        myDialog.setContentView(R.layout.layout_dialog_insert_account);
-//        myDialog.setCancelable(false);
-//        btnAdd = (Button) myDialog.findViewById(R.id.btnAdd);
-//        btnCannel =(Button) myDialog.findViewById(R.id.btnCannel) ;
-//
-//        eText_account_name = (EditText) myDialog.findViewById(R.id.eText_account_name);
-//        eText_account_pass = (EditText) myDialog.findViewById(R.id.eText_account_pass);
-//        eText_account_phone = (EditText) myDialog.findViewById(R.id.eText_account_phone);
-//        eText_accountRole = (EditText) myDialog.findViewById(R.id.eText_accountRole);
-//        eText_Accoutn_UserName = (EditText) myDialog.findViewById(R.id.eText_Accoutn_UserName);
-//        myDialog.show();
-//
-//
-//
-//        btnAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Accounts account = new Accounts(sizeList,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
-//                databaseReferenceAccount.child(String.valueOf(sizeList+1)).setValue(account);
-//                Initialize();
-//                myDialog.cancel();
-//            }
-//        });
-//        btnCannel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                myDialog.cancel();
-//                Initialize();
-//            }
-//        });
-//
-//    }
+    private void callDialog()
+    {
+        final Dialog myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.layout_dialog_insert_account);
+        myDialog.setCancelable(false);
+        btnAdd = (Button) myDialog.findViewById(R.id.btnAdd);
+        btnCannel =(Button) myDialog.findViewById(R.id.btnCannel) ;
+
+        eText_account_name = (EditText) myDialog.findViewById(R.id.eText_account_name);
+        eText_account_pass = (EditText) myDialog.findViewById(R.id.eText_account_pass);
+        eText_account_phone = (EditText) myDialog.findViewById(R.id.eText_account_phone);
+        eText_accountRole = (EditText) myDialog.findViewById(R.id.eText_accountRole);
+        eText_Accoutn_UserName = (EditText) myDialog.findViewById(R.id.eText_Accoutn_UserName);
+        myDialog.show();
+
+
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Accounts account = new Accounts(sizeList,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
+                databaseReferenceAccount.child(String.valueOf(sizeList+1)).setValue(account);
+                Initialize();
+                myDialog.cancel();
+            }
+        });
+        btnCannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                myDialog.cancel();
+                Initialize();
+            }
+        });
+
+    }
 }
