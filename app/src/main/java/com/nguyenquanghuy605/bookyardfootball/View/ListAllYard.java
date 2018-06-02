@@ -113,30 +113,6 @@ public class ListAllYard extends AppCompatActivity {
             }
         });
 
-//        databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
-//
-//                for(DataSnapshot data : nodeChild){
-//
-//                    // Lấy dữ liệu từ firebase xuống đưa vào model
-//                    Owners owners = data.getValue(Owners.class);
-//
-//                    Log.d("Yard",owners.toString());
-//                    Log.d("DataYard", data.getValue().toString());
-//                    // Add vào List
-//                    ownerArrayList.add(owners);
-//
-//                    yardAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.d("Error",databaseError.getMessage());
-//            }
-//        });
     }
 
 }
