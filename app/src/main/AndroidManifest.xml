@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.DetailScheduleYard">
+        <activity android:name=".View.ListSubYard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

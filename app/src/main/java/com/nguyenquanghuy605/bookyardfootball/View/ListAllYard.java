@@ -14,8 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
@@ -59,7 +57,7 @@ public class ListAllYard extends AppCompatActivity {
         lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListAllYard.this, DetailScheduleYard.class);
+                Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
                 Log.d("Intent page","Huy");
                 startActivity(intent);
             }
