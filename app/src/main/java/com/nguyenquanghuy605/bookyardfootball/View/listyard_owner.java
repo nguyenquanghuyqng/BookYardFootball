@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,19 +15,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapterowner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
+
 import java.util.ArrayList;
 
-public class ListAllYard extends AppCompatActivity {
+public class listyard_owner extends AppCompatActivity {
 
     ListView lvYard;
     ArrayList<Yards> yardArrayList;
-    YardAdapter yardAdapter;
+    YardAdapterowner yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
 
     private DatabaseReference databaseReferenceYard;
@@ -36,7 +38,7 @@ public class ListAllYard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_listview_yard);
+        setContentView(R.layout.activity_listyard_owner);
 
         AnhXa();
 
@@ -53,13 +55,13 @@ public class ListAllYard extends AppCompatActivity {
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         yardArrayList = new ArrayList<>();
-        yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList , ownerArrayList);
+        yardAdapter = new YardAdapterowner(this, R.layout.item_yard_owner, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
 
         lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListAllYard.this, DetailScheduleYard.class);
+                Intent intent = new Intent(listyard_owner.this, DetailScheduleYard.class);
                 Log.d("Intent page","Huy");
                 startActivity(intent);
             }

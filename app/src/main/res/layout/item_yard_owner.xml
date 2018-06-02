@@ -63,6 +63,7 @@
             android:text="number"
             android:textColor="#05c42b"
             android:textSize="13dp" />
+
         <ImageView
             android:id="@+id/star1"
             android:layout_width="20dp"
@@ -103,7 +104,6 @@
             android:src="@drawable/star"
             android:layout_toRightOf="@+id/star4"
             />
-
 
     </RelativeLayout>
 </RelativeLayout>
