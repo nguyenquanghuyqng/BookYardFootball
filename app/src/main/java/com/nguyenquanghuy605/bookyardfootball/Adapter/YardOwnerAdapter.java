@@ -19,18 +19,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yard_Owner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 
 import java.util.List;
 
-public class YardAdapter  extends BaseAdapter{
+public class YardOwnerAdapter extends BaseAdapter {
 
     public int ownerid=0;
     private Context context;
     private int layout;
-    private List<Yards> yardList;
-    private List<Owners> ownerList;
+    private List<Yard_Owner> yardOwnerList;
 
     // Create a storage reference from our app
     FirebaseStorage storage1 = FirebaseStorage.getInstance();
@@ -38,17 +38,16 @@ public class YardAdapter  extends BaseAdapter{
     // Biến image
     private StorageReference imageRef;
 
-    public YardAdapter(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
+    public YardOwnerAdapter(Context context, int layout, List<Yard_Owner> yardOwnerList ) {
         this.context = context;
         this.layout = layout;
-        this.yardList = yardList;
-        this.ownerList = ownerList;
+        this.yardOwnerList = yardOwnerList;
     }
 
     // Trả về số dòng trong listview
     @Override
     public int getCount() {
-        return yardList.size()+ownerList.size();     // trả về tất cả có trong list
+        return yardOwnerList.size();     // trả về tất cả có trong list
     }
 
     // Trả về đối tượng trong list
@@ -101,7 +100,9 @@ public class YardAdapter  extends BaseAdapter{
         }
         // Lấy giá trị trong danh sách ra
 
-        Yards  yard = yardList.get(i);
+        Yard_Owner  yard = yardOwnerList.get(i);
+        Log.d("Gia  tri i ",i+"");
+        Log.d("Gia  tri ownerid ",(ownerid++)+"");
 
         // truyền path hình vào và lấy hình
         imageRef = storageRef.child(yard.getImage());
@@ -123,17 +124,8 @@ public class YardAdapter  extends BaseAdapter{
         });
 
         holder.txtyardName.setText(yard.getNameyard());
-        try{
-            Owners owners = ownerList.get(i);
-            holder.txtAddress.setText(owners.getAddress());
-            holder.txtNumberYard.setText(owners.getNumberyard());
-        }
-        catch (Exception e){
-            Log.d("ErrorOwner" , e.getMessage());
-        }
-
-        Log.d("Gia  tri i ",i+"");
-        Log.d("Gia  tri ownerid ",(ownerid++)+"");
+        holder.txtAddress.setText(yard.getAddress());
+        holder.txtNumberYard.setText(yard.getNumberyard());
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);

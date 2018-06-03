@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import java.util.Collections;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,9 +20,12 @@ import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yard_Owner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ListAllYard extends AppCompatActivity {
 
@@ -32,6 +36,9 @@ public class ListAllYard extends AppCompatActivity {
 
     private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceOwner;
+
+    //
+    ArrayList<Yard_Owner> yardOwnerArrayList = new ArrayList<>();
 
     //Button btnBookYard;
     @Override
