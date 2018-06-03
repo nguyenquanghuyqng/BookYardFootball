@@ -57,9 +57,6 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
             R.id.time20, R.id.time21, R.id.time22, R.id.time23
     };
 
-    private int temp = 25;
-    private int temp2[] ={25};
-
     public SubYardAdapter(Context context, int layout, List<Yards> yardList, List<Owners> ownerList,
                           List<OptionYard> optionYardList, List<SubYards> subYardsList){
         this.context = context;
@@ -135,69 +132,33 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
 
             for(int i =0; i < idCheckBox.length;i++){
                 if(id == idCheckBox[i]){
-//                    for(int a =0; a < temp2.length; a++) {
-                        if (temp != id) {
+                    try {
+                        Log.d("ChuaXacNhan", "Hahaha");
+                        if (click == 1) {
+                            // Lấy hình ảnh từ drawable
+                            Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
+                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
 
-                            try {
-                                Log.d("ChuaXacNhan", "Hahaha");
-
-                                if (click == 1) {
-//                                    temp2[a] = id;
-                                    // Lấy hình ảnh từ drawable
-                                    Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
-                                    im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                    // Set hình ảnh cho checkbox
-                                    CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                                    checkBox.setCompoundDrawables(im, null, null, null);
-                                    click = 2;
-                                } else {
-//                                    temp2[a] = 0;
-                                    // Lấy hình ảnh từ drawable
-                                    Drawable im = context.getResources().getDrawable(R.drawable.normal);
-                                    im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                    // Set hình ảnh cho checkbox
-                                    CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                                    checkBox.setCompoundDrawables(im, null, null, null);
-
-                                    click = 1;
-                                }
-
-                            } catch (Exception e) {
-                                Log.d("ErrorImage", e.getMessage());
-                            }
-                        } else {
-                            try {
-                                Log.d("ChuaXacNhan", "Hahaha");
-
-                                if (click == 1) {
-
-                                    // Lấy hình ảnh từ drawable
-                                    Drawable im = context.getResources().getDrawable(R.drawable.normal);
-                                    im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                    // Set hình ảnh cho checkbox
-                                    CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                                    checkBox.setCompoundDrawables(im, null, null, null);
-
-                                    click = 1;
-                                } else {
-                                    // Lấy hình ảnh từ drawable
-                                    Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
-                                    im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                    // Set hình ảnh cho checkbox
-                                    CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                                    checkBox.setCompoundDrawables(im, null, null, null);
-                                    click = 2;
-                                }
-                            } catch (Exception e) {
-                                Log.d("ErrorImage", e.getMessage());
-                            }
+                            // Set hình ảnh cho checkbox
+                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
+                            checkBox.setCompoundDrawables(im, null, null, null);
+                            click = 2;
                         }
-//                    }
+                        else {
+                            // Lấy hình ảnh từ drawable
+                            Drawable im = context.getResources().getDrawable(R.drawable.normal);
+                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
 
+                            // Set hình ảnh cho checkbox
+                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
+                            checkBox.setCompoundDrawables(im, null, null, null);
+
+                            click = 1;
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("ErrorImage", e.getMessage());
+                    }
                 }
             }
 

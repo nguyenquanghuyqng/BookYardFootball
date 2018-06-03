@@ -6,6 +6,9 @@ public class Container {
     public String nameOwnerItem;
     public String numberYardItem;
     public String nameOptionYard;
+    public int date;
+    public int month;
+    public int year;
     private static Container instance =null;
     private void Container() {
     }

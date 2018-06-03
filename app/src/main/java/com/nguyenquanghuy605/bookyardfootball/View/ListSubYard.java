@@ -1,5 +1,6 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,14 +27,16 @@ import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.SubYards;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
-
+import android.support.v4.app.DialogFragment;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ListSubYard extends AppCompatActivity {
 
     ListView listviewSubYard;
-    TextView txtNameYard, txtNameOwner;
+    TextView txtNameYard, txtNameOwner, txtdate;
     Button btnBack;
+    ImageView date;
     ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
     ArrayList<Owners> ownersArrayList = new ArrayList<Owners>();
     ArrayList<SubYards> subYardsArrayList = new ArrayList<SubYards>();
@@ -58,6 +63,8 @@ public class ListSubYard extends AppCompatActivity {
         txtNameYard = (TextView)findViewById(R.id.yardnameitem);
         txtNameOwner = (TextView)findViewById(R.id.nameowneritem);
         btnBack = (Button)findViewById(R.id.btnBack);
+        date = (ImageView)findViewById(R.id.lich);
+        txtdate = (TextView)findViewById(R.id.date);
     }
 
     private void Initialize() {
@@ -179,19 +186,30 @@ public class ListSubYard extends AppCompatActivity {
             }
         });
 
-//        for(SubYards subYards : subYardsArrayList){
-//
-//            if(subYards.getId() == Container.getInstance().idyard){
-//                for(OptionYard optionYard : optionYardArrayList){
-//                    if(subYards.getOptionyard() == optionYard.getId()){
-//                        Container.getInstance().nameOptionYard = optionYard.getName();
-//                    }
-//                }
-//            }
-//            else {
-//                Log.d("ErrorSubYard" ,Container.getInstance().idyard+"");
-//            }
-//        }
+        txtdate.setText(Container.getInstance().date + "/" + (Container.getInstance().month) + "/" + Container.getInstance().year);
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ListSubYard.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                            txtdate.setText(day + "/" + (month + 1) + "/" + year);
+                        }
+                    }, 0, 0, 0);
+
+                datePickerDialog.show();
+
+
+            }
+        });
+
+
 
         try{
             txtNameYard.setText(Container.getInstance().nameYardItem);
