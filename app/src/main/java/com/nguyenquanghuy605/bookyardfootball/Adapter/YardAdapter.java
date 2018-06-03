@@ -48,7 +48,7 @@ public class YardAdapter  extends BaseAdapter{
     // Trả về số dòng trong listview
     @Override
     public int getCount() {
-        return yardList.size()+ownerList.size();     // trả về tất cả có trong list
+        return yardList.size();     // trả về tất cả có trong list
     }
 
     // Trả về đối tượng trong list
@@ -100,40 +100,44 @@ public class YardAdapter  extends BaseAdapter{
 
         }
         // Lấy giá trị trong danh sách ra
-
-        Yards  yard = yardList.get(i);
-
-        // truyền path hình vào và lấy hình
-        imageRef = storageRef.child(yard.getImage());
-        Log.d("Image" ,imageRef.toString());
-
-        final long ONE_MEGABYTE = 1024 * 1024;
-        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Log.d("OnSuccess ",imageRef.toString());
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.imgYard.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d("Error ", exception.getMessage());
-            }
-        });
-
-        holder.txtyardName.setText(yard.getNameyard());
         try{
-            Owners owners = ownerList.get(i);
-            holder.txtAddress.setText(owners.getAddress());
-            holder.txtNumberYard.setText(owners.getNumberyard());
+            Yards  yard = yardList.get(i);
+
+            // truyền path hình vào và lấy hình
+            imageRef = storageRef.child(yard.getImage());
+            Log.d("Image" ,imageRef.toString());
+
+            final long ONE_MEGABYTE = 1024 * 1024;
+            imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Log.d("OnSuccess ",imageRef.toString());
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    holder.imgYard.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("Error ", exception.getMessage());
+                }
+            });
+
+            holder.txtyardName.setText(yard.getNameyard());
+            try{
+                Owners owners = ownerList.get(i);
+                holder.txtAddress.setText(owners.getAddress());
+                holder.txtNumberYard.setText(owners.getNumberyard());
+            }
+            catch (Exception e){
+                Log.d("ErrorOwner" , e.getMessage());
+            }
+
+            Log.d("Gia  tri i ",i+"");
+            Log.d("Gia  tri ownerid ",(ownerid++)+"");
         }
         catch (Exception e){
-            Log.d("ErrorOwner" , e.getMessage());
+            Log.d("ErrorYard" , e.getMessage());
         }
-
-        Log.d("Gia  tri i ",i+"");
-        Log.d("Gia  tri ownerid ",(ownerid++)+"");
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);

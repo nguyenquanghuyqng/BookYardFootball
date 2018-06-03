@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/nameyard"
+        android:id="@+id/numyard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sân 1"
@@ -20,7 +20,7 @@
         android:id="@+id/imgyard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nameyard"
+        android:layout_below="@id/numyard"
         android:src="@drawable/field"
         />
 
@@ -28,7 +28,7 @@
         android:id="@+id/yardkind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nameyard"
+        android:layout_below="@+id/numyard"
         android:text="Sân 5 người"
         android:textStyle="bold"
         android:layout_marginTop="12dp"

@@ -33,7 +33,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/yardname"
+            android:id="@+id/yardnameitem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SÂN HIỆP PHÚ"
@@ -43,11 +43,11 @@
             android:textColor="#ff00"
             />
         <TextView
-            android:id="@+id/nameowner"
+            android:id="@+id/nameowneritem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trần Quốc Cường"
-            android:layout_below="@id/yardname"
+            android:layout_below="@id/yardnameitem"
             android:layout_alignParentRight="true"
             android:layout_marginRight="50dp"
             />
@@ -73,8 +73,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/yardname"
-            android:layout_toLeftOf="@id/nameowner"
+            android:layout_below="@id/yardnameitem"
+            android:layout_toLeftOf="@id/nameowneritem"
             android:text="Chủ sân :"
             />
 
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_below="@id/nameowner"
+            android:layout_below="@id/nameowneritem"
             android:layout_centerHorizontal="true"
 
             android:layout_marginTop="70dp" />

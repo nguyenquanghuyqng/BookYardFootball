@@ -62,9 +62,8 @@ public class SubYardAdapter extends BaseAdapter {
     // Có bao nhiêu biến ánh xạ thì khai báo trong class này
     // Sử dụng viewHolder để tối ưu listview
     private class ViewHolder{
-        ImageView imgYard;
-        TextView txtyardName, txtAddress, txtNumberYard;
-        Button btnBookYard;
+        TextView txtnumYard, txtyardKind;
+        Button btnTotal;
     }
 
     @Override
@@ -77,11 +76,17 @@ public class SubYardAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.layout_itemsubyard_time,null);
 
             holder = new ViewHolder();
+
+            holder.txtnumYard = (TextView) view.findViewById(R.id.numyard);
+            holder.txtyardKind = (TextView) view.findViewById(R.id.yardkind);
+//            holder.btnTotal = (Button) view.findViewById(R.id.tongtien);
         }
         else{
             // Lấy phần ánh xạ lại thôi
             holder = (ViewHolder) view.getTag();
         }
+
+//        holder.txtyardKind.setText(Container.getInstance().nameOptionYard);
 
         return view;
     }

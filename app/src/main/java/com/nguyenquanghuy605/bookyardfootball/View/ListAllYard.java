@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
+import com.nguyenquanghuy605.bookyardfootball.Model.OptionYard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yard_Owner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
@@ -33,12 +34,12 @@ public class ListAllYard extends AppCompatActivity {
     ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
     YardAdapter yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
+    ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
 
     private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceOwner;
+    private DatabaseReference databaseReferenceOption;
 
-    //
-    ArrayList<Yard_Owner> yardOwnerArrayList = new ArrayList<>();
 
     //Button btnBookYard;
     @Override
@@ -60,19 +61,10 @@ public class ListAllYard extends AppCompatActivity {
 
         databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
+        databaseReferenceOption = FirebaseDatabase.getInstance().getReference().child("OptionYard");
 
         yardAdapter = new YardAdapter(this, R.layout.layout_item_yard, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
-
-        lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
-                Container.getInstance().idyard = position + 1;
-                Log.d("YardPage",(position +1)+"");
-                startActivity(intent);
-            }
-        });
 
         databaseReferenceYard.addValueEventListener(new ValueEventListener() {
             @Override
@@ -129,6 +121,47 @@ public class ListAllYard extends AppCompatActivity {
             }
         });
 
+        Query queryOption = databaseReferenceOption.orderByChild("id");
+        queryOption.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data1 : dataSnapshot.getChildren()){
+                        OptionYard opt = data1.getValue(OptionYard.class);
+
+                        Log.d("OptionYard",data1.getValue().toString());
+
+                        optionYardArrayList.add(opt);
+
+//                        yardAdapter.notifyDataSetChanged();
+                    }
+                }else{
+                    Log.d("Not have data" ,"Haha");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error Owner",databaseError.getMessage());
+            }
+        });
+
+        // Set Onclick Item List
+        lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
+
+                Container.getInstance().idyard = position + 1;
+                Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
+                Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
+                Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
+//                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
+
+                Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
+                startActivity(intent);
+            }
+        });
     }
 
 }

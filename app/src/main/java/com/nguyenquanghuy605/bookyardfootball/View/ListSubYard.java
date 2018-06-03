@@ -55,8 +55,8 @@ public class ListSubYard extends AppCompatActivity {
 
     private void AnhXa(){
         listviewSubYard = (ListView)findViewById(R.id.listviewSubYard);
-        txtNameYard = (TextView)findViewById(R.id.nameyard);
-        txtNameOwner = (TextView)findViewById(R.id.nameowner);
+        txtNameYard = (TextView)findViewById(R.id.yardnameitem);
+        txtNameOwner = (TextView)findViewById(R.id.nameowneritem);
         btnBack = (Button)findViewById(R.id.btnBack);
     }
 
@@ -178,6 +178,30 @@ public class ListSubYard extends AppCompatActivity {
                 Log.d("Error Get data Yard",databaseError.getMessage());
             }
         });
+
+//        for(SubYards subYards : subYardsArrayList){
+//
+//            if(subYards.getId() == Container.getInstance().idyard){
+//                for(OptionYard optionYard : optionYardArrayList){
+//                    if(subYards.getOptionyard() == optionYard.getId()){
+//                        Container.getInstance().nameOptionYard = optionYard.getName();
+//                    }
+//                }
+//            }
+//            else {
+//                Log.d("ErrorSubYard" ,Container.getInstance().idyard+"");
+//            }
+//        }
+
+        try{
+            txtNameYard.setText(Container.getInstance().nameYardItem);
+            txtNameOwner.setText(Container.getInstance().nameOwnerItem);
+        }
+        catch (Exception e){
+            Log.d("ExceptionYard",Container.getInstance().nameYardItem);
+            Log.d("ExceptionOwner",Container.getInstance().nameOwnerItem);
+            Log.d("ErrorSetText" , e.getMessage());
+        }
 
     }
 
