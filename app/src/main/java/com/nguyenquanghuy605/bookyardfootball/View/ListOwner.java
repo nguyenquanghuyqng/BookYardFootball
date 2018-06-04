@@ -61,7 +61,7 @@ public class ListOwner extends AppCompatActivity {
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         yardArrayList = new ArrayList<>();
-        yardAdapter = new AdapterOwner(this, R.layout.item_yard_owner, yardArrayList , ownerArrayList);
+//        yardAdapter = new AdapterOwner(this, R.layout.item_yard_owner, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
 
         lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {

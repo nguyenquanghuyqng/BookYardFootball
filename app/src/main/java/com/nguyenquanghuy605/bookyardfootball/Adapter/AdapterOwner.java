@@ -96,8 +96,8 @@ public class AdapterOwner extends BaseAdapter {
         Yards yard = yardList.get(i);
 
         holder.txtyardName.setText(yard.getNameyard());
-        holder.txtAddress.setText(owners.getAddress());
-        holder.txtNumberYard.setText(owners.getNumberyard());
+//        holder.txtAddress.setText(owners.getAddress());
+//        holder.txtNumberYard.setText(owners.getNumberyard());
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
