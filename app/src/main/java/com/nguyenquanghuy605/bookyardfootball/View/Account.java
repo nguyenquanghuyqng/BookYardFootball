@@ -1,6 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +27,7 @@ import com.nguyenquanghuy605.bookyardfootball.Model.Accounts;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import java.util.ArrayList;
 
-public class Account extends AppCompatActivity {
+public class Account extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     ListView lvUser;
     ArrayList<Accounts> userArrayList;
@@ -35,9 +42,11 @@ public class Account extends AppCompatActivity {
     Button btnCannel;
     Button btnDeleteAccount;
     long sizeList;
+    String username , pass;
 
     FirebaseDatabase firebaseDatabase;
      DatabaseReference databaseReferenceAccount;
+    private  FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,7 @@ public class Account extends AppCompatActivity {
 
         Initialize();
 
+        firebaseAuth = FirebaseAuth.getInstance();
         addAcconut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +76,14 @@ public class Account extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+    }
+
     private void AnhXa(){
         lvUser = (ListView) findViewById(R.id.listviewAccount);
         addAcconut = (Button) findViewById(R.id.addAcconut);
@@ -105,29 +123,6 @@ public class Account extends AppCompatActivity {
                 Log.d("Error Yard", databaseError.getMessage());
             }
         });
-
-       /* Query query = databaseReferenceOwner.orderByChild("id");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                        Owners owners = data1.getValue(Owners.class);
-
-                        Log.d("Owners", data1.getValue().toString());
-
-                        ownerArrayList.add(owners);
-
-                        yardAdapter.notifyDataSetChanged();
-                    }
-                }
-            }*/
-
-            /*@Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("Error Owner", databaseError.getMessage());
-            }
-        });*/
     }
     private void callDialog()
     {
@@ -148,8 +143,11 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Accounts account = new Accounts(sizeList,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
-                databaseReferenceAccount.child(String.valueOf(sizeList+1)).setValue(account);
+                username=eText_Accoutn_UserName.getText().toString();
+                pass=eText_account_pass.getText().toString();
+                Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
+                databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
+                firebaseAuth.createUserWithEmailAndPassword(username,pass);
                 Initialize();
                 myDialog.cancel();
             }
@@ -162,6 +160,11 @@ public class Account extends AppCompatActivity {
                 Initialize();
             }
         });
+
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
     }
 }
