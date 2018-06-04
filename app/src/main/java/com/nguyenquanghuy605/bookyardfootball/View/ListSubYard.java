@@ -3,6 +3,7 @@ package com.nguyenquanghuy605.bookyardfootball.View;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -275,7 +276,8 @@ public class ListSubYard extends AppCompatActivity {
             }
         });
 
-
+        // Gán ngày trong cantainer
+        Container.getInstance().date = txtdate.getText().toString();
 
         try{
             txtNameYard.setText(Container.getInstance().nameYardItem);

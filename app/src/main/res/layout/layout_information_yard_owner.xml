@@ -65,6 +65,7 @@
                         android:textSize="20sp" />
 
                     <EditText
+                        android:id="@+id/eTextNumberYard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
@@ -88,7 +89,8 @@
                         android:text="Đánh giá"
                         android:textSize="20sp" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/eTextStar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
@@ -122,6 +124,7 @@
                 android:src="@drawable/name_admin" />
 
             <EditText
+                android:id="@+id/eTextName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -143,6 +146,7 @@
                 android:src="@drawable/phone_admin" />
 
             <EditText
+                android:id="@+id/eTextPhone"
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
@@ -165,8 +169,8 @@
                 android:src="@drawable/id_card_admin" />
 
             <EditText
+                android:id="@+id/eTextIdCard"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
@@ -187,6 +191,7 @@
                 android:src="@drawable/home" />
 
             <EditText
+                android:id="@+id/eTextAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -233,6 +238,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/btnDeleteOwner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
