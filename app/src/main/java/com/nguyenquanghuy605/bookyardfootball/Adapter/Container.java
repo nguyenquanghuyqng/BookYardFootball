@@ -1,14 +1,19 @@
 package com.nguyenquanghuy605.bookyardfootball.Adapter;
 
+import com.nguyenquanghuy605.bookyardfootball.Model.BookYard;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Container {
     public long idyard;
     public String nameYardItem;
     public String nameOwnerItem;
     public String numberYardItem;
     public String nameOptionYard;
-    public int date;
-    public int month;
-    public int year;
+    public String date;
+    public int checkDate;
+    public ArrayList<BookYard> bookYardList = new ArrayList<BookYard>();
     private static Container instance =null;
     private void Container() {
     }

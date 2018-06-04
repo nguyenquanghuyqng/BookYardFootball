@@ -311,7 +311,7 @@
 
 
         <TextView
-            android:id="@+id/tongtien"
+            android:id="@+id/txtMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=".........đ"
@@ -324,15 +324,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/listtime"
-            android:layout_toLeftOf="@id/tongtien"
+            android:layout_toLeftOf="@id/txtMoney"
             android:layout_marginRight="10dp"
             android:src="@drawable/money"
             />
         <Button
+            android:id="@+id/btnBookYard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đặt Sân"
-            android:layout_below="@id/tongtien"
+            android:layout_below="@id/txtMoney"
             android:layout_centerHorizontal="true"
             android:background="@drawable/subyardboderitem"
             android:textAllCaps="true"

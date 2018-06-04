@@ -163,15 +163,14 @@ public class ListAllYard extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
+                Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"");
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ListAllYard.this,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-//                                txtdate.setText(day + "/" + (month + 1) + "/" + year);
                             Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
-                            Container.getInstance().date = day;
-                            Container.getInstance().month = month +1;
-                            Container.getInstance().year = year;
+                            Container.getInstance().date = day+"/"+(month+1)+"/"+year;
                             Container.getInstance().idyard = position + 1;
                             Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
                             Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
@@ -182,7 +181,7 @@ public class ListAllYard extends AppCompatActivity {
                             Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
                             startActivity(intent);
                         }
-                    }, 0, 0, 0);
+                    }, year, month, dayOfMonth);
 
                 datePickerDialog.show();
 
