@@ -311,10 +311,10 @@
 
 
         <TextView
-            android:id="@+id/txtMoney"
+            android:id="@+id/txtTotalMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=".........đ"
+            android:text="........."
             android:layout_below="@id/listtime"
             android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
@@ -324,7 +324,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/listtime"
-            android:layout_toLeftOf="@id/txtMoney"
+            android:layout_toLeftOf="@id/txtTotalMoney"
             android:layout_marginRight="10dp"
             android:src="@drawable/money"
             />
@@ -333,10 +333,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đặt Sân"
-            android:layout_below="@id/txtMoney"
+            android:layout_below="@id/txtTotalMoney"
             android:layout_centerHorizontal="true"
             android:background="@drawable/subyardboderitem"
             android:textAllCaps="true"
             android:textSize="20sp"
             android:padding="5dp" />
+
 </RelativeLayout>
