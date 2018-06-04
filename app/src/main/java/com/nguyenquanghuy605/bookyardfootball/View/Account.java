@@ -139,8 +139,6 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
         eText_Accoutn_UserName = (EditText) myDialog.findViewById(R.id.eText_Accoutn_UserName);
         myDialog.show();
 
-
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.icu.text.LocaleDisplayNames;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ListView;
+
+import java.util.Calendar;
 import java.util.Collections;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +39,8 @@ public class ListAllYard extends AppCompatActivity {
     YardAdapter yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
     ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
+
+    Calendar calendar;
 
     private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceOwner;
@@ -148,18 +154,38 @@ public class ListAllYard extends AppCompatActivity {
 
         // Set Onclick Item List
         lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
 
-                Container.getInstance().idyard = position + 1;
-                Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
-                Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
-                Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+                Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"");
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ListAllYard.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                            Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
+                            Container.getInstance().date = day+"/"+(month+1)+"/"+year;
+                            Container.getInstance().idyard = position + 1;
+                            Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
+                            Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
+                            Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
 //                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
 
-                Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
-                startActivity(intent);
+
+                            Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
+                            startActivity(intent);
+                        }
+                    }, year, month, dayOfMonth);
+
+                datePickerDialog.show();
+
+
             }
         });
     }
