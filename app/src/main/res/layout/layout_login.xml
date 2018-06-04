@@ -44,14 +44,23 @@
         android:textColor="#0e0e0e" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogin"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="162dp"
+        android:layout_marginBottom="170dp"
         android:background="@drawable/edit_button_circle"
         android:text="Login" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnSingInGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="95dp"
+        android:background="@drawable/edit_button_circle"/>
 
 
 </RelativeLayout>

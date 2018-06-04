@@ -18,6 +18,7 @@ package com.nguyenquanghuy605.bookyardfootball.View;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.Query;
         import com.google.firebase.database.ValueEventListener;
+        import com.nguyenquanghuy605.bookyardfootball.Adapter.AdapterOwner;
         import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
         import com.nguyenquanghuy605.bookyardfootball.Adapter.SubYardAdapter;
         import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapterowner;
@@ -33,7 +34,7 @@ public class ListOwner extends AppCompatActivity {
 
     ListView lvYard;
     ArrayList<Yards> yardArrayList;
-    YardAdapterowner yardAdapter;
+    AdapterOwner yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
 
     private DatabaseReference databaseReferenceYard;
@@ -60,7 +61,7 @@ public class ListOwner extends AppCompatActivity {
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         yardArrayList = new ArrayList<>();
-        yardAdapter = new YardAdapterowner(this, R.layout.item_yard_owner, yardArrayList , ownerArrayList);
+        yardAdapter = new AdapterOwner(this, R.layout.item_yard_owner, yardArrayList , ownerArrayList);
         lvYard.setAdapter(yardAdapter);
 
         lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
