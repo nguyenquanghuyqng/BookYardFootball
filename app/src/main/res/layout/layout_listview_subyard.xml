@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/layoutSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fffffa">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/back" />
+        <Button
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/btnUser"
+            android:layout_width="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="32dp"
+            android:background="@drawable/user"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/layoutSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/yardnameitem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SÂN HIỆP PHÚ"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_marginTop="9dp"
+            android:textColor="#ff00"
+            />
+        <TextView
+            android:id="@+id/nameowneritem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trần Quốc Cường"
+            android:layout_below="@id/yardnameitem"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            />
+        <ImageView
+            android:id="@+id/lich"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/listtime"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/date"
+            android:layout_alignParentLeft="true"
+
+            />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn ngày"
+            android:layout_below="@id/listtime"
+            android:layout_toRightOf="@id/lich"
+            android:layout_marginTop="40dp"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/yardnameitem"
+            android:layout_toLeftOf="@id/nameowneritem"
+            android:text="Chủ sân :"
+            />
+
+        <ListView
+            android:id="@+id/listviewSubYard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_below="@id/nameowneritem"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="70dp" />
+    </RelativeLayout>
+</RelativeLayout>

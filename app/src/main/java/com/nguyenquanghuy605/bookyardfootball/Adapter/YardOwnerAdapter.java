@@ -19,18 +19,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yard_Owner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 
 import java.util.List;
 
-public class YardAdapter  extends BaseAdapter{
+public class YardOwnerAdapter extends BaseAdapter {
 
     public int ownerid=0;
     private Context context;
     private int layout;
-    private List<Yards> yardList;
-    private List<Owners> ownerList;
+    private List<Yard_Owner> yardOwnerList;
 
     // Create a storage reference from our app
     FirebaseStorage storage1 = FirebaseStorage.getInstance();
@@ -38,17 +38,16 @@ public class YardAdapter  extends BaseAdapter{
     // Biến image
     private StorageReference imageRef;
 
-    public YardAdapter(Context context, int layout, List<Yards> yardList,List<Owners> ownerList ) {
+    public YardOwnerAdapter(Context context, int layout, List<Yard_Owner> yardOwnerList ) {
         this.context = context;
         this.layout = layout;
-        this.yardList = yardList;
-        this.ownerList = ownerList;
+        this.yardOwnerList = yardOwnerList;
     }
 
     // Trả về số dòng trong listview
     @Override
     public int getCount() {
-        return yardList.size();     // trả về tất cả có trong list
+        return yardOwnerList.size();     // trả về tất cả có trong list
     }
 
     // Trả về đối tượng trong list
@@ -100,44 +99,33 @@ public class YardAdapter  extends BaseAdapter{
 
         }
         // Lấy giá trị trong danh sách ra
-        try{
-            Yards  yard = yardList.get(i);
 
-            // truyền path hình vào và lấy hình
-            imageRef = storageRef.child(yard.getImage());
-            Log.d("Image" ,imageRef.toString());
+        Yard_Owner  yard = yardOwnerList.get(i);
+        Log.d("Gia  tri i ",i+"");
+        Log.d("Gia  tri ownerid ",(ownerid++)+"");
 
-            final long ONE_MEGABYTE = 1024 * 1024;
-            imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Log.d("OnSuccess ",imageRef.toString());
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    holder.imgYard.setImageBitmap(bitmap);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Log.d("Error ", exception.getMessage());
-                }
-            });
+        // truyền path hình vào và lấy hình
+        imageRef = storageRef.child(yard.getImage());
+        Log.d("Image" ,imageRef.toString());
 
-            holder.txtyardName.setText(yard.getNameyard());
-            try{
-                Owners owners = ownerList.get(i);
-                holder.txtAddress.setText(owners.getAddress());
-                holder.txtNumberYard.setText(owners.getNumberyard());
+        final long ONE_MEGABYTE = 1024 * 1024;
+        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Log.d("OnSuccess ",imageRef.toString());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                holder.imgYard.setImageBitmap(bitmap);
             }
-            catch (Exception e){
-                Log.d("ErrorOwner" , e.getMessage());
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("Error ", exception.getMessage());
             }
+        });
 
-            Log.d("Gia  tri i ",i+"");
-            Log.d("Gia  tri ownerid ",(ownerid++)+"");
-        }
-        catch (Exception e){
-            Log.d("ErrorYard" , e.getMessage());
-        }
+        holder.txtyardName.setText(yard.getNameyard());
+        holder.txtAddress.setText(yard.getAddress());
+        holder.txtNumberYard.setText(yard.getNumberyard());
 
         // Trước khi return thì gán animation cho view
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_list);
