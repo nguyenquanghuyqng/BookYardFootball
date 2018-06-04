@@ -150,10 +150,10 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
                     // Setting Dialog Title
-                    alertDialog.setTitle("Confirm Book Yard...");
+                    alertDialog.setTitle("Thông báo xác nhận đặt sân");
 
                     // Setting Dialog Message
-                    alertDialog.setMessage("Are you sure you want book this yard?");
+                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
 
                     // Setting Positive "Yes" Button
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -162,11 +162,15 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
                             // Get data checkbox
                             try{
                                 Log.d("BookYard","Hihi");
+
+                                // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
+                                // Done date and Account 1, id,
                                 BookYard bookYard = new BookYard(Container.getInstance().accountid,Container.getInstance().date,
                                         subYardsList.size(),total,Container.getInstance().status,
                                         Container.getInstance().idsubyard, Container.getInstance().timestart,
                                         Container.getInstance().timeend);
 
+                                // Thực hiện Insert lên firebase
                                 databaseReferenceBookYard = FirebaseDatabase.getInstance().getReference().child("BookYard");
                                 databaseReferenceBookYard.child(String.valueOf(subYardsList.size()+1)).setValue(bookYard);
                             }
