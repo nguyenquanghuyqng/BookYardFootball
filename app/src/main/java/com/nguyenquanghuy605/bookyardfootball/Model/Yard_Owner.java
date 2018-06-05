@@ -9,8 +9,7 @@ public class Yard_Owner {
     private long star;
     private long comment;
     private long idowner;
-    private String address;
-    private String idcard;
+    private String address;    private String idcard;
     private String name;
     private String numberyard;
     private String phone;

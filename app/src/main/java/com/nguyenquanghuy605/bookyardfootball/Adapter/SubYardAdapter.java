@@ -23,13 +23,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nguyenquanghuy605.bookyardfootball.Model.BookYard;
 import com.nguyenquanghuy605.bookyardfootball.Model.OptionYard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
+import com.nguyenquanghuy605.bookyardfootball.Model.PriceTime;
 import com.nguyenquanghuy605.bookyardfootball.Model.SubYards;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
@@ -40,7 +45,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.security.AccessController.getContext;
 
-public class SubYardAdapter extends BaseAdapter implements View.OnClickListener {
+public class SubYardAdapter extends BaseAdapter{
 
     private Context context;
     private int layout;
@@ -51,10 +56,20 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
     private List<BookYard> bookYardList;
     private CheckBox ck0001;
 
+    private DatabaseReference databaseReferencePriceTime = FirebaseDatabase.getInstance()
+            .getReference().child("Prices");
+    //
+    private String[] from;
+    private int[] to;
+    private TextView[] showTv = new TextView[Integer.parseInt(Container.getInstance().numberYardItem)];
+    //
+
     int click = 1;
-    int numClick = 0;
+    int position = 0;
     int temp = 25;
     long total=0;
+    int idcheck;
+    int idBookYard=0;
     // Create a storage reference from our app
     FirebaseStorage storage1 = FirebaseStorage.getInstance();
     StorageReference storageRef = storage1.getReference();
@@ -63,7 +78,7 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
 
     private String[] timeCheckBox = {};
 
-    private DatabaseReference databaseReferenceBookYard;
+    private DatabaseReference databaseReferenceBookYard ;
 
     private int[] idCheckBox = {
             R.id.time00, R.id.time01, R.id.time02, R.id.time03,
@@ -101,12 +116,12 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return subYardsList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     // Có bao nhiêu biến ánh xạ thì khai báo trong class này
@@ -117,8 +132,8 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
+    public View getView(final int position, View view, ViewGroup viewGroup) {
+        idBookYard = subYardsList.size();
         int click =1;
         final ViewHolder holder;
         // Thường thì lần đầu khởi tạo chạy thì biến view sẽ bằng null
@@ -133,27 +148,21 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
             holder.txtyardKind = (TextView) view.findViewById(R.id.yardkind);
             holder.txtTotalMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
             holder.btnBookYard = (Button) view.findViewById(R.id.btnBookYard);
-//            txtMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
 
-            try{
-                for (int a = 0; a < idCheckBox.length; a++) {
-                    view.findViewById(idCheckBox[a]).setOnClickListener(this);
-                }
-            }
-            catch (Exception e){
-                Log.d("Error",e.getMessage());
-            }
+
+            Log.d("Isai",position+"");
+            Log.d("keysub",Container.getInstance().keysub+"");
 
             holder.btnBookYard.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
                     // Setting Dialog Title
                     alertDialog.setTitle("Thông báo xác nhận đặt sân");
 
                     // Setting Dialog Message
-                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
+                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?" + total);
 
                     // Setting Positive "Yes" Button
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -165,14 +174,22 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
 
                                 // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
                                 // Done date and Account 1, id,
+
                                 BookYard bookYard = new BookYard(Container.getInstance().accountid,Container.getInstance().date,
-                                        subYardsList.size(),total,Container.getInstance().status,
-                                        Container.getInstance().idsubyard, Container.getInstance().timestart,
-                                        Container.getInstance().timeend);
+                                        idBookYard,total,Container.getInstance().status,
+                                        Container.getInstance().idsubyard, idcheck,
+                                        idcheck+1);
 
                                 // Thực hiện Insert lên firebase
                                 databaseReferenceBookYard = FirebaseDatabase.getInstance().getReference().child("BookYard");
                                 databaseReferenceBookYard.child(String.valueOf(subYardsList.size()+1)).setValue(bookYard);
+
+                                Drawable im = context.getResources().getDrawable(R.drawable.dadat);
+                                im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                                // Set hình ảnh cho checkbox
+                                CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[idcheck]);
+                                checkBox.setCompoundDrawables(im, null, null, null);
                             }
                             catch (Exception e){
                                 Log.d("ErrorBookYard",e.getMessage());
@@ -192,13 +209,150 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
                     alertDialog.show();
                 }
             });
+
         }
         else{
             // Lấy phần ánh xạ lại thôi
             holder = (ViewHolder) view.getTag();
         }
-//        holder.txtTotalMoney.setText(total+"đ");
 
+        // Xử lý từng item
+        try {
+
+            final SubYards subYards = subYardsList.get(position);
+            final OptionYard optionYard = optionYardList.get(position);
+//            final BookYard bookYard = bookYardList.get(position);
+            try {
+                holder.txtyardKind.getTag(position);
+                holder.txtyardKind.setText(optionYard.getName());
+            }
+            catch (Exception e){
+                Log.d("ErrorSetName",e.getMessage());
+            }
+
+
+            for (int a = 0; a < idCheckBox.length; a++) {
+                view.findViewById(idCheckBox[a]).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "Postion:" + subYards.getId(), Toast.LENGTH_LONG).show();
+                        Log.d("PostionView",  subYards.getId()+ "");
+                        Log.d("HelloHuy", "Hahaha");
+
+                        try{
+
+                        int id = v.getId();
+
+                        for (int i = 0; i < idCheckBox.length; i++) {
+                            if (id == idCheckBox[i]) {
+                                try {
+                                    Log.d("ChuaXacNhan", "Hahaha");
+                                    if (check == false && clickCheck[i] == false) {
+                                        clickCheck[i] = true;
+                                    } else if (check == true && clickCheck[i] == false) {
+                                        clickCheck[i] = true;
+                                    } else if (check == false && clickCheck[i] == true) {
+                                        clickCheck[i] = false;
+                                    } else {
+                                        clickCheck[i] = false;
+                                    }
+
+                                    if (clickCheck[i]) {
+                                        try {
+                                            idBookYard = idBookYard +1;
+                                            idcheck =i;
+                                            Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
+                                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                                            // Set hình ảnh cho checkbox
+                                            CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[i]);
+                                            checkBox.setCompoundDrawables(im, null, null, null);
+                                            check = true;
+
+                                            try{
+
+
+                                                Query queryPriceTime = databaseReferencePriceTime.orderByChild("yard").equalTo(Container.getInstance().idyard);
+                                                queryPriceTime.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                        if(dataSnapshot.exists()){
+                                                            Log.d("DataSnapot",dataSnapshot.getValue().toString());
+
+
+                                                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                                                            PriceTime priceTime = data.getValue(PriceTime.class);
+
+                                                            Log.d("PriceTime",data.getValue().toString());
+
+                                                            Log.d("Huyhuy",priceTime.getTimestart()+"/"+priceTime.getTimeend()+"/"+idcheck+"/"+"time");
+
+                                                            if(idcheck >= priceTime.getTimestart()&& idcheck < priceTime.getTimeend()){
+                                                                Log.d("PriceGia",priceTime.getPrice()+"dong");
+                                                                total = total + priceTime.getPrice();
+                                                                holder.txtTotalMoney.setText(total+"đồng");
+                                                            }
+                                                            else {
+                                                                Log.d("NoPrice","");
+                                                            }
+
+                                                        }
+                                                        }
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+                                                        Log.d("Error PriceTime",databaseError.getMessage());
+                                                    }
+                                                });
+                                            }
+                                            catch (Exception e){
+                                                Log.d("ErroPrice",e.getMessage());
+                                            }
+
+                                        } catch (Exception e) {
+                                            Log.d("ErrorSetText", e.getMessage());
+                                        }
+                                    } else {
+                                        // Lấy hình ảnh từ drawable
+                                        Drawable im = context.getResources().getDrawable(R.drawable.normal);
+                                        im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                                        // Set hình ảnh cho checkbox
+                                        CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[i]);
+                                        checkBox.setCompoundDrawables(im, null, null, null);
+                                        check = false;
+                                        Container.getInstance().totalMoney = 0;
+                                        try {
+                                            total = total + i;
+                                            Log.d("TotalMoney", total + "");
+                                            holder.txtTotalMoney.setText("Hao");
+                                            //                                txtMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
+                                            //                                txtMoney.setText("");
+                                        } catch (Exception e) {
+                                            Log.d("ErrorSetText", e.getMessage());
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    Log.d("ErrorImage", e.getMessage());
+                                }
+                            }
+                        }
+                        }
+                        catch (Exception e){
+                            Log.d("Error", e.getMessage());
+                        }
+                    }
+                });
+            }
+        }
+
+        catch (Exception e){
+            Log.d("Error",e.getMessage());
+        }
         return view;
     }
 
@@ -223,75 +377,80 @@ public class SubYardAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     // Bắt sự kiện click cho checkBox
-    @Override
-    public void onClick(View view) {
-        Log.d("HelloHuy","Hahaha");
-        final ViewHolder holder = new ViewHolder();
-
-        try{
-            int id = view.getId();
-
-            for(int i =0; i < idCheckBox.length;i++){
-                if(id == idCheckBox[i]){
-                    try {
-                        Log.d("ChuaXacNhan", "Hahaha");
-                        if(check == false && clickCheck[i] ==false){
-                            clickCheck[i] = true;
-                        }
-                        else if(check == true && clickCheck[i] ==false ){
-                            clickCheck[i] = true;
-                        }
-                        else if(check == false && clickCheck[i] ==true){
-                            clickCheck[i] = false;
-                        }
-                        else {
-                            clickCheck[i] = false;
-                        }
-
-                        if(clickCheck[i]){
-                            try {
-                                Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
-                                im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                // Set hình ảnh cho checkbox
-                                CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                                checkBox.setCompoundDrawables(im, null, null, null);
-                                check = true;
-
-                                total = total+i;
-                                Log.d("TotalMoney", total + "");
-                            }
-                            catch (Exception e){
-                                Log.d("ErrorSetText",e.getMessage());
-                            }
-                        }
-                        else {
-                            // Lấy hình ảnh từ drawable
-                            Drawable im = context.getResources().getDrawable(R.drawable.normal);
-                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                            // Set hình ảnh cho checkbox
-                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
-                            checkBox.setCompoundDrawables(im, null, null, null);
-                            check = false;
-                            try{
-                                total = total+i;
-                                Log.d("TotalMoney",total+"");
-//                                txtMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
-//                                txtMoney.setText("");
-                            }
-                            catch (Exception e){
-                                Log.d("ErrorSetText",e.getMessage());
-                            }
-                        }
-                    } catch (Exception e) {
-                        Log.d("ErrorImage", e.getMessage());
-                    }
-                }
-            }
-
-        }catch (Exception e){
-            Log.d("Error","Onclick");
-        }
-    }
+//    @Override
+//    public void onClick(View view) {
+//
+//        Log.d("PostionView",view.getTag()+"");
+//        Log.d("HelloHuy","Hahaha");
+//        final ViewHolder holder = new ViewHolder();
+//
+//        try{
+//            int id = view.getId();
+//
+//            for(int i =0; i < idCheckBox.length;i++){
+//                if(id == idCheckBox[i]){
+//                    try {
+//                        Log.d("ChuaXacNhan", "Hahaha");
+//                        if(check == false && clickCheck[i] ==false){
+//                            clickCheck[i] = true;
+//                        }
+//                        else if(check == true && clickCheck[i] ==false ){
+//                            clickCheck[i] = true;
+//                        }
+//                        else if(check == false && clickCheck[i] ==true){
+//                            clickCheck[i] = false;
+//                        }
+//                        else {
+//                            clickCheck[i] = false;
+//                        }
+//
+//                        if(clickCheck[i]){
+//                            try {
+//                                Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
+//                                im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+//
+//                                // Set hình ảnh cho checkbox
+//                                CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
+//                                checkBox.setCompoundDrawables(im, null, null, null);
+//                                check = true;
+//
+//                                Container.getInstance().totalMoney = 100000;
+//                                Container.getInstance().timestart = i;
+//                                Log.d("TotalMoney", total + "");
+//                                holder.txtTotalMoney.setTag(position);
+//                            }
+//                            catch (Exception e){
+//                                Log.d("ErrorSetText",e.getMessage());
+//                            }
+//                        }
+//                        else {
+//                            // Lấy hình ảnh từ drawable
+//                            Drawable im = context.getResources().getDrawable(R.drawable.normal);
+//                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+//
+//                            // Set hình ảnh cho checkbox
+//                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[i]);
+//                            checkBox.setCompoundDrawables(im, null, null, null);
+//                            check = false;
+//                            Container.getInstance().totalMoney = 0;
+//                            try{
+//                                total = total+i;
+//                                Log.d("TotalMoney",total+"");
+////                                txtMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
+////                                txtMoney.setText("");
+//                            }
+//                            catch (Exception e){
+//                                Log.d("ErrorSetText",e.getMessage());
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        Log.d("ErrorImage", e.getMessage());
+//                    }
+//                }
+//            }
+//
+//        }catch (Exception e){
+//            Log.d("Error","Onclick");
+//        }
+//    }
 }
