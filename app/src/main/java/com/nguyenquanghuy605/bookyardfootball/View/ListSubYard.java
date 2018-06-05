@@ -292,7 +292,7 @@ public class ListSubYard extends AppCompatActivity {
         listviewSubYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Container.getInstance().keysub = (int) id;
+                Container.getInstance().keysub = (int) id;
             }
         });
 
