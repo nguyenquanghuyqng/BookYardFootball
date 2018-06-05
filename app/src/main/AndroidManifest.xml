@@ -19,9 +19,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".View.Account">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".View.ListAllYard">
@@ -87,6 +87,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.Myyard"></activity>
     </application>
 
 </manifest>
