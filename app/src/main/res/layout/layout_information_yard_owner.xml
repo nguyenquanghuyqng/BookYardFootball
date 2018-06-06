@@ -240,28 +240,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="58dp"
-            android:background="#747472"
-            android:text="Edit"
-            android:textColor="#fff" />
-
-        <Button
-            android:id="@+id/btnDeleteOwner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="52dp"
-            android:background="#747472"
-            android:text="Delete"
-            android:textColor="#fff" />
     </RelativeLayout>
 
 </LinearLayout>

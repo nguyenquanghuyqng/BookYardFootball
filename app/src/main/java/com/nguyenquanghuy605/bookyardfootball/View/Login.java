@@ -83,7 +83,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         firebaseAuth=FirebaseAuth.getInstance();
-        firebaseAuth.signOut();
+//        firebaseAuth.signOut();
         AnhXa();
 
         btnSignInGoogle.setOnClickListener(this);
@@ -322,7 +322,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         }
         else
         {
-
+            Toast.makeText(this,"Dang nhap that bai ",Toast.LENGTH_SHORT).show();
         }
     }
 

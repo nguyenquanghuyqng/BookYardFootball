@@ -1,6 +1,8 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Model.Accounts;
+import com.nguyenquanghuy605.bookyardfootball.Model.BookYard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yard_Owner;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
@@ -95,23 +98,52 @@ public class InformationOwner extends AppCompatActivity  {
 
         //databaseReferenceOwner.addValueEventListener(this);
 
-        btnDeleteOwner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                databaseReferenceOwner.removeValue();
-            }
-        });
+//        btnDeleteOwner.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                databaseReferenceOwner.removeValue();
+//            }
+//        });
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(role==1 || role == 3) {
 
-                    flag=1;
-                    databaseReferenceOwner.child(String.valueOf(nodeOwner)).removeValue();
-                    databaseReferenceAccount.child(String.valueOf(nodeAccount)).removeValue();
-                    databaseReferenceYard.child(String.valueOf(nodeYard)).removeValue();
-                    callDialog();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+
+                    // Setting Dialog Title
+                    alertDialog.setTitle("Xóa tài khoản");
+
+                    // Setting Dialog Message
+                    alertDialog.setMessage("Bạn có chắn chắn muốn xóa tài khoản?");
+
+                    // Setting Positive "Yes" Button
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            try{
+                                flag=1;
+                                databaseReferenceOwner.child(String.valueOf(nodeOwner)).removeValue();
+                                databaseReferenceAccount.child(String.valueOf(nodeAccount)).removeValue();
+                                databaseReferenceYard.child(String.valueOf(nodeYard)).removeValue();
+                                callDialog();
+                            }
+                            catch (Exception e){
+                                Log.d("ErrorBookYard",e.getMessage());
+                            }
+                        }
+                    });
+                    // Setting Negative "NO" Button
+                    alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Write your code here to invoke NO event
+                            dialog.cancel();
+                        }
+                    });
+
+                    alertDialog.show();
+
+
 
                 }
                 else
@@ -132,7 +164,6 @@ public class InformationOwner extends AppCompatActivity  {
         eTextPhone = (EditText) findViewById(R.id.eTextPhone);
         eTextIdCard = (EditText) findViewById(R.id.eTextIdCard);
         eTextAddress = (EditText) findViewById(R.id.eTextAddress);
-        btnDeleteOwner=(Button) findViewById(R.id.btnDeleteOwner);
         txtyardName=(TextView) findViewById(R.id.txtyardName);
         btnEdit =(ImageView) findViewById(R.id.btnEdit);
 

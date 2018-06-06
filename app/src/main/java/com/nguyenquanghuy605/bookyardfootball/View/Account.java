@@ -214,12 +214,27 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 pass=eText_account_pass.getText().toString();
                 Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
                 databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
-                firebaseAuth.createUserWithEmailAndPassword(username,pass);
-                Owners owners = new Owners(sizeOwner+1,null,null,eText_account_name.getText().toString(),null,eText_account_phone.getText().toString(),sizeList+1);
-                databaseReferenceOwner.child(String.valueOf(sizeOwner)).setValue(owners);
-                Yards yard = new Yards(sizeYard+1,null,eText_account_name.getText().toString(),sizeOwner+1,0,0,0,0);
-                databaseReferenceYard.child(String.valueOf(sizeYard+1)).setValue(yard);
-                myDialog.cancel();
+                try{
+                    firebaseAuth.createUserWithEmailAndPassword(username,pass);
+                    if(pass.length()>=8) {
+                        Owners owners = new Owners(sizeOwner + 1, null, null, eText_account_name.getText().toString(), null, eText_account_phone.getText().toString(), sizeList + 1);
+                        databaseReferenceOwner.child(String.valueOf(sizeOwner)).setValue(owners);
+                        Yards yard = new Yards(sizeYard + 1, null, eText_account_name.getText().toString(), sizeOwner + 1, 0, 0, 0, 0);
+                        databaseReferenceYard.child(String.valueOf(sizeYard + 1)).setValue(yard);
+                        Toast.makeText(Account.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                        myDialog.cancel();
+//                        lvUser.setAdapter(null);
+//                        Initialize();
+                    }
+                    else
+                    {
+                        Toast.makeText(Account.this, "PassWord phải trên 8 ký tự", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception e){
+                    Toast.makeText(Account.this, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         btnCannel.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +242,8 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
             public void onClick(View v) {
 
                 myDialog.cancel();
+//                lvUser.setAdapter(null);
+//                Initialize();
             }
         });
 
