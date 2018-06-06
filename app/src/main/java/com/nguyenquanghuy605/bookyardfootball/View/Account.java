@@ -1,11 +1,14 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,14 +26,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.AccountAdapter;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Model.Accounts;
+import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import java.util.ArrayList;
+
 
 public class Account extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     ListView lvUser;
-    ArrayList<Accounts> userArrayList;
+    ArrayList<Accounts> userArrayList= new ArrayList<Accounts>();
+
     AccountAdapter accountAdapter;
     EditText eText_Accoutn_UserName;
     EditText eText_account_pass;
@@ -43,6 +50,7 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     Button btnDeleteAccount;
     long sizeList;
     String username , pass;
+    long idUser;
 
     FirebaseDatabase firebaseDatabase;
      DatabaseReference databaseReferenceAccount;
@@ -93,9 +101,9 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     private void Initialize() {
         databaseReferenceAccount = FirebaseDatabase.getInstance().getReference().child("Accounts");
 
-        userArrayList = new ArrayList<>();
         accountAdapter = new AccountAdapter(this, R.layout.layout_item_yard_owner_account, userArrayList);
         lvUser.setAdapter(accountAdapter);
+
 
         databaseReferenceAccount.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,6 +131,21 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 Log.d("Error Yard", databaseError.getMessage());
             }
         });
+        lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.d("Click","Vao");
+                Container.getInstance().id=userArrayList.get(position).getId();
+                Container.getInstance().star =userArrayList.get(position).getRole();
+                Log.d("Owner",String.valueOf(Container.getInstance().id));
+                Intent intent = new Intent(Account.this, InformationOwner.class);
+
+                startActivity(intent);
+
+                //Toast.makeText(MainActivity.this, listValue[position], Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void callDialog()
     {
@@ -148,7 +171,6 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
                 databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
                 firebaseAuth.createUserWithEmailAndPassword(username,pass);
-                Initialize();
                 myDialog.cancel();
             }
         });
@@ -157,7 +179,6 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
             public void onClick(View v) {
 
                 myDialog.cancel();
-                Initialize();
             }
         });
 

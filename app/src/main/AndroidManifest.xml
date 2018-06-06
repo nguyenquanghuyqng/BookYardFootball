@@ -88,6 +88,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Myyard"></activity>
+        <activity android:name=".View.InformationOwner"></activity>
     </application>
 
 </manifest>

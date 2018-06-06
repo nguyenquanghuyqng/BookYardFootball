@@ -8,18 +8,27 @@ public class Owners {
     private String name;
     private String numberyard;
     private String phone;
+    private long account;
 
     public Owners(){}
 
-    public Owners(long id, String address, String idcard, String name, String numberyard, String phone) {
+    public Owners(long id, String address, String idcard, String name, String numberyard, String phone ,long account) {
         this.id = id;
         this.address = address;
         this.idcard = idcard;
         this.name = name;
         this.numberyard = numberyard;
         this.phone = phone;
+        this.account = account;
     }
 
+    public long getAccount() {
+        return account;
+    }
+
+    public void setAccount(long account) {
+        this.account = account;
+    }
     public long getId() {
         return id;
     }
