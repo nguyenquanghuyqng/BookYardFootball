@@ -95,9 +95,9 @@ public class ListSubYard extends AppCompatActivity {
 
 
         subYardAdapter = new SubYardAdapter(this,R.layout.layout_itemsubyard_time, yardArrayList,
-                            bookYardArrayList, optionYardArrayList, subYardsArrayList);
+                bookYardArrayList, optionYardArrayList, subYardsArrayList);
 
-                    // Set adapter cho listview
+        // Set adapter cho listview
         listviewSubYard.setAdapter(subYardAdapter);
 
         Query queryYard = databaseReferenceYard.orderByChild("id");
@@ -219,20 +219,20 @@ public class ListSubYard extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ListSubYard.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        txtdate.setText(day + "/" + (month + 1) + "/" + year);
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ListSubYard.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                txtdate.setText(day + "/" + (month + 1) + "/" + year);
 
-                    }
-                }, dayOfMonth, month, year);
+                            }
+                        }, dayOfMonth, month, year);
 
-            datePickerDialog.show();
+                datePickerDialog.show();
             }
         });
 

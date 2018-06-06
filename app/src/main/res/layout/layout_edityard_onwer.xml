@@ -107,6 +107,12 @@
                     android:text="Chọn giờ"
                     android:layout_marginLeft="21dp"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":00"
+                    android:textSize="17sp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="5dp"
@@ -128,6 +134,12 @@
                     android:layout_height="wrap_content"
                     android:text="Chọn giờ"
                     android:layout_marginLeft="9dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":00"
+                    android:textSize="17sp"
                     />
             </LinearLayout>
         </LinearLayout>
