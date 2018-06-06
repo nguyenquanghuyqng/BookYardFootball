@@ -24,7 +24,7 @@
             android:layout_marginStart="45dp"
             android:ems="10"
             android:hint="UserName (abc@gamil.com)"
-            android:inputType="textPersonName" />
+            android:inputType="textEmailAddress" />
     </RelativeLayout>
 
     <RelativeLayout
