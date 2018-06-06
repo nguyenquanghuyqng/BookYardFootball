@@ -163,7 +163,7 @@ public class ListAllYard extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-                Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"");
+                Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"/"+id+"/"+(position+1)+"");
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ListAllYard.this,
                     new DatePickerDialog.OnDateSetListener() {
