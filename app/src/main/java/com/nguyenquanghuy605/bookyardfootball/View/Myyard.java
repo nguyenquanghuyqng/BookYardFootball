@@ -26,28 +26,33 @@ public class Myyard extends AppCompatActivity {
         btnuser= (Button) findViewById(R.id.btnUser);
 
         nameyard.setText(optionyard.getInstance().nameYardItem);
+
         btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Myyard.this,edityard_onwer.class);
+                startActivity(intent);
             }
         });
         btndanhgia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1=new Intent(Myyard.this,MyEvaluate.class);
+                startActivity(intent1);
             }
         });
         btnsancon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent2=new Intent(Myyard.this,subyard_owner.class);
+                startActivity(intent2);
             }
         });
         btnuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent3=new Intent(Myyard.this,InformationYardOwner.class);
+                startActivity(intent3);
             }
         });
     }
