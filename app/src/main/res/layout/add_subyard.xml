@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center_vertical"
+    android:background="@drawable/beautifullbg2">
+    <TextView
+        android:id="@+id/tieude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm Sân Con"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textColor="#ff00"
+        android:layout_centerHorizontal="true"
+        />
+    <Spinner
+        android:id="@+id/sploai"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/tieude"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/array_name"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnadd"
+        android:text="Thêm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sploai"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>

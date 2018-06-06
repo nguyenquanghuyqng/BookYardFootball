@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     tools:context=".View.Myyard"
-    android:background="@drawable/greenbackground"
+    android:background="@drawable/beautifullbackground"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -64,22 +64,41 @@
         />
     <Button
         android:id="@+id/btnedit"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgsan"
         android:layout_centerHorizontal="true"
+        android:textColor="#ffff"
+        android:textSize="18sp"
+        android:background="@drawable/beautifullbutton"
         android:text="Xem và Sửa thông tin sân" />
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btndanhgia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnedit"
         android:layout_marginTop="30dp"
+        android:textColor="#ffff"
+        android:textSize="18sp"
+        android:background="@drawable/beautifullbutton"
         android:layout_centerHorizontal="true"
         android:text="Ý kiến Đánh giá và Phản hồi" />
 
      />
+    <Button
+        android:id="@+id/btnsancon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btndanhgia"
+        android:layout_marginTop="30dp"
+        android:textColor="#ffff"
+        android:textSize="18sp"
+        android:background="@drawable/beautifullbutton"
+        android:layout_centerHorizontal="true"
+        android:text="Danh Sách Đặt Sân" />
+
+    />
 </RelativeLayout>

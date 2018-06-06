@@ -29,4 +29,10 @@
     <string name="note_detail_note_detail_hint">Description</string>
     <string name="note_detail_add_note_hint">Your Note (Can Add Later)</string>
     <string name="note_detail_address_hint">Address</string>
+
+    <string-array name="array_name">
+        <item>Sân 5 người</item>
+        <item>Sân 7 người</item>
+
+    </string-array>
 </resources>

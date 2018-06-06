@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapterowner;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.optionyard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
@@ -187,6 +186,8 @@ public class listyard_owner extends AppCompatActivity {
                 optionyard.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
                 optionyard.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
                 optionyard.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
+                optionyard.getInstance().timestart = yardArrayList.get(position).getTimestart();
+                optionyard.getInstance().timeend = yardArrayList.get(position).getTimeend();
 //                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
 
 

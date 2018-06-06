@@ -47,13 +47,13 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     Button addAcconut;
     Button btnAdd;
     Button btnCannel;
-    Button btnDeleteAccount;
+    Button btnBack;
     long sizeList;
     String username , pass;
     long idUser;
 
     FirebaseDatabase firebaseDatabase;
-     DatabaseReference databaseReferenceAccount;
+    DatabaseReference databaseReferenceAccount;
     private  FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +73,13 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 callDialog();
             }
         });
-        /*btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int index = userArrayList.indexOf(btnDeleteAccount);
-                databaseReferenceAccount.child(String.valueOf(index));
-                databaseReferenceAccount.setValue(null);
+                firebaseAuth.signOut();
+
             }
-        });*/
-
-
+        });
     }
 
     @Override
@@ -95,7 +92,7 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     private void AnhXa(){
         lvUser = (ListView) findViewById(R.id.listviewAccount);
         addAcconut = (Button) findViewById(R.id.addAcconut);
-        btnDeleteAccount = (Button) findViewById(R.id.btnDeleteAccount);
+        btnBack=(Button) findViewById(R.id.btnBack);
     }
 
     private void Initialize() {
@@ -138,6 +135,7 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 Log.d("Click","Vao");
                 Container.getInstance().id=userArrayList.get(position).getId();
                 Container.getInstance().star =userArrayList.get(position).getRole();
+                Container.getInstance().accountid=position;
                 Log.d("Owner",String.valueOf(Container.getInstance().id));
                 Intent intent = new Intent(Account.this, InformationOwner.class);
 

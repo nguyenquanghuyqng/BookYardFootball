@@ -15,10 +15,11 @@ public class optionyard {
     public long idOwner;
     public String nameYardItem;
     public String nameOwnerItem;
-    public String numberYardItem;
     public String nameOptionYard;
     public String date;
     public int checkDate;
+     public long timestart ;
+    public long timeend ;
     public ArrayList<BookYard> bookYardList = new ArrayList<BookYard>();
     private static Container instance =null;
     private void Container() {
