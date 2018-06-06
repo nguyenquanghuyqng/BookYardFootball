@@ -69,6 +69,11 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     public static int CHECK_PROVIDER_SIGNIN=0;
     private DatabaseReference databaseReferenceAccount;
     private DatabaseReference databaseReferenceOwner;
+    private DatabaseReference databaseReferenceYard;
+    long idown;
+    long yardid;
+     ArrayList<Yards> yardArrayList=new ArrayList<Yards>();
+     ArrayList<Owners> ownerArrayList=new ArrayList<Owners>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,6 +237,8 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                     {
                         if(role ==2)
                         {
+                            databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
+
                             databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -250,7 +257,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                                         if ( idAccount==id) {
                                             Container.getInstance().idOwner=yard_owner.getId();
                                             optionyard.getInstance().idOwner=yard_owner.getId();
-                                            Log.d("idOwner123", String.valueOf(Container.getInstance().idOwner));
+                                            idown=yard_owner.getId();
+                                            optionyard.getInstance().nameOwnerItem =yard_owner.getName();
+                                            optionyard.getInstance().numberYardItem =yard_owner.getNumberyard();
                                         }
                                     }
                                 }
@@ -260,7 +269,40 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                                 }
                             });
-                            Intent intent= new Intent(Login.this , Myyard.class);
+                            databaseReferenceYard.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+
+                                    for(DataSnapshot data : nodeChild){
+
+                                        // Lấy dữ liệu từ firebase xuống đưa vào model
+                                        Yards yard = data.getValue(Yards.class);
+
+                                        Log.d("Yard",yard.toString());
+                                        Log.d("DataYard", data.getValue().toString());
+                                        // Add vào List
+                                        yardArrayList.add(yard);
+                                        if(yard.getOwner()==idown)
+                                        {
+                                            optionyard.getInstance().idyard = yard.getId();
+                                            optionyard.getInstance().nameYardItem = yard.getNameyard();
+                                            optionyard.getInstance().timestart = yard.getTimestart();
+                                            optionyard.getInstance().timeend = yard.getTimeend();
+                                        }
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.d("Error Yard",databaseError.getMessage());
+                                }
+                            });
+                            Intent intent = new Intent(Login.this, Myyard.class);
+//                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
+
+
                             startActivity(intent);
                         }
                         else
