@@ -28,6 +28,7 @@
                 android:background="@drawable/edit_avatar_admin"/>
 
             <TextView
+                android:id="@+id/txtyardName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

@@ -40,6 +40,7 @@ import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import com.nguyenquanghuy605.bookyardfootball.View.ListSubYard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,36 +51,31 @@ public class SubYardAdapter extends BaseAdapter{
     private Context context;
     private int layout;
     private List<Yards> yardList;
-    private List<Owners> ownerList;
     private List<OptionYard> optionYardList;
     private List<SubYards> subYardsList;
     private List<BookYard> bookYardList;
-    private CheckBox ck0001;
 
+    // Khai cáo DatabaseReference để lấy giá theo  giờ và ngày
     private DatabaseReference databaseReferencePriceTime = FirebaseDatabase.getInstance()
             .getReference().child("Prices");
-    //
-    private String[] from;
-    private int[] to;
-    private TextView[] showTv = new TextView[Integer.parseInt(Container.getInstance().numberYardItem)];
-    //
 
-    int click = 1;
-    int position = 0;
-    int temp = 25;
-    long total=0;
-    int idcheck;
-    int idBookYard=0;
+    private DatabaseReference databaseReferenceYard = FirebaseDatabase.getInstance()
+            .getReference().child("Yards");
+
+    private DatabaseReference databaseReferenceBookYard = FirebaseDatabase.getInstance()
+            .getReference().child("BookYard");;
+
+    long total=0;       // Tổng tiền khi đặt sân
+    int idcheck;        // Vị trí của khi  click vào checkBox
+    int idBookYard=0;   // Id của BookYard
+    int checked=0;      // Biến lưu khi đã book thành công
+    int timeopen;       // Biến lưu giờ mở cửa
     // Create a storage reference from our app
     FirebaseStorage storage1 = FirebaseStorage.getInstance();
     StorageReference storageRef = storage1.getReference();
-    // Biến image
-    private StorageReference imageRef;
-
     private String[] timeCheckBox = {};
 
-    private DatabaseReference databaseReferenceBookYard ;
-
+    // Mảng  id của 24 checkbox
     private int[] idCheckBox = {
             R.id.time00, R.id.time01, R.id.time02, R.id.time03,
             R.id.time04, R.id.time05, R.id.time06, R.id.time07,
@@ -99,12 +95,12 @@ public class SubYardAdapter extends BaseAdapter{
             false,false,false,false,false,false,
     };
 
-    public SubYardAdapter(Context context, int layout, List<Yards> yardList, List<Owners> ownerList,
+    public SubYardAdapter(Context context, int layout, List<Yards> yardList, List<BookYard> bookYardList,
                           List<OptionYard> optionYardList, List<SubYards> subYardsList){
         this.context = context;
         this.layout = layout;
         this.yardList = yardList;
-        this.ownerList = ownerList;
+        this.bookYardList = bookYardList;
         this.optionYardList = optionYardList;
         this.subYardsList = subYardsList;
     }
@@ -123,7 +119,6 @@ public class SubYardAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
-
     // Có bao nhiêu biến ánh xạ thì khai báo trong class này
     // Sử dụng viewHolder để tối ưu listview
     private class ViewHolder{
@@ -131,10 +126,66 @@ public class SubYardAdapter extends BaseAdapter{
         Button btnBookYard;
     }
 
+    // Lấy dữ liệu truyền vào model Yard và BookYard
+    public void GetData(){
+        Query queryYard = databaseReferenceYard.orderByChild("id").equalTo(Container.getInstance().idyard);
+        queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        Yards yards = data.getValue(Yards.class);
+                        Log.d("ShowData",yards.getTimestart()+"/"+yards.getTimeend()+"");
+                        yardList.add(yards);
+                    }
+                }
+                else{
+                    Log.d("No data","Didn't get data");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error PriceTime",databaseError.getMessage());
+            }
+        });
+
+        // Lấy dữ liệu đổ vào BookYardListf
+        Log.d("DataBook",Container.getInstance().date);
+        Query queryBookYard = databaseReferenceBookYard.orderByChild("date").equalTo(Container.getInstance().date);
+        queryBookYard.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    Log.d("Accc",dataSnapshot.toString());
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        BookYard bookYard = data.getValue(BookYard.class);
+                        bookYardList.add(bookYard);
+                    }
+                }
+                else{
+                    Log.d("Dont have Data","ahhh");
+//                    for(DataSnapshot data : dataSnapshot.getChildren()){
+//                        BookYard bookYard = data.getValue(BookYard.class);
+//                        bookYardList.add(bookYard);
+//                    }
+                    bookYardList.isEmpty();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @Override
-    public View getView(final int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, ViewGroup viewGroup) {
+
+        GetData();
+
         idBookYard = subYardsList.size();
-        int click =1;
         final ViewHolder holder;
         // Thường thì lần đầu khởi tạo chạy thì biến view sẽ bằng null
         if(view == null){
@@ -149,13 +200,10 @@ public class SubYardAdapter extends BaseAdapter{
             holder.txtTotalMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
             holder.btnBookYard = (Button) view.findViewById(R.id.btnBookYard);
 
-
-            Log.d("Isai",position+"");
-            Log.d("keysub",Container.getInstance().keysub+"");
-
+            // Set Sự kiện click cho button Đặt sân
             holder.btnBookYard.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
+                public void onClick(View v) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
                     // Setting Dialog Title
@@ -167,36 +215,23 @@ public class SubYardAdapter extends BaseAdapter{
                     // Setting Positive "Yes" Button
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int which) {
-                            Log.d("Hahahahaha","Error");
-                            // Get data checkbox
                             try{
-                                Log.d("BookYard","Hihi");
-
                                 // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
-                                // Done date and Account 1, id,
-
                                 BookYard bookYard = new BookYard(Container.getInstance().accountid,Container.getInstance().date,
                                         idBookYard,total,Container.getInstance().status,
                                         Container.getInstance().idsubyard, idcheck,
                                         idcheck+1);
-
                                 // Thực hiện Insert lên firebase
-                                databaseReferenceBookYard = FirebaseDatabase.getInstance().getReference().child("BookYard");
-                                databaseReferenceBookYard.child(String.valueOf(subYardsList.size()+1)).setValue(bookYard);
+                                databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
 
-                                Drawable im = context.getResources().getDrawable(R.drawable.dadat);
-                                im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
-
-                                // Set hình ảnh cho checkbox
-                                CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[idcheck]);
-                                checkBox.setCompoundDrawables(im, null, null, null);
+                                // Khi insert thành công thì biến checked = 1;
+                                checked =1;
                             }
                             catch (Exception e){
                                 Log.d("ErrorBookYard",e.getMessage());
                             }
                         }
                     });
-
                     // Setting Negative "NO" Button
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -205,48 +240,96 @@ public class SubYardAdapter extends BaseAdapter{
                         }
                     });
 
-                    // Showing Alert Message
                     alertDialog.show();
                 }
             });
-
         }
         else{
             // Lấy phần ánh xạ lại thôi
             holder = (ViewHolder) view.getTag();
         }
 
+        // Set thời gian bắt đầu và thời gian kết thúc và set màu cho các thời gian đó
+        try{
+            for (int c = 0; c < idCheckBox.length; c++) {
+                timeopen=c;
+
+                for(Yards yards : yardList){
+                    Log.d("WhatTheHell",timeopen+"/"+yards.getTimestart()+"/"+yards.getTimeend());
+
+                    // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
+                    if(timeopen <  yards.getTimestart() || timeopen > yards.getTimeend()){
+                        checked = 1;
+                        Drawable im = context.getResources().getDrawable(R.drawable.dadat);
+                        im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                        // Set hình ảnh cho checkbox
+                        CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
+                        checkBox.setCompoundDrawables(im, null, null, null);
+                        checkBox.setEnabled(false);     // Set checkbox ko được click vào
+                    }
+                    else {
+                        checked = 0;
+                        Drawable im = context.getResources().getDrawable(R.drawable.normal);
+                        im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                        // Set hình ảnh cho checkbox
+                        CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
+                        checkBox.setCompoundDrawables(im, null, null, null);
+                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
+                    }
+                }
+
+                if(bookYardList != null && !bookYardList.isEmpty()){
+                    for (BookYard bookYard : bookYardList){
+                        Log.d("CheckTime",bookYard.getTimestart()+"/"+timeopen+"/"+bookYard.getTimeend()+"");
+                        if(timeopen ==  bookYard.getTimestart() || timeopen == bookYard.getTimeend()){
+                            Drawable im = context.getResources().getDrawable(R.drawable.dadat);
+                            im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+
+                            // Set hình ảnh cho checkbox
+                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
+                            checkBox.setCompoundDrawables(im, null, null, null);
+                            checkBox.setEnabled(false);     // Set checkbox ko được click vào
+                        }
+                        else{
+                            Log.d("CheckColor","Huhuh");
+                            //                        Drawable im = context.getResources().getDrawable(R.drawable.normal);
+                            //                        im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
+                            //
+                            //                        // Set hình ảnh cho checkbox
+                            //                        CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
+                            //                        checkBox.setCompoundDrawables(im, null, null, null);
+                        }
+                    }
+                }
+                else{
+                    Log.d("AHihi","");
+                }
+            }
+        }catch (Exception e){
+            Log.d("CheckColorError",e.getMessage());
+        }
+
         // Xử lý từng item
         try {
-
             final SubYards subYards = subYardsList.get(position);
             final OptionYard optionYard = optionYardList.get(position);
-//            final BookYard bookYard = bookYardList.get(position);
-            try {
-                holder.txtyardKind.getTag(position);
-                holder.txtyardKind.setText(optionYard.getName());
-            }
-            catch (Exception e){
-                Log.d("ErrorSetName",e.getMessage());
-            }
+            holder.txtyardKind.getTag(position);
+            holder.txtyardKind.setText(optionYard.getName());
+            holder.txtnumYard.getTag(position);
+            holder.txtnumYard.setText("Sân"+subYards.getId());
 
-
+            // Bắt sự kiện click khi người dùng click vào checkbox
             for (int a = 0; a < idCheckBox.length; a++) {
                 view.findViewById(idCheckBox[a]).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "Postion:" + subYards.getId(), Toast.LENGTH_LONG).show();
-                        Log.d("PostionView",  subYards.getId()+ "");
-                        Log.d("HelloHuy", "Hahaha");
-
                         try{
-
-                        int id = v.getId();
-
                         for (int i = 0; i < idCheckBox.length; i++) {
-                            if (id == idCheckBox[i]) {
+                            if (v.getId() == idCheckBox[i]) {
                                 try {
-                                    Log.d("ChuaXacNhan", "Hahaha");
+                                    // Kiểm tra checkbox
                                     if (check == false && clickCheck[i] == false) {
                                         clickCheck[i] = true;
                                     } else if (check == true && clickCheck[i] == false) {
@@ -256,53 +339,43 @@ public class SubYardAdapter extends BaseAdapter{
                                     } else {
                                         clickCheck[i] = false;
                                     }
-
+                                    // Kiểm tra khi clickCheck = true thì tích xanh  cái checkBox đó
                                     if (clickCheck[i]) {
                                         try {
                                             idBookYard = idBookYard +1;
                                             idcheck =i;
-                                            Drawable im = context.getResources().getDrawable(R.drawable.chuaxacnhan);
+                                            // Thực hiện set Image khi click vào checkbox
+                                            Drawable im = context.getResources().getDrawable(R.drawable.duocchon);
                                             im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
 
                                             // Set hình ảnh cho checkbox
                                             CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[i]);
                                             checkBox.setCompoundDrawables(im, null, null, null);
+                                            // Khi đã check vào màu xanh thì check =true
                                             check = true;
-
+                                            // Truy vấn lấy giá theo giờ và so sánh với giờ đã được checkbox
                                             try{
-
-
                                                 Query queryPriceTime = databaseReferencePriceTime.orderByChild("yard").equalTo(Container.getInstance().idyard);
                                                 queryPriceTime.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                                                         if(dataSnapshot.exists()){
-                                                            Log.d("DataSnapot",dataSnapshot.getValue().toString());
-
-
                                                             for (DataSnapshot data : dataSnapshot.getChildren()) {
-
-                                                            PriceTime priceTime = data.getValue(PriceTime.class);
-
-                                                            Log.d("PriceTime",data.getValue().toString());
-
-                                                            Log.d("Huyhuy",priceTime.getTimestart()+"/"+priceTime.getTimeend()+"/"+idcheck+"/"+"time");
-
-                                                            if(idcheck >= priceTime.getTimestart()&& idcheck < priceTime.getTimeend()){
-                                                                Log.d("PriceGia",priceTime.getPrice()+"dong");
-                                                                total = total + priceTime.getPrice();
-                                                                holder.txtTotalMoney.setText(total+"đồng");
+                                                                PriceTime priceTime = data.getValue(PriceTime.class);
+                                                                // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
+                                                                if(idcheck >= priceTime.getTimestart()&& idcheck < priceTime.getTimeend()){
+                                                                    total = total + priceTime.getPrice();
+                                                                    holder.txtTotalMoney.setText(total+"đồng");
+                                                                }
+                                                                else {
+                                                                    Log.d("NoPrice","");
+                                                                }
                                                             }
-                                                            else {
-                                                                Log.d("NoPrice","");
-                                                            }
-
                                                         }
+                                                        else{
+                                                            Log.d("No data","Didn't get data");
                                                         }
-
                                                     }
-
                                                     @Override
                                                     public void onCancelled(DatabaseError databaseError) {
                                                         Log.d("Error PriceTime",databaseError.getMessage());
@@ -314,7 +387,7 @@ public class SubYardAdapter extends BaseAdapter{
                                             }
 
                                         } catch (Exception e) {
-                                            Log.d("ErrorSetText", e.getMessage());
+                                            Log.d("Error", e.getMessage());
                                         }
                                     } else {
                                         // Lấy hình ảnh từ drawable
@@ -324,15 +397,39 @@ public class SubYardAdapter extends BaseAdapter{
                                         // Set hình ảnh cho checkbox
                                         CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[i]);
                                         checkBox.setCompoundDrawables(im, null, null, null);
+                                        // Trường hợp bỏ chọn thì sẽ check = false;
+                                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
                                         check = false;
-                                        Container.getInstance().totalMoney = 0;
-                                        try {
-                                            total = total + i;
-                                            Log.d("TotalMoney", total + "");
-                                            holder.txtTotalMoney.setText("Hao");
-                                            //                                txtMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
-                                            //                                txtMoney.setText("");
-                                        } catch (Exception e) {
+                                        try{
+                                            Query queryPriceTime = databaseReferencePriceTime.orderByChild("yard").equalTo(Container.getInstance().idyard);
+                                            queryPriceTime.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    if(dataSnapshot.exists()){
+                                                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                            PriceTime priceTime = data.getValue(PriceTime.class);
+                                                            // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
+                                                            if(idcheck >= priceTime.getTimestart()&& idcheck < priceTime.getTimeend()){
+                                                                // Set lại giá tiền sân
+                                                                total = total - priceTime.getPrice();
+                                                                holder.txtTotalMoney.setText(total+"đồng");
+                                                            }
+                                                            else {
+                                                                Log.d("NoPrice","");
+                                                            }
+                                                        }
+                                                    }
+                                                    else{
+                                                        Log.d("No data","Didn't get data");
+                                                    }
+                                                }
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    Log.d("Error PriceTime",databaseError.getMessage());
+                                                }
+                                            });
+                                        }
+                                        catch (Exception e) {
                                             Log.d("ErrorSetText", e.getMessage());
                                         }
                                     }

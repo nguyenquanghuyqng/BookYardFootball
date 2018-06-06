@@ -43,14 +43,12 @@ public class ListSubYard extends AppCompatActivity {
     Button btnBack;
     ImageView date;
     ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
-    ArrayList<Owners> ownersArrayList = new ArrayList<Owners>();
     ArrayList<SubYards> subYardsArrayList = new ArrayList<SubYards>();
     ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
     ArrayList<BookYard> bookYardArrayList = new ArrayList<BookYard>();
     SubYardAdapter subYardAdapter;
 
     private DatabaseReference databaseReferenceYard;
-    private DatabaseReference databaseReferenceOwner;
     private DatabaseReference databaseReferenceSubYard;
     private DatabaseReference databaseReferenceOptionYard;
     private DatabaseReference databaseReferenceBookYard;
@@ -91,29 +89,13 @@ public class ListSubYard extends AppCompatActivity {
 
         // Gọi tới node cha
         databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
-        databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
         databaseReferenceSubYard = FirebaseDatabase.getInstance().getReference().child("SubYards");
         databaseReferenceOptionYard = FirebaseDatabase.getInstance().getReference().child("OptionYard");
         databaseReferenceBookYard = FirebaseDatabase.getInstance().getReference().child("BookYard");
 
-//        try{
-//            for (BookYard bookYard : bookYardArrayList){
-//                if(bookYard.getDate().equals(getdate)){
-//                    subYardAdapter = new SubYardAdapter(this,R.layout.layout_itemsubyard_time, yardArrayList,
-//                            ownersArrayList, optionYardArrayList, subYardsArrayList);
-//
-//                    // Set adapter cho listview
-//                    listviewSubYard.setAdapter(subYardAdapter);
-//                }
-//            }
-//        }
-//        catch (Exception e){
-//            Log.d("Errror" ,"Hahaha");
-//        }
-
 
         subYardAdapter = new SubYardAdapter(this,R.layout.layout_itemsubyard_time, yardArrayList,
-                            ownersArrayList, optionYardArrayList, subYardsArrayList);
+                            bookYardArrayList, optionYardArrayList, subYardsArrayList);
 
                     // Set adapter cho listview
         listviewSubYard.setAdapter(subYardAdapter);
@@ -146,67 +128,11 @@ public class ListSubYard extends AppCompatActivity {
             Log.d("Error Query",e.getMessage());
         }
 
-        Query queryBookYard = databaseReferenceBookYard.orderByChild("id");
-        queryBookYard.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        BookYard bookYard = data.getValue(BookYard.class);
 
-                        Log.d("DataBookYard",data.getValue().toString());
-
-                        bookYardArrayList.add(bookYard);
-
-                        if(getdate.equals(bookYard.getDate())){
-                            Container.getInstance().checkDate = 1;
-                            Container.getInstance().bookYardList.add(bookYard);
-                            Log.d("DateBook",bookYard.getDate());
-                        }
-                        subYardAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("Error Get data Yard",databaseError.getMessage());
-            }
-        });
-
-        for (BookYard bookYard : bookYardArrayList){
-            Log.d("DateBook",bookYard.getDate());
-            if(bookYard.getDate().equals(getdate)){
-
-            }
-        }
-
-        Query queryOwner = databaseReferenceOwner.orderByChild("id");
-        queryOwner.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        Owners owners = data.getValue(Owners.class);
-
-                        Log.d("DataOwner",data.getValue().toString());
-
-                        ownersArrayList.add(owners);
-
-                        subYardAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("Error Get data Yard",databaseError.getMessage());
-            }
-        });
 
         Log.d("Container",Container.getInstance().idyard+"");
         //id
-        Query querySubYard = databaseReferenceSubYard.orderByChild("id");
+        Query querySubYard = databaseReferenceSubYard.orderByChild("yard").equalTo(Container.getInstance().idyard);
         querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -218,6 +144,40 @@ public class ListSubYard extends AppCompatActivity {
                         Log.d("DataSubYard",data.getValue().toString());
                         if(data.child("yard").getValue().equals(Container.getInstance().idyard)){
                             subYardsArrayList.add(subYards);
+                        }
+
+                        subYardAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error Get data Yard",databaseError.getMessage());
+            }
+        });
+
+        Query queryBookYard = databaseReferenceBookYard.orderByChild("date").equalTo(Container.getInstance().date);
+        queryBookYard.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        BookYard bookYard = data.getValue(BookYard.class);
+
+                        if(getdate.equals(bookYard.getDate())){
+                            Container.getInstance().checkDate = 1;
+                            Container.getInstance().bookYardList.add(bookYard);
+                            Log.d("DateBook",bookYard.getDate());
+                        }
+
+                        for(SubYards subYards : subYardsArrayList){
+                            if(bookYard.getSubyard() == subYards.getId()){
+                                bookYardArrayList.add(bookYard);
+                            }
+                            else{
+                                Log.d("Hihih","cu");
+                            }
                         }
 
                         subYardAdapter.notifyDataSetChanged();
@@ -292,7 +252,7 @@ public class ListSubYard extends AppCompatActivity {
         listviewSubYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Container.getInstance().keysub = (int) id;
+                Container.getInstance().keysub = (int) id;
             }
         });
 
