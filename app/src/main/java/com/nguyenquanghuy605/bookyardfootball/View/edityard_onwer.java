@@ -115,6 +115,7 @@ public class edityard_onwer extends AppCompatActivity {
                         // Add vào List
                         optionYardArrayList.add(yard);
                         loaisanlist.add(yard.getName().toString());
+
                         arrayAdapter.notifyDataSetChanged();
                     }
 
@@ -189,12 +190,12 @@ public class edityard_onwer extends AppCompatActivity {
                         Yards yards = data.getValue(Yards.class);
 
                         if(data.child("id").getValue().equals(optionyard.getInstance().idyard)){
-
+                            timestart.setText(""+yards.getTimestart());
+                            timeend.setText(""+yards.getTimeend());
                             img=yards.getImage();
                             star=yards.getStar();
 
                         }
-                        editpriceAdapter.notifyDataSetChanged();
                     }
 
                 }
@@ -213,8 +214,8 @@ public class edityard_onwer extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-                timestart.setText(""+optionyard.getInstance().timestart);
-                timeend.setText(""+optionyard.getInstance().timeend);
+//                timestart.setText(""+optionyard.getInstance().timestart);
+//                timeend.setText(""+optionyard.getInstance().timeend);
                 san5.setText(""+optionYardArrayList.get(0).getAddprice());
                 san7.setText(""+optionYardArrayList.get(1).getAddprice());
                // Toast.makeText(edityard_onwer.this, ""+priceTimeslist.get(1).getTimestart(), Toast.LENGTH_SHORT).show();
