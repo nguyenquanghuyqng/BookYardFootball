@@ -1,6 +1,7 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -37,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
@@ -46,6 +49,9 @@ import com.nguyenquanghuy605.bookyardfootball.R;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
+
+import java.security.acl.Owner;
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateListener,GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
 
@@ -57,15 +63,18 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     GoogleApiClient apiClient;
     private  String username,pass;
     private long role;
+    private long id;
     public static  int CODE_SIGNIN_GOOGLE =99;
     public static int CHECK_PROVIDER_SIGNIN=0;
     private DatabaseReference databaseReferenceAccount;
+    private DatabaseReference databaseReferenceOwner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login);
 
         databaseReferenceAccount = FirebaseDatabase.getInstance().getReference().child("Accounts");
+        databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseAuth.signOut();
@@ -138,6 +147,22 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(this);
+        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+            Log.d("personName" ,"personName");
+            Log.d("personGivenName" ,"personGivenName");
+            Log.d("personFamilyName" ,"personFamilyName");
+            Log.d("personEmail" ,"personEmail");
+            Log.d("personId" ,"personId");
+            Log.d("personPhoto" ,"personPhoto");
+        }*/
     }
     @Override
     public void onStop() {
@@ -166,6 +191,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                             String user= account.getUsername();
                             if( user.equals(username)) {
                                 role = account.getRole();
+                                id=account.getId();
                             }
                         }
                     }else{
@@ -180,6 +206,33 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                     {
                         if(role ==2)
                         {
+                            databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+
+                                    for (DataSnapshot data : nodeChild) {
+
+                                        // Lấy dữ liệu từ firebase xuống đưa vào model
+                                        Owners yard_owner = data.getValue(Owners.class);
+
+                                        Log.d("Yard", yard_owner.toString());
+                                        Log.d("DataYard", data.getValue().toString());
+                                                                                     // Add vào List
+                                        long idAccount = yard_owner.getAccount();
+                                        Log.d("idAccount", String.valueOf(yard_owner.getAccount()));
+                                        if ( idAccount==id) {
+                                            Container.getInstance().idOwner=yard_owner.getId();
+                                            Log.d("idOwner123", String.valueOf(Container.getInstance().idOwner));
+                                            }
+                                            }
+                                            }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                             Intent intent= new Intent(Login.this , ListAllYard.class);
                             startActivity(intent);
                         }
