@@ -45,7 +45,7 @@ public class edityard_onwer extends AppCompatActivity {
     TextView timestart,timeend,namyard;
     RecyclerView.Adapter editpriceAdapter;
     String img;
-    long star;
+    long star,maloaisan;
     private RecyclerView.LayoutManager mLayoutManager;
     RecyclerView giakhunggio;
    final private ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
@@ -230,11 +230,15 @@ public class edityard_onwer extends AppCompatActivity {
 
             }
         });
+        //hehe
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                maloaisan=arrayAdapter.getPosition(spdsloaisan.getSelectedItem().toString());
                 Savedulieu();
-                Toast.makeText(edityard_onwer.this, "Cập nhật thông tin sân thành công", Toast.LENGTH_LONG).show();
+
+                Toast.makeText(edityard_onwer.this, "Cập nhật thông tin thành công", Toast.LENGTH_LONG).show();
             }
         });
         final int i=optionYardArrayList.size();
@@ -243,7 +247,7 @@ public class edityard_onwer extends AppCompatActivity {
             public void onClick(View v) {
 
                 ShowDialog();
-               // Toast.makeText(edityard_onwer.this,"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(edityard_onwer.this,""+arrayAdapter.getPosition(""+spdsloaisan.getSelectedItem().toString()), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -300,7 +304,7 @@ public class edityard_onwer extends AppCompatActivity {
                 int x= Integer.parseInt(simpleDateFormat.format(calendar.getTime()).toString());
                 int y= Integer.parseInt(timeend.getText().toString());
                 if(x>=y){
-                    Toast.makeText(edityard_onwer.this, "Giờ đóng cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(edityard_onwer.this, "Giờ mở cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     timestart.setText(simpleDateFormat.format(calendar.getTime()));
@@ -340,7 +344,19 @@ public class edityard_onwer extends AppCompatActivity {
         Yards yards=new Yards(optionyard.getInstance().idyard,img,optionyard.getInstance().nameYardItem,
                 optionyard.getInstance().idOwner,optionyard.getInstance().comment,
                 optionyard.getInstance().comment,st,ed);
-        databaseReferenceYards.child(String.valueOf(optionyard.getInstance().idyard+1)).setValue(yards);
+        databaseReferenceYards.child(String.valueOf(optionyard.getInstance().idyard-1)).setValue(yards);
+        long idsubyard= Long.parseLong(spdssan.getSelectedItem().toString());
+        SubYards subyards=new SubYards(idsubyard,maloaisan+1,optionyard.getInstance().idyard);
+        databaseReferenceSubYard.child(String.valueOf(optionyard.getInstance().idyard-1)).setValue(subyards);
+
+//        long san5so= Long.parseLong(san5.getText().toString());
+//        OptionYard preoptionyard=new OptionYard(1,san5so,"Sân 5 người");
+//        databaseReferenceOption.child(String.valueOf(0)).setValue(preoptionyard);
+        long san7so= Long.parseLong(san7.getText().toString());
+        OptionYard pre2optionyard=new OptionYard(2,san7so,"Sân 7 người");
+        databaseReferenceOption.child(String.valueOf(1)).setValue(pre2optionyard);
+
+
     }
 
 

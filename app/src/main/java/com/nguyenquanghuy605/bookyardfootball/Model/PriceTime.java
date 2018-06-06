@@ -6,16 +6,17 @@ public class PriceTime {
     private long price;
     private long timestart;
     private long timeend;
-    private long idyard;
+    private long yard;
 
     public PriceTime(){}
 
-    public PriceTime(long id, long price, long timestart, long timeend, long idyard) {
+
+    public PriceTime(long id, long price, long timestart, long timeend, long yard) {
         this.id = id;
         this.price = price;
         this.timestart = timestart;
         this.timeend = timeend;
-        this.idyard = idyard;
+        this.yard = yard;
     }
 
     public long getId() {
@@ -50,11 +51,11 @@ public class PriceTime {
         this.timeend = timeend;
     }
 
-    public long getIdyard() {
-        return idyard;
+    public long getYard() {
+        return yard;
     }
 
-    public void setIdyard(long idyard) {
-        this.idyard = idyard;
+    public void setYard(long yard) {
+        this.yard = yard;
     }
 }
