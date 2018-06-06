@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="400dp"
+    android:layout_height="560dp"
     android:orientation="vertical"
-    android:weightSum="7"
     >
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +32,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="84dp"
         android:layout_weight="1">
 
         <TextView
@@ -56,10 +58,15 @@
             android:hint="Name Yard"
             android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="165dp"
+        android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,9 +89,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,13 +112,18 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="54dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Phone Number" />
+            android:hint="Phone Number"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="158dp"
+        android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,13 +141,17 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="54dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Id Card" />
+            android:hint="Id Card"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="71dp"
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -151,39 +170,42 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="54dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Number of Yard" />
+            android:hint="Number of Yard"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="1"
         android:gravity="center">
+
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="77dp"
             android:layout_marginBottom="15dp"
+            android:layout_marginStart="77dp"
             android:gravity="left"
             android:text="   ADD"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/btnCannel"
-            android:layout_width="100dp"
+            android:layout_width="119dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="85dp"
             android:layout_marginBottom="15dp"
+            android:layout_marginEnd="66dp"
             android:gravity="right"
             android:text="CANNEL"
             android:textSize="20dp" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -214,7 +214,10 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                             if( user.equals(username) || user.equals(userEmail)) {
                                 role = account.getRole();
                                 id=account.getId();
+                                Container.getInstance().star=role;
+                                Log.d("role1234",String.valueOf(role));
                                 Container.getInstance().id=id;
+                                Log.d("idAccount1234",String.valueOf(id));
                             }
                         }
                     }else{
@@ -257,7 +260,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                                 }
                             });
-                            Intent intent= new Intent(Login.this , ListAllYard.class);
+                            Intent intent= new Intent(Login.this , Myyard.class);
                             startActivity(intent);
                         }
                         else

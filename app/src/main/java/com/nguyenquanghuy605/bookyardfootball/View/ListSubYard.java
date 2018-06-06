@@ -128,9 +128,6 @@ public class ListSubYard extends AppCompatActivity {
             Log.d("Error Query",e.getMessage());
         }
 
-
-
-        Log.d("Container",Container.getInstance().idyard+"");
         //id
         Query querySubYard = databaseReferenceSubYard.orderByChild("yard").equalTo(Container.getInstance().idyard);
         querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
