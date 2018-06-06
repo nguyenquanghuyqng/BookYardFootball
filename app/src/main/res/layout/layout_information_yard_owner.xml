@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="240dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="211dp"
             android:layout_alignParentStart="true"
@@ -22,25 +22,38 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/avatar"
-                android:background="@drawable/edit_avatar_admin"/>
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edit_avatar_admin"
+                android:src="@drawable/avatar" />
 
             <TextView
                 android:id="@+id/txtyardName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="76dp"
                 android:text="Sân Thiếu Nhi"
                 android:textColor="#fff"
                 android:textSize="21sp"
                 android:textStyle="bold" />
-        </LinearLayout>
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="22dp"
+                android:background="@drawable/ic_delete_account" />
+        </RelativeLayout>
 
         <android.support.v7.widget.CardView
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="87dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
