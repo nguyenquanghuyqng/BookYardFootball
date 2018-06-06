@@ -95,7 +95,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.MyEvaluate"></activity>
-        <activity android:name=".View.InformationOwner"></activity>
+        <activity android:name=".View.InformationOwner">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -63,9 +63,12 @@ public class InformationOwner extends AppCompatActivity  {
 
         //role = Container.getInstance().star;
         //idAccount = Container.getInstance().id;
-        nodeAccount=Container.getInstance().accountid;
-        role=Container.getInstance().star;
-        idAccount=Container.getInstance().id;
+        //nodeAccount=Container.getInstance().accountid;
+        //role=Container.getInstance().star;
+        //idAccount=Container.getInstance().id;
+        nodeAccount=0;
+        role=1;
+        idAccount=3;
 
         Log.d("role12345",String.valueOf(role));
         Log.d("idAccount12345",String.valueOf(idAccount));
