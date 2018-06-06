@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 
 import java.util.Calendar;
 import java.util.Collections;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,11 +36,14 @@ import java.util.List;
 
 public class ListAllYard extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
+
     ListView lvYard;
     ArrayList<Yards> yardArrayList = new ArrayList<Yards>();
     YardAdapter yardAdapter;
     ArrayList<Owners> ownerArrayList = new ArrayList<Owners>();
     ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
+    Button btnBack;
 
     Calendar calendar;
 
@@ -53,6 +58,8 @@ public class ListAllYard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_listview_yard);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         AnhXa();
 
         Initialize();
@@ -60,10 +67,20 @@ public class ListAllYard extends AppCompatActivity {
     }
     private void AnhXa(){
         lvYard = (ListView) findViewById(R.id.listviewYard);
+        btnBack =(Button) findViewById(R.id.btnBack);
     }
 
     // Phương thức xử lý
     private void Initialize() {
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                Intent intent=new Intent(ListAllYard.this,Login.class);
+                startActivity(intent);
+            }
+        });
 
         databaseReferenceYard = FirebaseDatabase.getInstance().getReference().child("Yards");
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");

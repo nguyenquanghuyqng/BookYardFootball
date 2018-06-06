@@ -180,7 +180,7 @@ public class SubYardAdapter extends BaseAdapter{
                         public void onClick(DialogInterface dialog,int which) {
                             try{
                                 // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
-                                BookYard bookYard = new BookYard(Container.getInstance().accountid,Container.getInstance().date,
+                                BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
                                         idBookYard,total,Container.getInstance().status,
                                         Container.getInstance().idsubyard, idcheck,
                                         idcheck+1);

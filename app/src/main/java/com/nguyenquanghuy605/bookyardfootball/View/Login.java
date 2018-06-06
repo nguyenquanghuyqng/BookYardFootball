@@ -59,14 +59,16 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     EditText  id_username;
     EditText id_pass;
     Button btnLogin;
-    int sizeAccount;
+    int sizeAccount =0;
     String personName ;
     String user="";
+    String userEmail="";
 
     SignInButton btnSignInGoogle;
     FirebaseAuth firebaseAuth;
     GoogleApiClient apiClient;
-    private  String username,pass;
+    private  String username ="";
+    private String pass="";
     private long role;
     private long id;
     public static  int CODE_SIGNIN_GOOGLE =99;
@@ -82,12 +84,12 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login);
-
+        //firebaseAuth.signOut();
         databaseReferenceAccount = FirebaseDatabase.getInstance().getReference().child("Accounts");
         databaseReferenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners");
 
         firebaseAuth=FirebaseAuth.getInstance();
-//        firebaseAuth.signOut();
+
         AnhXa();
 
         btnSignInGoogle.setOnClickListener(this);
@@ -189,7 +191,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         if(firebaseUser!=null)
         {
             String userId = firebaseUser.getUid();
-            final String userEmail = firebaseUser.getEmail();
+            userEmail = firebaseUser.getEmail();
             Log.d("User dang nhap",userEmail);
             Log.d("Dang nhap 6","huy");
             Toast.makeText(this,"Dang nhap thanh cong ",Toast.LENGTH_SHORT).show();
@@ -217,8 +219,8 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                             }
                         }
                         sizeAccount=i-1;
-                        Accounts account = new Accounts(sizeAccount+1,personName,null,null,0,null);
-                        databaseReferenceAccount.child(String.valueOf(sizeAccount)).setValue(account);
+                        //Accounts account = new Accounts(sizeAccount+1,personName,null,null,0,null);
+                        //databaseReferenceAccount.child(String.valueOf(sizeAccount)).setValue(account);
                     }else{
                         Log.d("Not have data" ,"Haha");
                     }
