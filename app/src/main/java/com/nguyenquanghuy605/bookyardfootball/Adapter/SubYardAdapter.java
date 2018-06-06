@@ -173,7 +173,7 @@ public class SubYardAdapter extends BaseAdapter{
                     alertDialog.setTitle("Thông báo xác nhận đặt sân");
 
                     // Setting Dialog Message
-                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?" + total);
+                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
 
                     // Setting Positive "Yes" Button
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -218,8 +218,6 @@ public class SubYardAdapter extends BaseAdapter{
                 timeopen=c;
 
                 for(Yards yards : yardList){
-                    Log.d("WhatTheHell",timeopen+"/"+yards.getTimestart()+"/"+yards.getTimeend());
-
                     // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
                     if(timeopen <  yards.getTimestart() || timeopen > yards.getTimeend()){
                         checked = 1;
@@ -247,7 +245,7 @@ public class SubYardAdapter extends BaseAdapter{
                     for (BookYard bookYard : bookYardList){
                         Log.d("CheckTime",bookYard.getTimestart()+"/"+timeopen+"/"+bookYard.getTimeend()+"");
                         if(timeopen ==  bookYard.getTimestart() && timeopen < bookYard.getTimeend()
-                                && bookYard.getSubyard() == position+1){
+                                && bookYard.getSubyard() == position+1 && bookYard.getSubyard() == Container.getInstance().idsubyard){
                             Drawable im = context.getResources().getDrawable(R.drawable.dadat);
                             im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
 
