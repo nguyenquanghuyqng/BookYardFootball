@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapterowner;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.optionyard;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
@@ -40,6 +42,7 @@ public class listyard_owner extends AppCompatActivity {
 
     private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceOwner;
+
 
     //Button btnBookYard;
     @Override
@@ -174,6 +177,21 @@ public class listyard_owner extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d("Error Owner",databaseError.getMessage());
+            }
+        });
+        lvYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(listyard_owner.this, edityard_onwer.class);
+                optionyard.getInstance().idyard = position + 1;
+                optionyard.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
+                optionyard.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
+                optionyard.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
+//                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
+
+
+                Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
+                startActivity(intent);
             }
         });
 

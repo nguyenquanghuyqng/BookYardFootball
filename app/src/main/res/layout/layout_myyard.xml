@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:context=".View.Myyard"
+    android:background="@drawable/greenbackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/layoutSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fffffa">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back" />
+
+        <Button
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/btnUser"
+            android:layout_width="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="32dp"
+            android:background="@drawable/user"/>
+
+        <SearchView
+            android:id="@+id/txtSearch"
+            android:maxWidth="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@id/btnUser">
+        </SearchView>
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/namyard"
+        android:layout_below="@id/layoutSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sân Hiệp Phú"
+        android:textSize="25sp"
+        android:textColor="#d12620"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        />
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:id="@+id/imgsan"
+        android:layout_below="@id/namyard"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/sanbonghiepphu"
+
+        />
+    <Button
+        android:id="@+id/btnedit"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgsan"
+        android:layout_centerHorizontal="true"
+        android:text="Xem và Sửa thông tin sân" />
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnedit"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="Ý kiến Đánh giá và Phản hồi" />
+
+     />
+</RelativeLayout>

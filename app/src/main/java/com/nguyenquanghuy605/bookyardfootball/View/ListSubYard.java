@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -94,8 +95,6 @@ public class ListSubYard extends AppCompatActivity {
         databaseReferenceSubYard = FirebaseDatabase.getInstance().getReference().child("SubYards");
         databaseReferenceOptionYard = FirebaseDatabase.getInstance().getReference().child("OptionYard");
         databaseReferenceBookYard = FirebaseDatabase.getInstance().getReference().child("BookYard");
-
-
 
 //        try{
 //            for (BookYard bookYard : bookYardArrayList){
@@ -206,6 +205,7 @@ public class ListSubYard extends AppCompatActivity {
         });
 
         Log.d("Container",Container.getInstance().idyard+"");
+        //id
         Query querySubYard = databaseReferenceSubYard.orderByChild("id");
         querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -270,7 +270,7 @@ public class ListSubYard extends AppCompatActivity {
                         txtdate.setText(day + "/" + (month + 1) + "/" + year);
 
                     }
-                }, 0, 0, 0);
+                }, dayOfMonth, month, year);
 
             datePickerDialog.show();
             }
@@ -288,6 +288,13 @@ public class ListSubYard extends AppCompatActivity {
             Log.d("ExceptionOwner",Container.getInstance().nameOwnerItem);
             Log.d("ErrorSetText" , e.getMessage());
         }
+
+        listviewSubYard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Container.getInstance().keysub = (int) id;
+            }
+        });
 
     }
 

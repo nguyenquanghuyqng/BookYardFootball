@@ -8,16 +8,20 @@ public class Yards {
     private long owner;
     private long star;
     private long comment;
+    private long timestart;
+    private long timeend;
 
     public Yards(){}
 
-    public Yards(long id, String image, String nameyard, long owner, long star, long comment) {
+    public Yards(long id, String image, String nameyard, long owner, long star, long comment, long timestart, long timeend) {
         this.id = id;
         this.image = image;
         this.nameyard = nameyard;
         this.owner = owner;
         this.star = star;
         this.comment = comment;
+        this.timestart = timestart;
+        this.timeend = timeend;
     }
 
     public long getId() {
@@ -66,5 +70,21 @@ public class Yards {
 
     public void setComment(long comment) {
         this.comment = comment;
+    }
+
+    public long getTimestart() {
+        return timestart;
+    }
+
+    public void setTimestart(long timestart) {
+        this.timestart = timestart;
+    }
+
+    public long getTimeend() {
+        return timeend;
+    }
+
+    public void setTimeend(long timeend) {
+        this.timeend = timeend;
     }
 }
