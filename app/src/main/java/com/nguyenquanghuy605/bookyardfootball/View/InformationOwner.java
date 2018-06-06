@@ -39,7 +39,7 @@ public class InformationOwner extends AppCompatActivity  {
     long idOwner;
     ArrayList<Yard_Owner> ownersArrayList;
     long role;
-    EditText eTextNumberYard,eTextStar,eTextName,eTextPhone,eTextIdCard,eTextAddress;
+    TextView eTextNumberYard,eTextStar,eTextName,eTextPhone,eTextIdCard,eTextAddress;
     EditText eText_YardOwner_NameYard,eText_YardOwner_Name,eText_YardOwner_phone,eText_YardOwner_IdCard,eText_YardOwner_Yards,eText_YardOwner_Address;
     Button btnDeleteOwner;
     TextView txtyardName;
@@ -158,12 +158,12 @@ public class InformationOwner extends AppCompatActivity  {
         });
     }
     public void AnhXa(){
-        eTextNumberYard = (EditText) findViewById(R.id.eTextNumberYard);
-        eTextStar = (EditText) findViewById(R.id.eTextStar);
-        eTextName = (EditText) findViewById(R.id.eTextName);
-        eTextPhone = (EditText) findViewById(R.id.eTextPhone);
-        eTextIdCard = (EditText) findViewById(R.id.eTextIdCard);
-        eTextAddress = (EditText) findViewById(R.id.eTextAddress);
+        eTextNumberYard = (TextView) findViewById(R.id.eTextNumberYard);
+        eTextStar = (TextView) findViewById(R.id.eTextStar);
+        eTextName = (TextView) findViewById(R.id.eTextName);
+        eTextPhone = (TextView) findViewById(R.id.eTextPhone);
+        eTextIdCard = (TextView) findViewById(R.id.eTextIdCard);
+        eTextAddress = (TextView) findViewById(R.id.eTextAddress);
         txtyardName=(TextView) findViewById(R.id.txtyardName);
         btnEdit =(ImageView) findViewById(R.id.btnEdit);
 
@@ -246,41 +246,7 @@ public class InformationOwner extends AppCompatActivity  {
             }
         });
     }
-    private void InforYard(){
-        if( flag==1) {
-            databaseReferenceYard.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
 
-                    for (DataSnapshot data : nodeChild) {
-                        Yards yards = data.getValue(Yards.class);
-
-                        long idYard= yards.getOwner();
-                        Log.d("idOwner", String.valueOf(idYard));
-                        if(idYard==idOwner)
-                        {
-                            txtyardName.setText(yards.getNameyard());
-                            eTextStar.setText(String.valueOf(yards.getStar()));
-                            break;
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-        else
-        {
-            eTextNumberYard.setVisibility(View.GONE);
-            eTextStar.setVisibility(View.GONE);;
-        }
-
-
-    }
 
     private void callDialog()
     {
@@ -317,11 +283,39 @@ public class InformationOwner extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+
+                // Setting Dialog Title
+                alertDialog.setTitle("Cập nhập thông tin cá nhân ");
+
+                // Setting Dialog Message
+                alertDialog.setMessage("Bạn có chắn chắn muốn cập nhập dữ liệu ?");
+
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        try{
                 Owners owners = new Owners(nodeOwner+1,eText_YardOwner_Address.getText().toString(),eText_YardOwner_IdCard.getText().toString(),eText_YardOwner_Name.getText().toString(),eText_YardOwner_Yards.getText().toString(),eText_YardOwner_phone.getText().toString(),idAccount);
                 databaseReferenceOwner.child(String.valueOf(nodeOwner)).setValue(owners);
                 //Yards yard = new Yards(sizeYard+1,null,eText_account_name.getText().toString(),sizeOwner+1,0,0,0,0);
                 databaseReferenceYard.child(String.valueOf(nodeYard)).child("nameyard").setValue(eText_YardOwner_NameYard.getText().toString());
                 myDialog.cancel();
+                        }
+                        catch (Exception e){
+                            Log.d("ErrorBookYard",e.getMessage());
+                        }
+            }
+        });
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.show();
+
             }
         });
         btnCannel.setOnClickListener(new View.OnClickListener() {

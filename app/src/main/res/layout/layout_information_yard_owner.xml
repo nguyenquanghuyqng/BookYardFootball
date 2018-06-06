@@ -37,7 +37,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="76dp"
-                android:text="Sân Thiếu Nhi"
+                android:text=""
                 android:textColor="#fff"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -83,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
-                        android:text="125"
+                        android:text=""
                         android:textColor="#1dbcd4"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
-                        android:text="1205"
+                        android:text=""
                         android:textColor="#1dbcd4"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Nguyễn Quang Huy"
+                android:text=""
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="212797258"
+                android:text=""
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="212797258"
+                android:text=""
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Số 1 Võ Văn Ngân , quận Thủ Đức"
+                android:text=""
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

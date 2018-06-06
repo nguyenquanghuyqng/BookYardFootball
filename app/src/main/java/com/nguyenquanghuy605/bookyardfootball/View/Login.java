@@ -59,6 +59,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     EditText  id_username;
     EditText id_pass;
     Button btnLogin;
+    int sizeAccount;
+    String personName ;
+
     SignInButton btnSignInGoogle;
     FirebaseAuth firebaseAuth;
     GoogleApiClient apiClient;
@@ -145,7 +148,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
                 if (acct != null) {
-                    String personName = acct.getDisplayName();
+                     personName = acct.getDisplayName();
                     String personGivenName = acct.getGivenName();
                     String personFamilyName = acct.getFamilyName();
                     String personEmail = acct.getEmail();
@@ -171,22 +174,6 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(this);
-        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
-
-            Log.d("personName" ,"personName");
-            Log.d("personGivenName" ,"personGivenName");
-            Log.d("personFamilyName" ,"personFamilyName");
-            Log.d("personEmail" ,"personEmail");
-            Log.d("personId" ,"personId");
-            Log.d("personPhoto" ,"personPhoto");
-        }*/
     }
     @Override
     public void onStop() {
@@ -211,7 +198,10 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
+                        int i=0;
                         for(DataSnapshot data1 : dataSnapshot.getChildren()){
+
+                            i++;
                             Accounts account = data1.getValue(Accounts.class);
 
                             Log.d("Owners",data1.getValue().toString());
@@ -225,6 +215,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                                 Log.d("idAccount1234",String.valueOf(id));
                             }
                         }
+                        sizeAccount=i-1;
+                        Accounts account = new Accounts(sizeAccount+1,personName,null,null,0,null);
+                        databaseReferenceAccount.child(String.valueOf(sizeAccount)).setValue(account);
                     }else{
                         Log.d("Not have data" ,"Haha");
                     }
@@ -255,8 +248,8 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                                         long idAccount = yard_owner.getAccount();
                                         Log.d("idAccount", String.valueOf(yard_owner.getAccount()));
                                         if ( idAccount==id) {
-                                            Container.getInstance().idOwner=yard_owner.getId();
-                                            optionyard.getInstance().idOwner=yard_owner.getId();
+                                            Container.getInstance().idOwner=yard_owner.getId()-1;
+                                            optionyard.getInstance().idOwner=yard_owner.getId()-1;
                                             idown=yard_owner.getId();
                                             optionyard.getInstance().nameOwnerItem =yard_owner.getName();
                                             optionyard.getInstance().numberYardItem =yard_owner.getNumberyard();
@@ -279,11 +272,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                                         // Lấy dữ liệu từ firebase xuống đưa vào model
                                         Yards yard = data.getValue(Yards.class);
 
-                                        Log.d("Yard",yard.toString());
-                                        Log.d("DataYard", data.getValue().toString());
                                         // Add vào List
                                         yardArrayList.add(yard);
-                                        if(yard.getOwner()==idown)
+                                        if(yard.getOwner()==idown-1)
                                         {
                                             optionyard.getInstance().idyard = yard.getId();
                                             optionyard.getInstance().nameYardItem = yard.getNameyard();
