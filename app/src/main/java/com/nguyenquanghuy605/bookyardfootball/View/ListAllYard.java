@@ -163,8 +163,6 @@ public class ListAllYard extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-                Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"/"+id+"/"+(position+1)+"");
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ListAllYard.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -177,8 +175,6 @@ public class ListAllYard extends AppCompatActivity {
                                 Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
 //                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
 
-
-                                Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
                                 startActivity(intent);
                             }
                         }, year, month, dayOfMonth);
