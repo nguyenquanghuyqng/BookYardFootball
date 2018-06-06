@@ -67,7 +67,7 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceAccount=firebaseDatabase.getReference().child("Accounts");
         databaseReferenceOwner=firebaseDatabase.getReference().child("Owners");
-        databaseReferenceYard=firebaseDatabase.getReference().child("Yard");
+        databaseReferenceYard=firebaseDatabase.getReference().child("Yards");
 
         AnhXa();
 
@@ -84,6 +84,8 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
+                Intent intent = new Intent(Account.this , Login.class);
+                startActivity(intent);
 
             }
         });
