@@ -314,7 +314,7 @@
             android:id="@+id/txtTotalMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="........."
+            android:text=".........đ"
             android:layout_below="@id/listtime"
             android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
@@ -328,16 +328,18 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/money"
             />
-        <Button
-            android:id="@+id/btnBookYard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đặt Sân"
-            android:layout_below="@id/txtTotalMoney"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/subyardboderitem"
-            android:textAllCaps="true"
-            android:textSize="20sp"
-            android:padding="5dp" />
+
+    <Button
+        android:id="@+id/btnBookYard"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/txtTotalMoney"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/subyardboderitem"
+        android:padding="5dp"
+        android:text="Đặt Sân"
+        android:textAllCaps="true"
+        android:textSize="20sp" />
 
 </RelativeLayout>

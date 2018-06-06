@@ -40,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.optionyard;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.YardAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
@@ -99,7 +100,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-         apiClient = new GoogleApiClient.Builder(this)
+        apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
                 .build();
@@ -124,8 +125,8 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     }
     private  void SignInEmail()
     {
-         username = id_username.getText().toString();
-         pass=id_pass.getText().toString();
+        username = id_username.getText().toString();
+        pass=id_pass.getText().toString();
         firebaseAuth.signInWithEmailAndPassword(username,pass);
     }
     @Override
@@ -136,6 +137,24 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
             {
                 GoogleSignInResult signInResult= Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 GoogleSignInAccount account= signInResult.getSignInAccount();
+
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    String personGivenName = acct.getGivenName();
+                    String personFamilyName = acct.getFamilyName();
+                    String personEmail = acct.getEmail();
+                    String personId = acct.getId();
+                    Uri personPhoto = acct.getPhotoUrl();
+
+                    Log.d("personName" ,"personName");
+                    Log.d("personGivenName" ,"personGivenName");
+                    Log.d("personFamilyName" ,"personFamilyName");
+                    Log.d("personEmail" ,"personEmail");
+                    Log.d("personId" ,"personId");
+                    Log.d("personPhoto" ,"personPhoto");
+                }
+
                 String tokenID= account.getIdToken();
                 CheckSignIn(tokenID);
             }
@@ -176,6 +195,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if(firebaseUser!=null)
         {
+            String userId = firebaseUser.getUid();
+            final String userEmail = firebaseUser.getEmail();
+            Log.d("User dang nhap",userEmail);
             Log.d("Dang nhap 6","huy");
             Toast.makeText(this,"Dang nhap thanh cong ",Toast.LENGTH_SHORT).show();
 
@@ -189,17 +211,18 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                             Log.d("Owners",data1.getValue().toString());
                             String user= account.getUsername();
-                            if( user.equals(username)) {
+                            if( user.equals(username) || user.equals(userEmail)) {
                                 role = account.getRole();
                                 id=account.getId();
+                                Container.getInstance().id=id;
                             }
                         }
                     }else{
                         Log.d("Not have data" ,"Haha");
                     }
-                        Log.d(String.valueOf(role),"role");
+                    Log.d(String.valueOf(role),"role");
                     if(role==1){
-                        Intent intent= new Intent(Login.this , ListOwner.class);
+                        Intent intent= new Intent(Login.this , Account.class);
                         startActivity(intent);
                     }
                     else
@@ -218,15 +241,16 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                                         Log.d("Yard", yard_owner.toString());
                                         Log.d("DataYard", data.getValue().toString());
-                                                                                     // Add vào List
+                                        // Add vào List
                                         long idAccount = yard_owner.getAccount();
                                         Log.d("idAccount", String.valueOf(yard_owner.getAccount()));
                                         if ( idAccount==id) {
                                             Container.getInstance().idOwner=yard_owner.getId();
+                                            optionyard.getInstance().idOwner=yard_owner.getId();
                                             Log.d("idOwner123", String.valueOf(Container.getInstance().idOwner));
-                                            }
-                                            }
-                                            }
+                                        }
+                                    }
+                                }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {

@@ -166,22 +166,22 @@ public class ListAllYard extends AppCompatActivity {
                 Log.d("Date/Month/Year",dayOfMonth+"/"+month+"/"+year+"/"+id+"/"+(position+1)+"");
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ListAllYard.this,
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                            Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
-                            Container.getInstance().date = day+"/"+(month+1)+"/"+year;
-                            Container.getInstance().idyard = position + 1;
-                            Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
-                            Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
-                            Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                Intent intent = new Intent(ListAllYard.this, ListSubYard.class);
+                                Container.getInstance().date = day+"/"+(month+1)+"/"+year;
+                                Container.getInstance().idyard = position + 1;
+                                Container.getInstance().nameYardItem = yardArrayList.get(position).getNameyard();
+                                Container.getInstance().nameOwnerItem = ownerArrayList.get(position).getName();
+                                Container.getInstance().numberYardItem = ownerArrayList.get(position).getNumberyard();
 //                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
 
 
-                            Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
-                            startActivity(intent);
-                        }
-                    }, year, month, dayOfMonth);
+                                Log.d("YardPage",(yardArrayList.get(position).getNameyard())+" "+ownerArrayList.get(position).getName());
+                                startActivity(intent);
+                            }
+                        }, year, month, dayOfMonth);
 
                 datePickerDialog.show();
 

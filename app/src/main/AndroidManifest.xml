@@ -89,6 +89,7 @@
         </activity>
         <activity android:name=".View.Myyard" />
         <activity android:name=".View.MyEvaluate"></activity>
+        <activity android:name=".View.InformationOwner"></activity>
     </application>
 
 </manifest>
