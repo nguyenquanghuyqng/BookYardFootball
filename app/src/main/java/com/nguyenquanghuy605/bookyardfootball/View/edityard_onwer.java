@@ -40,10 +40,12 @@ public class edityard_onwer extends AppCompatActivity {
 
     Spinner spdssan,spdsloaisan;
 
-    Button btnadd;
+    Button btnadd,btnsave;
     EditText san5,san7;
     TextView timestart,timeend,namyard;
     RecyclerView.Adapter editpriceAdapter;
+    String img;
+    long star;
     private RecyclerView.LayoutManager mLayoutManager;
     RecyclerView giakhunggio;
    final private ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
@@ -54,6 +56,7 @@ public class edityard_onwer extends AppCompatActivity {
     private DatabaseReference databaseReferenceOption;
     private DatabaseReference databaseReferenceSubYard;
     private DatabaseReference databaseReferencePriceTime;
+    private DatabaseReference databaseReferenceYards;
 //    private DatabaseReference databaseReference;
 //    private DatabaseReference databaseReferencesubYard;
     @Override
@@ -78,6 +81,7 @@ public class edityard_onwer extends AppCompatActivity {
         databaseReferenceSubYard = FirebaseDatabase.getInstance().getReference().child("SubYards");
         databaseReferenceOption = FirebaseDatabase.getInstance().getReference().child("OptionYard");
         databaseReferencePriceTime=FirebaseDatabase.getInstance().getReference().child("Prices");
+        databaseReferenceYards=FirebaseDatabase.getInstance().getReference().child("Yards");
         final ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_spinner_item,loaisanlist);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spdsloaisan.setAdapter(arrayAdapter);
@@ -176,6 +180,31 @@ public class edityard_onwer extends AppCompatActivity {
                 Log.d("Error Get data Yard",databaseError.getMessage());
             }
         });
+        Query queryYards = databaseReferenceYards.orderByChild("id");
+        queryYards.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        Yards yards = data.getValue(Yards.class);
+
+                        if(data.child("id").getValue().equals(optionyard.getInstance().idyard)){
+
+                            img=yards.getImage();
+                            star=yards.getStar();
+
+                        }
+                        editpriceAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error Get data Yard",databaseError.getMessage());
+            }
+        });
 
 
 
@@ -184,8 +213,8 @@ public class edityard_onwer extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-                timestart.setText(""+optionyard.getInstance().timestart+":00");
-                timeend.setText(""+optionyard.getInstance().timeend+":00");
+                timestart.setText(""+optionyard.getInstance().timestart);
+                timeend.setText(""+optionyard.getInstance().timeend);
                 san5.setText(""+optionYardArrayList.get(0).getAddprice());
                 san7.setText(""+optionYardArrayList.get(1).getAddprice());
                // Toast.makeText(edityard_onwer.this, ""+priceTimeslist.get(1).getTimestart(), Toast.LENGTH_SHORT).show();
@@ -199,6 +228,13 @@ public class edityard_onwer extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Savedulieu();
+                Toast.makeText(edityard_onwer.this, "Cập nhật thông tin sân thành công", Toast.LENGTH_LONG).show();
             }
         });
         final int i=optionYardArrayList.size();
@@ -250,6 +286,7 @@ public class edityard_onwer extends AppCompatActivity {
         timeend= (TextView) findViewById(R.id.timeend);
         namyard= (TextView) findViewById(R.id.namyard);
         giakhunggio= (RecyclerView) findViewById(R.id.listkhunggio);
+        btnsave= (Button) findViewById(R.id.save);
     }
     private void chongiostart(){
         final Calendar calendar=Calendar.getInstance();
@@ -258,9 +295,17 @@ public class edityard_onwer extends AppCompatActivity {
         TimePickerDialog timePickerDialog=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH");
                 calendar.set(0,0,0,hourOfDay,minute);
-                timestart.setText(simpleDateFormat.format(calendar.getTime()));
+                int x= Integer.parseInt(simpleDateFormat.format(calendar.getTime()).toString());
+                int y= Integer.parseInt(timeend.getText().toString());
+                if(x>=y){
+                    Toast.makeText(edityard_onwer.this, "Giờ đóng cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    timestart.setText(simpleDateFormat.format(calendar.getTime()));
+
+           }
             }
         },gio,phut,true);
         timePickerDialog.show();
@@ -272,23 +317,30 @@ public class edityard_onwer extends AppCompatActivity {
         TimePickerDialog timePickerDialog2=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH");
               //  SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("HH");
                 calendar2.set(0,0,0,hourOfDay,minute);
-//                int x= Integer.parseInt(simpleDateFormat2.format(calendar2.getTime()).toString());
-//                int y= Integer.parseInt(timestart.getText().toString());
-//                if(x<=y){
-//                    Toast.makeText(edityard_onwer.this, "Giờ đóng cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
+                int x= Integer.parseInt(simpleDateFormat.format(calendar2.getTime()).toString());
+                int y= Integer.parseInt(timestart.getText().toString());
+                if(x<=y){
+                    Toast.makeText(edityard_onwer.this, "Giờ đóng cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
                timeend.setText(simpleDateFormat.format(calendar2.getTime()));
-//                }
+
+            }
             }
         },gio,phut,true);
         timePickerDialog2.show();
     }
     private void Savedulieu(){
+        long st= Long.parseLong(timestart.getText().toString());
+        long ed= Long.parseLong(timeend.getText().toString());
 
+        Yards yards=new Yards(optionyard.getInstance().idyard,img,optionyard.getInstance().nameYardItem,
+                optionyard.getInstance().idOwner,optionyard.getInstance().comment,
+                optionyard.getInstance().comment,st,ed);
+        databaseReferenceYards.child(String.valueOf(optionyard.getInstance().idyard+1)).setValue(yards);
     }
 
 
