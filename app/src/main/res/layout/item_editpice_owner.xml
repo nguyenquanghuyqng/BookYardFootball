@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/beautifullitem"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/khung"
+        android:textSize="15sp"
+        android:textColor="#ff00"
+        android:text="Khung Giờ từ :"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="9dp"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/khungstart"
+        android:layout_toRightOf="@+id/khung"
+        android:hint="5:00"
+        android:inputType="number"
+        />
+        <TextView
+            android:id="@+id/dong1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=":00"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/khungstart"
+            />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/den"
+        android:textSize="15sp"
+        android:textColor="#ff00"
+        android:text="Đến :"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="9dp"
+        android:layout_toRightOf="@id/dong1"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/khungend"
+        android:layout_toRightOf="@+id/den"
+        android:hint="12:00"
+        android:inputType="number"
+        />
+        <TextView
+            android:id="@+id/dong2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=":00"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/khungend"
+            />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/khunggia"
+        android:textSize="15sp"
+        android:textColor="#ff00"
+        android:text="Giá :"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="9dp"
+        android:layout_below="@id/khung"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gia"
+        android:layout_toRightOf="@+id/khunggia"
+        android:layout_below="@id/khungstart"
+        android:hint="12:00"
+        android:inputType="number"
+        />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="đ"
+            android:layout_marginTop="9dp"
+            android:layout_toRightOf="@id/gia"
+            android:layout_below="@id/khungstart"
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

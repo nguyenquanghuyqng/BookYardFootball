@@ -1,8 +1,11 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,31 +24,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
+import com.nguyenquanghuy605.bookyardfootball.Adapter.EditpriceAdapterRecly;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.optionyard;
 import com.nguyenquanghuy605.bookyardfootball.Model.OptionYard;
+import com.nguyenquanghuy605.bookyardfootball.Model.PriceTime;
 import com.nguyenquanghuy605.bookyardfootball.Model.SubYards;
-import com.nguyenquanghuy605.bookyardfootball.Model.Time;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.SimpleTimeZone;
 
 public class edityard_onwer extends AppCompatActivity {
 
     Spinner spdssan,spdsloaisan;
+
     Button btnadd;
     EditText san5,san7;
     TextView timestart,timeend,namyard;
+    RecyclerView.Adapter editpriceAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    RecyclerView giakhunggio;
    final private ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
    private ArrayList<SubYards> subYardsArrayList=new ArrayList<SubYards>();
    final private ArrayList<String> loaisanlist=new ArrayList<String>();
     final private ArrayList<Long> sanlist=new ArrayList<Long>();
+    private  ArrayList<PriceTime> priceTimeslist=new ArrayList<PriceTime>();
     private DatabaseReference databaseReferenceOption;
     private DatabaseReference databaseReferenceSubYard;
-    private DatabaseReference databaseReferenceTime;
+    private DatabaseReference databaseReferencePriceTime;
 //    private DatabaseReference databaseReference;
 //    private DatabaseReference databaseReferencesubYard;
     @Override
@@ -63,13 +71,13 @@ public class edityard_onwer extends AppCompatActivity {
         timeend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chongiostart();
+                chonggioend();
             }
         });
         //danh sách loại sân+sân
         databaseReferenceSubYard = FirebaseDatabase.getInstance().getReference().child("SubYards");
         databaseReferenceOption = FirebaseDatabase.getInstance().getReference().child("OptionYard");
-        databaseReferenceTime=FirebaseDatabase.getInstance().getReference().child("Time");
+        databaseReferencePriceTime=FirebaseDatabase.getInstance().getReference().child("Prices");
         final ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_spinner_item,loaisanlist);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spdsloaisan.setAdapter(arrayAdapter);
@@ -77,6 +85,15 @@ public class edityard_onwer extends AppCompatActivity {
         final ArrayAdapter arrayAdaptersan=new ArrayAdapter(this,android.R.layout.simple_spinner_item,sanlist);
         arrayAdaptersan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spdssan.setAdapter(arrayAdaptersan);
+
+        giakhunggio.setHasFixedSize(true);
+
+
+        mLayoutManager = new LinearLayoutManager(this);
+        giakhunggio.setLayoutManager(mLayoutManager);
+
+        editpriceAdapter=new EditpriceAdapterRecly(priceTimeslist);
+        giakhunggio.setAdapter(editpriceAdapter);
 
         databaseReferenceOption.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,6 +141,7 @@ public class edityard_onwer extends AppCompatActivity {
                             sanlist.add(subYards.getId());
                         }
                         arrayAdaptersan.notifyDataSetChanged();
+
                     }
 
                 }
@@ -134,19 +152,20 @@ public class edityard_onwer extends AppCompatActivity {
                 Log.d("Error Get data Yard",databaseError.getMessage());
             }
         });
-        Query queryTime = databaseReferenceTime.orderByChild("id");
+        Query queryTime = databaseReferencePriceTime.orderByChild("id");
         queryTime.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot data : dataSnapshot.getChildren()){
-                        Time time = data.getValue(Time.class);
+                        PriceTime priceTime = data.getValue(PriceTime.class);
 
                         Log.d("DataSubYard",data.getValue().toString());
                         if(data.child("yard").getValue().equals(optionyard.getInstance().idyard)){
 
+                             priceTimeslist.add(priceTime);
                         }
-                        arrayAdaptersan.notifyDataSetChanged();
+                        editpriceAdapter.notifyDataSetChanged();
                     }
 
                 }
@@ -163,10 +182,13 @@ public class edityard_onwer extends AppCompatActivity {
         spdssan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               // namyard.setText(optionyard.getInstance().nameYardItem);
-                san5.setText(""+optionYardArrayList.get(0).getAddprice()+" đ");
-                san7.setText(""+optionYardArrayList.get(1).getAddprice()+" đ");
-               // Toast.makeText(edityard_onwer.this, ""+sanlist.get(position), Toast.LENGTH_SHORT).show();               // spdsloaisan.setSelection();
+
+
+                timestart.setText(""+optionyard.getInstance().timestart+":00");
+                timeend.setText(""+optionyard.getInstance().timeend+":00");
+                san5.setText(""+optionYardArrayList.get(0).getAddprice());
+                san7.setText(""+optionYardArrayList.get(1).getAddprice());
+               // Toast.makeText(edityard_onwer.this, ""+priceTimeslist.get(1).getTimestart(), Toast.LENGTH_SHORT).show();
                 for(OptionYard op :optionYardArrayList){
                     if(op.getId()==subYardsArrayList.get(position).getOptionyard()){
                         spdsloaisan.setSelection(arrayAdapter.getPosition(op.getName()));
@@ -184,16 +206,38 @@ public class edityard_onwer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                gialoaisan();
-
-                Toast.makeText(edityard_onwer.this,""+optionyard.getInstance().idyard, Toast.LENGTH_SHORT).show();
+                ShowDialog();
+               // Toast.makeText(edityard_onwer.this,"", Toast.LENGTH_SHORT).show();
             }
         });
 
 
 
     }
-    private  void gialoaisan(){
+    private  void ShowDialog(){
+        final Dialog dialog=new Dialog(this);
+        dialog.setContentView(R.layout.add_subyard);
+
+        final Spinner adspin = (Spinner) dialog.findViewById(R.id.spinloai);
+
+//        ArrayAdapter addAdapter=new ArrayAdapter(this,android.R.layout.simple_spinner_item,loaisanlist);
+//        addAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adspin.setAdapter(addAdapter);
+
+       // Toast.makeText(this, "hehe :"+addAdapter.getPosition("Sân 7 người"), Toast.LENGTH_SHORT).show();
+        Button  addloai= (Button) dialog.findViewById(R.id.btnadd);
+
+        addloai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+       // addAdapter.notifyDataSetChanged();
 
     }
     private void Anhxa(){
@@ -205,6 +249,7 @@ public class edityard_onwer extends AppCompatActivity {
         timestart= (TextView) findViewById(R.id.timestart);
         timeend= (TextView) findViewById(R.id.timeend);
         namyard= (TextView) findViewById(R.id.namyard);
+        giakhunggio= (RecyclerView) findViewById(R.id.listkhunggio);
     }
     private void chongiostart(){
         final Calendar calendar=Calendar.getInstance();
@@ -221,20 +266,30 @@ public class edityard_onwer extends AppCompatActivity {
         timePickerDialog.show();
     }
     private void chonggioend(){
-        final Calendar calendar=Calendar.getInstance();
-        int gio=calendar.get(Calendar.HOUR_OF_DAY);
-        int phut=calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        final Calendar calendar2=Calendar.getInstance();
+        int gio=calendar2.get(Calendar.HOUR_OF_DAY);
+        int phut=calendar2.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog2=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
-                calendar.set(0,0,0,hourOfDay,minute);
-                timeend.setText(simpleDateFormat.format(calendar.getTime()));
+              //  SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("HH");
+                calendar2.set(0,0,0,hourOfDay,minute);
+//                int x= Integer.parseInt(simpleDateFormat2.format(calendar2.getTime()).toString());
+//                int y= Integer.parseInt(timestart.getText().toString());
+//                if(x<=y){
+//                    Toast.makeText(edityard_onwer.this, "Giờ đóng cửa không hợp lệ!!", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+               timeend.setText(simpleDateFormat.format(calendar2.getTime()));
+//                }
             }
         },gio,phut,true);
-        timePickerDialog.show();
+        timePickerDialog2.show();
     }
+    private void Savedulieu(){
 
+    }
 
 
 }

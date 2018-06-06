@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <HorizontalScrollView
+        android:fillViewport="true"
+        android:layout_width="fill_parent" android:layout_height="fill_parent">
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:background="@drawable/img_login">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="102dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="97dp"
         android:text="Tên ứng dụng"
+
         android:textColor="#fff"
         android:textSize="25dp" />
     <EditText
         android:id="@+id/id_userName"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/textView"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
-        android:layout_alignParentTop="true"
+        android:textAlignment="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="208dp"
         android:background="@drawable/edit_circle"
         android:ems="10"
-        android:hint="  UserName"
+        android:hint="UserName"
         android:inputType="textPersonName"
         android:textColor="#101010" />
 
@@ -34,33 +42,37 @@
         android:id="@+id/id_pass"
         android:layout_width="wrap_content"
         android:layout_height="43dp"
-        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:layout_below="@id/id_userName"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="238dp"
         android:background="@drawable/edit_circle"
         android:ems="10"
-        android:hint="  PassWord"
+        android:hint="PassWord"
         android:inputType="textPassword"
         android:textColor="#0e0e0e" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="104dp"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/id_pass"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="170dp"
+
         android:background="@drawable/edit_button_circle"
         android:text="Login" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnSingInGoogle"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="95dp"
+        android:layout_below="@id/btnLogin"
         android:background="@drawable/edit_button_circle"/>
 
 
 </RelativeLayout>
+    </HorizontalScrollView>
+</ScrollView>
