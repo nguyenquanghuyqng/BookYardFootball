@@ -1,117 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="370dp"
+    android:layout_height="500dp"
     android:orientation="vertical"
     android:weightSum="7"
+    android:gravity="center"
     >
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"></RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
 
         <EditText
             android:id="@+id/eText_Accoutn_UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_marginStart="45dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="UserName (abc@gamil.com)" />
+            android:hint="UserName (abc@gamil.com)"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="79dp"
+        android:layout_weight="1">
 
         <EditText
             android:id="@+id/eText_account_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_marginStart="49dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="PassWord" />
+            android:hint="PassWord"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="161dp">
 
         <EditText
             android:id="@+id/eText_account_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_marginStart="47dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="NameYard" />
+            android:hint="NameYard"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="183dp">
+
         <EditText
             android:id="@+id/eText_account_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_marginStart="44dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Phone Number" />
+            android:hint="Phone Number"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="98dp">
 
 
         <EditText
             android:id="@+id/eText_accountRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_marginStart="47dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Role" />
+            android:hint="Role"
+            android:inputType="textPersonName" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp">
+
         <Button
             android:id="@+id/btnAdd"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="50dp"
-            android:text="ADD"
-            android:textSize="20dp"
-            android:gravity="left"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="37dp"
+            android:gravity="left"
+            android:text=" ADD"
+            android:textSize="20dp" />
+
         <Button
             android:id="@+id/btnCannel"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="50dp"
-            android:text="CANNEL"
-            android:textSize="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="106dp"
             android:gravity="right"
-            android:layout_toRightOf="@id/btnAdd"/>
+            android:text="CANNEL"
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

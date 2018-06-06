@@ -42,9 +42,9 @@
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageView
                 android:id="@+id/btnEdit"
-                android:layout_width="50dp"
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"

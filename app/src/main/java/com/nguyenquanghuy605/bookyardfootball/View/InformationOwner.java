@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +36,12 @@ public class InformationOwner extends AppCompatActivity  {
     long idOwner;
     ArrayList<Yard_Owner> ownersArrayList;
     long role;
-    EditText eTextNumberYard,eTextStar,eTextName,eTextPhone,eTextIdCard,eTextAddress,eText_YardOwner_Address;
-    EditText eText_YardOwner_NameYard,eText_YardOwner_Name,eText_YardOwner_phone,eText_YardOwner_IdCard,eText_YardOwner_Yards;
+    EditText eTextNumberYard,eTextStar,eTextName,eTextPhone,eTextIdCard,eTextAddress;
+    EditText eText_YardOwner_NameYard,eText_YardOwner_Name,eText_YardOwner_phone,eText_YardOwner_IdCard,eText_YardOwner_Yards,eText_YardOwner_Address;
     Button btnDeleteOwner;
     TextView txtyardName;
-    Button btnEdit,btnAdd,btnCannel;
+    Button btnAdd,btnCannel;
+    ImageView btnEdit;
 
     DatabaseReference databaseReferenceAccount;
     DatabaseReference databaseReferenceOwner;
@@ -61,6 +63,9 @@ public class InformationOwner extends AppCompatActivity  {
         nodeAccount=Container.getInstance().accountid;
         role=Container.getInstance().star;
         idAccount=Container.getInstance().id;
+
+        Log.d("role1234",String.valueOf(role));
+        Log.d("idAccount1234",String.valueOf(idAccount));
         if(role==2) {
 
             flag=1;
@@ -74,13 +79,13 @@ public class InformationOwner extends AppCompatActivity  {
             if(role ==1)
             {
                 flag=1;
-                btnEdit.setBackgroundResource(R.drawable.ic_delete_account);
+                btnEdit.setImageResource(R.drawable.ic_delete_account);
                 Initialize();
             }
             else {
                 if (role == 3) {
                     //InforYard();
-                    btnEdit.setBackgroundResource(R.drawable.ic_delete_account);
+                    btnEdit.setImageResource(R.drawable.ic_delete_account);
                     Initialize();
                 }
             }
@@ -106,6 +111,7 @@ public class InformationOwner extends AppCompatActivity  {
                     databaseReferenceOwner.child(String.valueOf(nodeOwner)).removeValue();
                     databaseReferenceAccount.child(String.valueOf(nodeAccount)).removeValue();
                     databaseReferenceYard.child(String.valueOf(nodeYard)).removeValue();
+                    callDialog();
 
                 }
                 else
@@ -113,6 +119,7 @@ public class InformationOwner extends AppCompatActivity  {
                     if(role ==2)
                     {
 
+                        callDialog();
                     }
                 }
             }
@@ -127,19 +134,12 @@ public class InformationOwner extends AppCompatActivity  {
         eTextAddress = (EditText) findViewById(R.id.eTextAddress);
         btnDeleteOwner=(Button) findViewById(R.id.btnDeleteOwner);
         txtyardName=(TextView) findViewById(R.id.txtyardName);
-        btnEdit =(Button) findViewById(R.id.btnEdit);
-        eText_YardOwner_Address =(EditText) findViewById(R.id.eText_YardOwner_Address);
-        eText_YardOwner_Name =(EditText) findViewById(R.id.eText_YardOwner_Name);
-        eText_YardOwner_NameYard=(EditText) findViewById(R.id.eText_YardOwner_NameYard);
-        eText_YardOwner_IdCard=(EditText) findViewById(R.id.eText_YardOwner_IdCard);
-        eText_YardOwner_phone =(EditText) findViewById(R.id.eText_YardOwner_phone);
-        eText_YardOwner_Yards =(EditText) findViewById(R.id.eText_YardOwner_Yards);
+        btnEdit =(ImageView) findViewById(R.id.btnEdit);
+
     }
 
 
     private void Initialize( ) {
-
-
 
         databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
             @Override
@@ -256,26 +256,40 @@ public class InformationOwner extends AppCompatActivity  {
         final Dialog myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.layout_dialog_update_information_yardowner);
         myDialog.setCancelable(false);
+
+        eText_YardOwner_Address =(EditText) myDialog.findViewById(R.id.eText_YardOwner_Address);
+        eText_YardOwner_Name =(EditText) myDialog.findViewById(R.id.eText_YardOwner_Name);
+        eText_YardOwner_NameYard=(EditText) myDialog.findViewById(R.id.eText_YardOwner_NameYard);
+        eText_YardOwner_IdCard=(EditText) myDialog.findViewById(R.id.eText_YardOwner_IdCard);
+        eText_YardOwner_phone =(EditText) myDialog.findViewById(R.id.eText_YardOwner_phone);
+        eText_YardOwner_Yards =(EditText) myDialog.findViewById(R.id.eText_YardOwner_Yards);
         btnAdd = (Button) myDialog.findViewById(R.id.btnAdd);
         btnCannel =(Button) myDialog.findViewById(R.id.btnCannel) ;
 
-        eText_YardOwner_Name.setText(eTextName.getText().toString());
-        eText_YardOwner_Yards.setText(eTextNumberYard.getText().toString());
-        eText_YardOwner_Address.setText(eTextAddress.getText().toString());
-        eText_YardOwner_phone.setText(eTextPhone.getText().toString());
-        eText_YardOwner_IdCard.setText(eTextIdCard.getText().toString());
-        eText_YardOwner_NameYard.setText(txtyardName.getText().toString());
+        String name= eTextName.getText().toString();
+        String number=eTextNumberYard.getText().toString();
+        String address=eTextAddress.getText().toString();
+        String phone=eTextPhone.getText().toString();
+        String card=eTextIdCard.getText().toString();
+        String nameYard=txtyardName.getText().toString();
+
+        Log.d("name123", name);
+        eText_YardOwner_Name.setText(name);
+        eText_YardOwner_Yards.setText(number);
+        eText_YardOwner_Address.setText(address);
+        eText_YardOwner_phone.setText(phone);
+        eText_YardOwner_IdCard.setText(card);
+        eText_YardOwner_NameYard.setText(nameYard);
         myDialog.show();
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //username=eText_Accoutn_UserName.getText().toString();
-                //pass=eText_account_pass.getText().toString();
-                //Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
-                //databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
-                //firebaseAuth.createUserWithEmailAndPassword(username,pass);
+                Owners owners = new Owners(nodeOwner+1,eText_YardOwner_Address.getText().toString(),eText_YardOwner_IdCard.getText().toString(),eText_YardOwner_Name.getText().toString(),eText_YardOwner_Yards.getText().toString(),eText_YardOwner_phone.getText().toString(),idAccount);
+                databaseReferenceOwner.child(String.valueOf(nodeOwner)).setValue(owners);
+                //Yards yard = new Yards(sizeYard+1,null,eText_account_name.getText().toString(),sizeOwner+1,0,0,0,0);
+                databaseReferenceYard.child(String.valueOf(nodeYard)).child("nameyard").setValue(eText_YardOwner_NameYard.getText().toString());
                 myDialog.cancel();
             }
         });

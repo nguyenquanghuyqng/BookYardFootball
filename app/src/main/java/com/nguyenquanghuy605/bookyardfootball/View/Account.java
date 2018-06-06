@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.AccountAdapter;
 import com.nguyenquanghuy605.bookyardfootball.Adapter.Container;
 import com.nguyenquanghuy605.bookyardfootball.Model.Accounts;
+import com.nguyenquanghuy605.bookyardfootball.Model.Owners;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     ListView lvUser;
     ArrayList<Accounts> userArrayList= new ArrayList<Accounts>();
 
+    int sizeOwner,sizeYard;
     AccountAdapter accountAdapter;
     EditText eText_Accoutn_UserName;
     EditText eText_account_pass;
@@ -54,6 +56,8 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReferenceAccount;
+    DatabaseReference databaseReferenceOwner;
+    DatabaseReference databaseReferenceYard;
     private  FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,10 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
         setContentView(R.layout.layout_list_yard_owner_account);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReferenceAccount=firebaseDatabase.getReference();
+        databaseReferenceAccount=firebaseDatabase.getReference().child("Accounts");
+        databaseReferenceOwner=firebaseDatabase.getReference().child("Owners");
+        databaseReferenceYard=firebaseDatabase.getReference().child("Yard");
+
         AnhXa();
 
         Initialize();
@@ -96,7 +103,6 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
     }
 
     private void Initialize() {
-        databaseReferenceAccount = FirebaseDatabase.getInstance().getReference().child("Accounts");
 
         accountAdapter = new AccountAdapter(this, R.layout.layout_item_yard_owner_account, userArrayList);
         lvUser.setAdapter(accountAdapter);
@@ -128,13 +134,53 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 Log.d("Error Yard", databaseError.getMessage());
             }
         });
-        lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        databaseReferenceOwner.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+                int i = 0;
+                for (DataSnapshot data : nodeChild) {
+                    i++;
+                    // Lấy dữ liệu từ firebase xuống đưa vào model
+                    Owners yard_owner = data.getValue(Owners.class);
+                    }
+                    sizeOwner=i-1;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        databaseReferenceYard.addValueEventListener(new ValueEventListener() {
+
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+                int i = 0;
+                for (DataSnapshot data : nodeChild) {
+                    i++;
+                    // Lấy dữ liệu từ firebase xuống đưa vào model
+                    Yards yard_owner = data.getValue(Yards.class);
+                    }
+                    sizeYard=i-1;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+                    lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Log.d("Click","Vao");
                 Container.getInstance().id=userArrayList.get(position).getId();
-                Container.getInstance().star =userArrayList.get(position).getRole();
+                //Container.getInstance().star =userArrayList.get(position).getRole();
                 Container.getInstance().accountid=position;
                 Log.d("Owner",String.valueOf(Container.getInstance().id));
                 Intent intent = new Intent(Account.this, InformationOwner.class);
@@ -169,6 +215,10 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
                 Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
                 databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
                 firebaseAuth.createUserWithEmailAndPassword(username,pass);
+                Owners owners = new Owners(sizeOwner+1,null,null,eText_account_name.getText().toString(),null,eText_account_phone.getText().toString(),sizeList+1);
+                databaseReferenceOwner.child(String.valueOf(sizeOwner)).setValue(owners);
+                Yards yard = new Yards(sizeYard+1,null,eText_account_name.getText().toString(),sizeOwner+1,0,0,0,0);
+                databaseReferenceYard.child(String.valueOf(sizeYard+1)).setValue(yard);
                 myDialog.cancel();
             }
         });
