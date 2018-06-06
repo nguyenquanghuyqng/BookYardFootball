@@ -80,7 +80,6 @@ public class AccountAdapter  extends BaseAdapter {
             // Ánh xạ view
             holder.txtYardNameAccount = (TextView) view.findViewById(R.id.txtYardNameAccount);
             holder.txtUserNameYard = (TextView) view.findViewById(R.id.txtUserNameYard);
-            holder.txtEmailYardOwner = (TextView) view.findViewById(R.id.txtEmailYardOwner);
             holder.btnAddAcount = (Button) view.findViewById(R.id.btnAddAcount);
 
             // Set tag cho View
@@ -129,7 +128,6 @@ public class AccountAdapter  extends BaseAdapter {
 
         holder.txtYardNameAccount.setText(user.getName());
         holder.txtUserNameYard.setText(user.getUsername());
-        holder.txtEmailYardOwner.setText(user.getEmail());
 //        holder.imgYard.setImageBitmap();
 
         // Trước khi return thì gán animation cho view
