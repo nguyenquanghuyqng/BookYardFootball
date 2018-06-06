@@ -61,6 +61,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     Button btnLogin;
     int sizeAccount;
     String personName ;
+    String user="";
 
     SignInButton btnSignInGoogle;
     FirebaseAuth firebaseAuth;
@@ -205,7 +206,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                             Accounts account = data1.getValue(Accounts.class);
 
                             Log.d("Owners",data1.getValue().toString());
-                            String user= account.getUsername();
+                            user= account.getUsername();
                             if( user.equals(username) || user.equals(userEmail)) {
                                 role = account.getRole();
                                 id=account.getId();
