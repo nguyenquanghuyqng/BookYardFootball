@@ -177,25 +177,26 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                     }
                 });
-                try{
-                    pass=eTextPass.getText().toString();
-                    firebaseAuth.createUserWithEmailAndPassword(username,pass);
-                    if(pass.length()>=8) {
-                        Accounts account = new Accounts(sizeAccount,eTextName.getText().toString(),eTextPass.getText().toString(),eTextPhoneUser.getText().toString(),3,eTextUserName.getText().toString());
-                        databaseReferenceAccount.child(String.valueOf(sizeAccount-1)).setValue(account);
-                        Toast.makeText(Login.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-                        myDialog.cancel();
-                    }
-                    else
-                    {
-                        Toast.makeText(Login.this, "PassWord phải trên 8 ký tự", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (Exception e){
-                    Toast.makeText(Login.this, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
-                }
+                try {
+                    username = eTextUserName.getText().toString();
+                    pass = eTextPass.getText().toString();
+                    firebaseAuth.createUserWithEmailAndPassword(username, pass);
+                    if (username.indexOf('@') != -1) {
 
-            }
+                        if (pass.length() >= 8) {
+                            //Accounts account = new Accounts(sizeAccount,eTextName.getText().toString(),eTextPass.getText().toString(),eTextPhoneUser.getText().toString(),3,eTextUserName.getText().toString());
+                            //databaseReferenceAccount.child(String.valueOf(sizeAccount-1)).setValue(account);
+                            Toast.makeText(Login.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                            myDialog.cancel();
+                        } else {
+                            Toast.makeText(Login.this, "PassWord phải trên 8 ký tự", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                        Toast.makeText(Login.this, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
         });
         btnCannel.setOnClickListener(new View.OnClickListener() {
             @Override
