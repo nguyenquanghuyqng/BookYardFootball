@@ -100,7 +100,7 @@ public class ListSubYard extends AppCompatActivity {
         // Set adapter cho listview
         listviewSubYard.setAdapter(subYardAdapter);
 
-        Query queryYard = databaseReferenceYard.orderByChild("id");
+        Query queryYard = databaseReferenceYard.orderByChild("id").equalTo(Container.getInstance().idyard);
         try{
             queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -129,11 +129,10 @@ public class ListSubYard extends AppCompatActivity {
         }
 
         //id
-        Query querySubYard = databaseReferenceSubYard.orderByChild("yard").equalTo(Container.getInstance().idyard);
+        Query querySubYard = databaseReferenceSubYard;
         querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("Hahaha","error");
                 if(dataSnapshot.exists()){
                     for(DataSnapshot data : dataSnapshot.getChildren()){
                         SubYards subYards = data.getValue(SubYards.class);
