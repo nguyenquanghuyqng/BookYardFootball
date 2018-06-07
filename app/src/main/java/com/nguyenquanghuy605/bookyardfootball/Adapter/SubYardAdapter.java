@@ -109,7 +109,7 @@ public class SubYardAdapter extends BaseAdapter{
     public void GetData(){
 
         // Lấy ra ListYard
-        Query queryYard = databaseReferenceYard.orderByChild("id");
+        Query queryYard = databaseReferenceYard.orderByChild("id").equalTo(Container.getInstance().idyard);
         queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -185,11 +185,11 @@ public class SubYardAdapter extends BaseAdapter{
                                 // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
 
                                 BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
-                                        subYardsList.size()+1,total,Container.getInstance().status,
+                                        Container.getInstance().totalBook+1,total,Container.getInstance().status,
                                         Container.getInstance().idsubyard, idcheck,
                                         idcheck+1);
                                 // Thực hiện Insert lên firebase
-                                databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
+                                databaseReferenceBookYard.child(String.valueOf(Container.getInstance().totalBook+1)).setValue(bookYard);
                                 // Khi insert thành công thì biến checked = 1;
                                 checked =1;
                             }
@@ -220,6 +220,7 @@ public class SubYardAdapter extends BaseAdapter{
 
             for (int c = 0; c < idCheckBox.length; c++) {
                 timeopen=c;
+                // Xét màu cho giờ mở cửa và đóng cửa
                 for(Yards yards : yardList){
                     // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
                     if(timeopen <  yards.getTimestart() || timeopen > yards.getTimeend()){
@@ -240,14 +241,14 @@ public class SubYardAdapter extends BaseAdapter{
                         // Set hình ảnh cho checkbox
                         CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
                         checkBox.setCompoundDrawables(im, null, null, null);
-//                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
+                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
                     }
                 }
                 // Kiểm tra những sân đã được đặt hay chưa nếu đã đặt rồi thì disable
                 if(bookYardList != null && !bookYardList.isEmpty()){
                     for (BookYard bookYard : bookYardList){
                         if(timeopen ==  bookYard.getTimestart() && timeopen < bookYard.getTimeend()
-                                && bookYard.getSubyard() == position+1 && bookYard.getSubyard() == Container.getInstance().idsubyard){
+                                 && bookYard.getSubyard() == Container.getInstance().idsubyard){
                             Drawable im = context.getResources().getDrawable(R.drawable.dadat);
                             im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());
 
@@ -258,7 +259,7 @@ public class SubYardAdapter extends BaseAdapter{
                         }
                         else{
                             Log.d("CheckColor","Huhuh");
-                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
+//                            CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
                         }
                     }
                 }
@@ -284,8 +285,10 @@ public class SubYardAdapter extends BaseAdapter{
                     @Override
                     public void onClick(View v) {
                         try{
+//                            Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
                             for (int i = 0; i < idCheckBox.length; i++) {
                                 if (v.getId() == idCheckBox[i]) {
+
                                     try {
                                         // Kiểm tra checkbox
                                         if (check == false && clickCheck[i] == false) {
@@ -300,7 +303,7 @@ public class SubYardAdapter extends BaseAdapter{
                                         // Kiểm tra khi clickCheck = true thì tích xanh  cái checkBox đó
                                         if (clickCheck[i]) {
                                             try {
-                                                idBookYard = idBookYard +1;
+//                                                idBookYard = idBookYard +1;
                                                 idcheck =i;
                                                 // Thực hiện set Image khi click vào checkbox
                                                 Drawable im = context.getResources().getDrawable(R.drawable.duocchon);
@@ -309,7 +312,8 @@ public class SubYardAdapter extends BaseAdapter{
                                                 // Set hình ảnh cho checkbox
                                                 CheckBox checkBox = (CheckBox) v.findViewById(idCheckBox[i]);
                                                 checkBox.setCompoundDrawables(im, null, null, null);
-                                                Container.getInstance().idsubyard = position+1;
+                                                Container.getInstance().idsubyard = subYards.getId();
+                                                Toast.makeText(context, subYards.getId()+"", Toast.LENGTH_SHORT).show();
                                                 // Khi đã check vào màu xanh thì check =true
                                                 check = true;
                                                 // Truy vấn lấy giá theo giờ và so sánh với giờ đã được checkbox
@@ -348,7 +352,7 @@ public class SubYardAdapter extends BaseAdapter{
                                                 Log.d("Error", e.getMessage());
                                             }
                                         } else {
-                                            idBookYard=idBookYard-1;
+//                                            idBookYard=idBookYard-1;
                                             // Lấy hình ảnh từ drawable
                                             Drawable im = context.getResources().getDrawable(R.drawable.normal);
                                             im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());

@@ -33,6 +33,8 @@ import com.nguyenquanghuy605.bookyardfootball.Model.SubYards;
 import com.nguyenquanghuy605.bookyardfootball.Model.Yards;
 import com.nguyenquanghuy605.bookyardfootball.R;
 import android.support.v4.app.DialogFragment;
+
+import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -47,7 +49,7 @@ public class ListSubYard extends AppCompatActivity {
     ArrayList<OptionYard> optionYardArrayList = new ArrayList<OptionYard>();
     ArrayList<BookYard> bookYardArrayList = new ArrayList<BookYard>();
     SubYardAdapter subYardAdapter;
-
+    ArrayList<BookYard> bookYardArrayList1 = new ArrayList<BookYard>();
     private DatabaseReference databaseReferenceYard;
     private DatabaseReference databaseReferenceSubYard;
     private DatabaseReference databaseReferenceOptionYard;
@@ -129,7 +131,7 @@ public class ListSubYard extends AppCompatActivity {
         }
 
         //id
-        Query querySubYard = databaseReferenceSubYard;
+        Query querySubYard = databaseReferenceSubYard.orderByChild("yard").equalTo(Container.getInstance().idyard);
         querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -137,9 +139,12 @@ public class ListSubYard extends AppCompatActivity {
                     for(DataSnapshot data : dataSnapshot.getChildren()){
                         SubYards subYards = data.getValue(SubYards.class);
 
+                        Toast.makeText(ListSubYard.this, data.child("yard").getValue()+"/"+Container.getInstance().idyard+"", Toast.LENGTH_SHORT).show();
+
                         Log.d("DataSubYard",data.getValue().toString());
                         if(data.child("yard").getValue().equals(Container.getInstance().idyard)){
                             subYardsArrayList.add(subYards);
+
                         }
 
                         subYardAdapter.notifyDataSetChanged();
@@ -180,6 +185,27 @@ public class ListSubYard extends AppCompatActivity {
                         subYardAdapter.notifyDataSetChanged();
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error Get data Yard",databaseError.getMessage());
+            }
+        });
+
+        Query queryBookYard1 = databaseReferenceBookYard;
+        queryBookYard1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        BookYard bookYard = data.getValue(BookYard.class);
+
+                        bookYardArrayList1.add(bookYard);
+
+                    }
+                }
+                Container.getInstance().totalBook = bookYardArrayList1.size();
             }
 
             @Override
@@ -250,6 +276,7 @@ public class ListSubYard extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Container.getInstance().keysub = (int) id;
+
             }
         });
 

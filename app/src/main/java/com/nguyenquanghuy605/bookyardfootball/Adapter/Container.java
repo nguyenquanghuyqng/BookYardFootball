@@ -21,7 +21,7 @@ public class Container {
     public long  idsubyard = 1;
     public long timestart = 15;
     public long timeend = 16;
-    public int totalMoney;
+    public int totalBook;
     public int keysub;
     public ArrayList<BookYard> bookYardList = new ArrayList<BookYard>();
     private static Container instance =null;
