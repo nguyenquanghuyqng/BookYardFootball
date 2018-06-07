@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="560dp"
+    android:layout_width="380dp"
+    android:layout_height="400dp"
     android:orientation="vertical"
+    android:background="#b4b4b2"
     >
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="13dp"
-            android:text="Name"
+            android:text="Name :"
+            android:textColor="#121211"
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/eText_YardOwner_Name"
+            android:id="@+id/eTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="22dp"
             android:ems="10"
-            android:hint="Name Owner"
-            android:inputType="textPersonName" />
+            android:hint="First name + Last name"
+            android:inputType="textPersonName"
+            android:textColor="#121211"
+            />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="84dp"
@@ -44,24 +48,26 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="13dp"
-            android:text="Name Yard"
-            android:textSize="20dp" />
+            android:text="UserName"
+            android:textSize="20dp"
+            android:textColor="#121211"/>
 
         <EditText
-            android:id="@+id/eText_YardOwner_NameYard"
+            android:id="@+id/eTextUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="23dp"
             android:ems="10"
-            android:hint="Name Yard"
-            android:inputType="textPersonName" />
+            android:hint="UserName@gmail.com"
+            android:inputType="textEmailAddress"
+            android:textColor="#121211" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="165dp"
@@ -73,26 +79,29 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="13dp"
-            android:text="Address"
-            android:textSize="20dp" />
+            android:text="PassWord"
+            android:textSize="20dp"
+            android:textColor="#121211"/>
 
         <EditText
-            android:id="@+id/eText_YardOwner_Address"
+            android:id="@+id/eTextPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="23dp"
             android:ems="10"
-            android:hint="Address Owner"
-            android:inputType="textPersonName" />
+            android:hint=">= 8 characters"
+            android:inputType="textPersonName"
+            android:textColor="#121211"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="103dp"
         android:layout_weight="1">
 
         <TextView
@@ -100,78 +109,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="20dp"
             android:text="Phone "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="#121211"/>
 
         <EditText
-            android:id="@+id/eText_YardOwner_phone"
+            android:id="@+id/eTextPhoneUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="23dp"
             android:ems="10"
             android:hint="Phone Number"
-            android:inputType="textPersonName" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="158dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="13dp"
-            android:text="Id Card "
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/eText_YardOwner_IdCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
-            android:ems="10"
-            android:hint="Id Card"
-            android:inputType="textPersonName" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="71dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="13dp"
-            android:text=" Yards "
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/eText_YardOwner_Yards"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="54dp"
-            android:ems="10"
-            android:hint="Number of Yard"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="#121211"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -184,26 +137,26 @@
 
         <Button
             android:id="@+id/btnAdd"
-            android:layout_width="80dp"
+            android:layout_width="160dp"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="77dp"
-            android:gravity="left"
-            android:textSize="20dp"
-            android:background="@drawable/add_infor"/>
+            android:layout_marginStart="39dp"
+            android:background="@drawable/edit_circle"
+            android:gravity="center"
+            android:text="Registration"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/btnCannel"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="66dp"
-            android:gravity="right"
-            android:background="@drawable/cancel"
+            android:layout_marginEnd="38dp"
+            android:background="@drawable/edit_circle"
+            android:gravity="center"
+            android:text="CANCEL"
             android:textSize="20dp" />
 
     </RelativeLayout>

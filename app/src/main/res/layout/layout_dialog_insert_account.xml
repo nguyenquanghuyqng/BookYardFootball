@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:weightSum="7"
     android:gravity="center"
+    android:background="#bebebd"
     >
 
     <RelativeLayout
@@ -115,24 +116,24 @@
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="37dp"
             android:gravity="left"
-            android:text=" ADD"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/add_infor"/>
 
         <Button
             android:id="@+id/btnCannel"
-            android:layout_width="110dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="106dp"
             android:gravity="right"
-            android:text="CANNEL"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/cancel"/>
 
     </RelativeLayout>
 
