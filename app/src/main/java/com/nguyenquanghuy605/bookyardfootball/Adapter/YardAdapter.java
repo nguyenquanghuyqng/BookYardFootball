@@ -26,7 +26,6 @@ import java.util.List;
 
 public class YardAdapter  extends BaseAdapter{
 
-    public int ownerid=0;
     private Context context;
     private int layout;
     private List<Yards> yardList;
@@ -54,13 +53,11 @@ public class YardAdapter  extends BaseAdapter{
     // Trả về đối tượng trong list
     @Override
     public Object getItem(int position) {
-        ownerid=0;
         return null;
     }
 
     @Override
     public long getItemId(int position) {
-        ownerid=0;
         return 0;
     }
 
@@ -131,9 +128,6 @@ public class YardAdapter  extends BaseAdapter{
             catch (Exception e){
                 Log.d("ErrorOwner" , e.getMessage());
             }
-
-            Log.d("Gia  tri i ",i+"");
-            Log.d("Gia  tri ownerid ",(ownerid++)+"");
         }
         catch (Exception e){
             Log.d("ErrorYard" , e.getMessage());

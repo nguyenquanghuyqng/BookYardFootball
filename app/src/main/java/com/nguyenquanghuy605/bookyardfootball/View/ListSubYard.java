@@ -163,6 +163,7 @@ public class ListSubYard extends AppCompatActivity {
 
                         if(getdate.equals(bookYard.getDate())){
                             Container.getInstance().checkDate = 1;
+                            Container.getInstance().date = getdate;
                             Container.getInstance().bookYardList.add(bookYard);
                             Log.d("DateBook",bookYard.getDate());
                         }

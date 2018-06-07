@@ -70,6 +70,8 @@ public class SubYardAdapter extends BaseAdapter{
     private DatabaseReference databaseReferenceBookYard = FirebaseDatabase.getInstance()
             .getReference().child("BookYard");
 
+    private DatabaseReference databaseReferenceSubYard = FirebaseDatabase.getInstance().getReference().child("SubYards");
+
     public SubYardAdapter(Context context, int layout, List<Yards> yardList, List<BookYard> bookYardList,
                           List<OptionYard> optionYardList, List<SubYards> subYardsList){
         this.context = context;
@@ -103,6 +105,27 @@ public class SubYardAdapter extends BaseAdapter{
 
     // Lấy dữ liệu truyền vào model Yard và BookYard
     public void GetData(){
+//        Query querySubYard = databaseReferenceSubYard;
+//        querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    for(DataSnapshot data : dataSnapshot.getChildren()){
+//                        SubYards subYards = data.getValue(SubYards.class);
+//
+//                        if(data.child("yard").getValue().equals(Container.getInstance().idyard)){
+//                            subYardsList.add(subYards);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d("Error Get data Yard",databaseError.getMessage());
+//            }
+//        });
+
         // Lấy ra ListYard
         Query queryYard = databaseReferenceYard.orderByChild("id");
         queryYard.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,7 +146,6 @@ public class SubYardAdapter extends BaseAdapter{
                 Log.d("Error PriceTime",databaseError.getMessage());
             }
         });
-
         // Lấy dữ liệu đổ vào BookYardList
         Query queryBookYard = databaseReferenceBookYard.orderByChild("date").equalTo(Container.getInstance().date);
         queryBookYard.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -132,7 +154,10 @@ public class SubYardAdapter extends BaseAdapter{
                 if(dataSnapshot.exists()){
                     for(DataSnapshot data : dataSnapshot.getChildren()){
                         BookYard bookYard = data.getValue(BookYard.class);
-                        bookYardList.add(bookYard);
+
+                        if(bookYard.getSubyard() == Container.getInstance().idsubyard){
+                            bookYardList.add(bookYard);
+                        }
                     }
                 }
                 else{
@@ -153,11 +178,9 @@ public class SubYardAdapter extends BaseAdapter{
         // Thường thì lần đầu khởi tạo chạy thì biến view sẽ bằng null
         if(view == null){
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             view = inflater.inflate(R.layout.layout_itemsubyard_time,null);
 
             holder = new ViewHolder();
-
             holder.txtnumYard = (TextView) view.findViewById(R.id.numyard);
             holder.txtyardKind = (TextView) view.findViewById(R.id.yardkind);
             holder.txtTotalMoney = (TextView) view.findViewById(R.id.txtTotalMoney);
@@ -167,43 +190,38 @@ public class SubYardAdapter extends BaseAdapter{
             holder.btnBookYard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                    // Setting Dialog Title
+                    alertDialog.setTitle("Thông báo xác nhận đặt sân");
+                    // Setting Dialog Message
+                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
 
-                // Setting Dialog Title
-                alertDialog.setTitle("Thông báo xác nhận đặt sân");
-
-                // Setting Dialog Message
-                alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
-
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
-                    try{
-                        // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
-                        BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
-                                idBookYard,total,Container.getInstance().status,
-                                Container.getInstance().idsubyard, idcheck,
-                                idcheck+1);
-                        // Thực hiện Insert lên firebase
-                        databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
-
-                        // Khi insert thành công thì biến checked = 1;
-                        checked =1;
-                    }
-                    catch (Exception e){
-                        Log.d("ErrorBookYard",e.getMessage());
-                    }
-                    }
-                });
-                // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
-                        dialog.cancel();
-                    }
-                });
-
-                alertDialog.show();
+                    // Setting Positive "Yes" Button
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            try{
+                                // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
+                                BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
+                                        idBookYard,total,Container.getInstance().status,
+                                        Container.getInstance().idsubyard, idcheck,
+                                        idcheck+1);
+                                // Thực hiện Insert lên firebase
+                                databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
+                                // Khi insert thành công thì biến checked = 1;
+                                checked =1;
+                            }
+                            catch (Exception e){
+                                Log.d("ErrorBookYard",e.getMessage());
+                            }
+                        }
+                    });
+                    // Setting Negative "NO" Button
+                    alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.show();
                 }
             });
         }
@@ -211,12 +229,13 @@ public class SubYardAdapter extends BaseAdapter{
             // Lấy phần ánh xạ lại thôi
             holder = (ViewHolder) view.getTag();
         }
-
         // Set thời gian bắt đầu và thời gian kết thúc và set màu cho các thời gian đó
         try{
+            SubYards  subYards = subYardsList.get(position);
+            Container.getInstance().idsubyard = subYards.getId();
+
             for (int c = 0; c < idCheckBox.length; c++) {
                 timeopen=c;
-
                 for(Yards yards : yardList){
                     // Kiểm tra thời gian được check vào checkbox với thời gian lấy từ bảng giá Firebase
                     if(timeopen <  yards.getTimestart() || timeopen > yards.getTimeend()){
@@ -237,13 +256,12 @@ public class SubYardAdapter extends BaseAdapter{
                         // Set hình ảnh cho checkbox
                         CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
                         checkBox.setCompoundDrawables(im, null, null, null);
-                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
+//                        checkBox.setEnabled(true);      // Set checkBox lại click lại được
                     }
                 }
-
+                // Kiểm tra những sân đã được đặt hay chưa nếu đã đặt rồi thì disable
                 if(bookYardList != null && !bookYardList.isEmpty()){
                     for (BookYard bookYard : bookYardList){
-                        Log.d("CheckTime",bookYard.getTimestart()+"/"+timeopen+"/"+bookYard.getTimeend()+"");
                         if(timeopen ==  bookYard.getTimestart() && timeopen < bookYard.getTimeend()
                                 && bookYard.getSubyard() == position+1 && bookYard.getSubyard() == Container.getInstance().idsubyard){
                             Drawable im = context.getResources().getDrawable(R.drawable.dadat);
@@ -257,7 +275,6 @@ public class SubYardAdapter extends BaseAdapter{
                         else{
                             Log.d("CheckColor","Huhuh");
                             CheckBox checkBox = (CheckBox) view.findViewById(idCheckBox[c]);
-//                            checkBox.setEnabled(true);
                         }
                     }
                 }
@@ -268,7 +285,6 @@ public class SubYardAdapter extends BaseAdapter{
         }catch (Exception e){
             Log.d("CheckColorError",e.getMessage());
         }
-
         // Xử lý từng item
         try {
             final SubYards subYards = subYardsList.get(position);
@@ -344,11 +360,11 @@ public class SubYardAdapter extends BaseAdapter{
                                                 catch (Exception e){
                                                     Log.d("ErroPrice",e.getMessage());
                                                 }
-
                                             } catch (Exception e) {
                                                 Log.d("Error", e.getMessage());
                                             }
                                         } else {
+                                            idBookYard=idBookYard-1;
                                             // Lấy hình ảnh từ drawable
                                             Drawable im = context.getResources().getDrawable(R.drawable.normal);
                                             im.setBounds(0, 0, im.getIntrinsicWidth(), im.getIntrinsicHeight());

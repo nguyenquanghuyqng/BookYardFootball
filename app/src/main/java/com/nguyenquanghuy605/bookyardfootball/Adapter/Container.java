@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Container {
     public long idyard;
-    public long id;
+    public long id = 1;
     public long star;
     public long idOwner;
     public String nameYardItem;
