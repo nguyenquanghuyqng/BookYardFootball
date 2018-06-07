@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -105,26 +107,6 @@ public class SubYardAdapter extends BaseAdapter{
 
     // Lấy dữ liệu truyền vào model Yard và BookYard
     public void GetData(){
-//        Query querySubYard = databaseReferenceSubYard;
-//        querySubYard.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    for(DataSnapshot data : dataSnapshot.getChildren()){
-//                        SubYards subYards = data.getValue(SubYards.class);
-//
-//                        if(data.child("yard").getValue().equals(Container.getInstance().idyard)){
-//                            subYardsList.add(subYards);
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.d("Error Get data Yard",databaseError.getMessage());
-//            }
-//        });
 
         // Lấy ra ListYard
         Query queryYard = databaseReferenceYard.orderByChild("id");
@@ -201,8 +183,9 @@ public class SubYardAdapter extends BaseAdapter{
                         public void onClick(DialogInterface dialog,int which) {
                             try{
                                 // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
+
                                 BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
-                                        idBookYard,total,Container.getInstance().status,
+                                        subYardsList.size()+1,total,Container.getInstance().status,
                                         Container.getInstance().idsubyard, idcheck,
                                         idcheck+1);
                                 // Thực hiện Insert lên firebase
@@ -222,6 +205,7 @@ public class SubYardAdapter extends BaseAdapter{
                         }
                     });
                     alertDialog.show();
+//                    Toast.makeText(context, "IdBookYard"+Container.getInstance().idsubyard, Toast.LENGTH_SHORT).show();
                 }
             });
         }
