@@ -5,7 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <HorizontalScrollView
         android:fillViewport="true"
-        android:layout_width="fill_parent" android:layout_height="fill_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -72,6 +73,15 @@
         android:layout_below="@id/btnLogin"
         android:background="@drawable/edit_button_circle"/>
 
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnSingInGoogle"
+        android:background="@drawable/edit_button_circle"
+        android:text="registration"/>
 
 </RelativeLayout>
     </HorizontalScrollView>

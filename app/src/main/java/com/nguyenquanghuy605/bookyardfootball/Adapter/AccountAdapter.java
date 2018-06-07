@@ -94,37 +94,7 @@ public class AccountAdapter  extends BaseAdapter {
         Accounts user = usersList.get(i);
         Log.d("Gia  tri i ",i+"");
 
-//        StorageReference islandRef = storageRef.child("images/island.jpg");
-
-
-//        final long ONE_MEGABYTE = 1024 * 1024;
-//        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
 //
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                Log.d("Error ", exception.getMessage());
-//            }
-//        });
-
-        /*final long ONE_MEGABYTE = 1024 * 1024;
-        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Log.d("OnSuccess ",imageRef.toString());
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.imgYard.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d("Error ", exception.getMessage());
-            }
-        });*/
 
         holder.txtYardNameAccount.setText(user.getName());
         holder.txtUserNameYard.setText(user.getUsername());

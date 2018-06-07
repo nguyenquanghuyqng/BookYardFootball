@@ -1,5 +1,6 @@
 package com.nguyenquanghuy605.bookyardfootball.View;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -56,19 +57,17 @@ import java.util.ArrayList;
 
 public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateListener,GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
 
-    EditText  id_username;
-    EditText id_pass;
-    Button btnLogin;
+    EditText  id_username,id_pass,eTextName,eTextUserName,eTextPass,eTextPhoneUser;
+    Button btnLogin,btnSignIn,btnAdd,btnCannel;
     int sizeAccount =0;
-    String personName ;
-    String user="";
     String userEmail="";
+    int SignInGoogle;
 
     SignInButton btnSignInGoogle;
-    FirebaseAuth firebaseAuth;
+    public FirebaseAuth firebaseAuth;
     GoogleApiClient apiClient;
-    private  String username ="";
-    private String pass="";
+    String username ="";
+    String pass="";
     private long role;
     private long id;
     public static  int CODE_SIGNIN_GOOGLE =99;
@@ -95,6 +94,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         btnSignInGoogle.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         CreateClientSignInGoogle();
+        btnSignIn.setOnClickListener(this);
 
     }
     public void AnhXa()
@@ -103,6 +103,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         id_pass=(EditText) findViewById(R.id.id_pass);
         btnLogin=(Button) findViewById(R.id.btnLogin);
         btnSignInGoogle=(SignInButton) findViewById(R.id.btnSingInGoogle);
+        btnSignIn =(Button) findViewById(R.id.btnSignIn);
     }
 
     private void CreateClientSignInGoogle()
@@ -137,8 +138,73 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
     private  void SignInEmail()
     {
         username = id_username.getText().toString();
+        userEmail=username;
         pass=id_pass.getText().toString();
         firebaseAuth.signInWithEmailAndPassword(username,pass);
+    }
+    private void SignIn()
+    {
+        final Dialog myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.dialog_signin);
+        myDialog.setCancelable(false);
+        btnAdd = (Button) myDialog.findViewById(R.id.btnAdd);
+        btnCannel =(Button) myDialog.findViewById(R.id.btnCannel) ;
+
+         eTextName= (EditText) myDialog.findViewById(R.id.eTextName);
+        eTextPass = (EditText) myDialog.findViewById(R.id.eTextPass);
+        eTextPhoneUser = (EditText) myDialog.findViewById(R.id.eTextPhone);
+        eTextUserName = (EditText) myDialog.findViewById(R.id.eTextUserName);
+        myDialog.show();
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReferenceAccount.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            int i = 0;
+                            for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+
+                                i++;
+                            }
+                            sizeAccount = i;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                try{
+                    pass=eTextPass.getText().toString();
+                    firebaseAuth.createUserWithEmailAndPassword(username,pass);
+                    if(pass.length()>=8) {
+                        Accounts account = new Accounts(sizeAccount,eTextName.getText().toString(),eTextPass.getText().toString(),eTextPhoneUser.getText().toString(),3,eTextUserName.getText().toString());
+                        databaseReferenceAccount.child(String.valueOf(sizeAccount-1)).setValue(account);
+                        Toast.makeText(Login.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                        myDialog.cancel();
+                    }
+                    else
+                    {
+                        Toast.makeText(Login.this, "PassWord phải trên 8 ký tự", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception e){
+                    Toast.makeText(Login.this, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        btnCannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                myDialog.cancel();
+//
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -148,23 +214,6 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
             {
                 GoogleSignInResult signInResult= Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 GoogleSignInAccount account= signInResult.getSignInAccount();
-
-                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-                if (acct != null) {
-                     personName = acct.getDisplayName();
-                    String personGivenName = acct.getGivenName();
-                    String personFamilyName = acct.getFamilyName();
-                    String personEmail = acct.getEmail();
-                    String personId = acct.getId();
-                    Uri personPhoto = acct.getPhotoUrl();
-
-                    Log.d("personName" ,"personName");
-                    Log.d("personGivenName" ,"personGivenName");
-                    Log.d("personFamilyName" ,"personFamilyName");
-                    Log.d("personEmail" ,"personEmail");
-                    Log.d("personId" ,"personId");
-                    Log.d("personPhoto" ,"personPhoto");
-                }
 
                 String tokenID= account.getIdToken();
                 CheckSignIn(tokenID);
@@ -185,19 +234,75 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         firebaseAuth.removeAuthStateListener(this);
     }
     @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if(firebaseUser!=null)
         {
             String userId = firebaseUser.getUid();
-            userEmail = firebaseUser.getEmail();
+            userEmail = firebaseUser.getEmail().toString();
             Log.d("User dang nhap",userEmail);
             Log.d("Dang nhap 6","huy");
-            Toast.makeText(this,"Dang nhap thanh cong ",Toast.LENGTH_SHORT).show();
+            if(SignInGoogle==1)
+            {
+                databaseReferenceAccount.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            int flag = 0;
 
-            Query query = databaseReferenceAccount.orderByChild("id");
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                                Accounts account = data1.getValue(Accounts.class);
+
+                                Log.d("Owners", data1.getValue().toString());
+
+                                String user = account.getUsername().toString();
+
+                                if (user.equals(userEmail)) {
+                                    flag=1;
+                                }
+                            }
+                            if(flag==0){
+                                databaseReferenceAccount.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            int i = 0;
+                                            for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+
+                                                i++;
+                                            }
+                                            sizeAccount = i;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                try {
+                                    pass="";
+                                    firebaseAuth.createUserWithEmailAndPassword(username, pass);
+                                        Accounts account = new Accounts(sizeAccount, userEmail, "", "", 3, userEmail);
+                                        databaseReferenceAccount.child(String.valueOf(sizeAccount - 1)).setValue(account);
+
+                                }
+                                    catch (Exception e){
+                                        Toast.makeText(Login.this, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                                    }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            databaseReferenceAccount.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -208,7 +313,12 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                             Accounts account = data1.getValue(Accounts.class);
 
                             Log.d("Owners",data1.getValue().toString());
-                            user= account.getUsername();
+
+                            String user= account.getUsername().toString();
+                            Log.d("User Name",account.getUsername().toString());
+                            Log.d("Email Name",userEmail);
+                            Log.d("Email Name",username);
+                            Log.d("Email Name",user);
                             if( user.equals(username) || user.equals(userEmail)) {
                                 role = account.getRole();
                                 id=account.getId();
@@ -216,6 +326,9 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                                 Log.d("role1234",String.valueOf(role));
                                 Container.getInstance().id=id;
                                 Log.d("idAccount1234",String.valueOf(id));
+                            }
+                            else{
+                                Log.d("check","Không phai tai k này");
                             }
                         }
                         sizeAccount=i-1;
@@ -290,13 +403,11 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-                                    Log.d("Error Yard",databaseError.getMessage());
+                                    Log.d("Error SignIn",databaseError.getMessage());
                                 }
                             });
                             Intent intent = new Intent(Login.this, Myyard.class);
 //                Container.getInstance().nameOptionYard = optionYardArrayList.get(position).getName();
-
-
                             startActivity(intent);
                         }
                         else
@@ -313,6 +424,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
 
                 }
             });
+            Toast.makeText(this,"Dang nhap thanh cong ",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -331,6 +443,7 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
         switch (id)
         {
             case R.id.btnSingInGoogle:
+                SignInGoogle=0;
                 SignInGoogle(apiClient);
                 Log.d("Dang nhap 2 ","huy");
                 break;
@@ -338,6 +451,12 @@ public class Login extends AppCompatActivity implements FirebaseAuth.AuthStateLi
                 SignInEmail();
                 Log.d("Dang nhap 2 ","huy");
                 break;
+
+            case R.id.btnSignIn:
+                SignIn();
+                Log.d("Dang nhap 2 ","huy");
+                break;
+
 
         }
     }

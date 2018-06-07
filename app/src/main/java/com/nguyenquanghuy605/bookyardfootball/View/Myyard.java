@@ -90,7 +90,7 @@ public class Myyard extends AppCompatActivity {
         btnuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent3=new Intent(Myyard.this,InformationYardOwner.class);
+                Intent intent3=new Intent(Myyard.this,InformationOwner.class);
                 startActivity(intent3);
                 nameyard.setText(optionyard.getInstance().nameYardItem.toString());
             }
