@@ -167,43 +167,43 @@ public class SubYardAdapter extends BaseAdapter{
             holder.btnBookYard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
-                    // Setting Dialog Title
-                    alertDialog.setTitle("Thông báo xác nhận đặt sân");
+                // Setting Dialog Title
+                alertDialog.setTitle("Thông báo xác nhận đặt sân");
 
-                    // Setting Dialog Message
-                    alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
+                // Setting Dialog Message
+                alertDialog.setMessage("Bạn có chắn chắn muốn đặt sân?");
 
-                    // Setting Positive "Yes" Button
-                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int which) {
-                            try{
-                                // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
-                                BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
-                                        idBookYard,total,Container.getInstance().status,
-                                        Container.getInstance().idsubyard, idcheck,
-                                        idcheck+1);
-                                // Thực hiện Insert lên firebase
-                                databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                    try{
+                        // Thực hiện truyền biến vào BookYard để thực hiện Insert lên Firebase
+                        BookYard bookYard = new BookYard(Container.getInstance().id,Container.getInstance().date,
+                                idBookYard,total,Container.getInstance().status,
+                                Container.getInstance().idsubyard, idcheck,
+                                idcheck+1);
+                        // Thực hiện Insert lên firebase
+                        databaseReferenceBookYard.child(String.valueOf(idBookYard+1)).setValue(bookYard);
 
-                                // Khi insert thành công thì biến checked = 1;
-                                checked =1;
-                            }
-                            catch (Exception e){
-                                Log.d("ErrorBookYard",e.getMessage());
-                            }
-                        }
-                    });
-                    // Setting Negative "NO" Button
-                    alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Write your code here to invoke NO event
-                            dialog.cancel();
-                        }
-                    });
+                        // Khi insert thành công thì biến checked = 1;
+                        checked =1;
+                    }
+                    catch (Exception e){
+                        Log.d("ErrorBookYard",e.getMessage());
+                    }
+                    }
+                });
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        dialog.cancel();
+                    }
+                });
 
-                    alertDialog.show();
+                alertDialog.show();
                 }
             });
         }
