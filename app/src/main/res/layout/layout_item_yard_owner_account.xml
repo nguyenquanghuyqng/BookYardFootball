@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@id/txtUserNameYard"
+                android:layout_marginEnd="31dp"
                 android:text="santhieunhi"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -80,9 +80,7 @@
                 android:layout_width="189dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="5dp"
-                android:layout_toLeftOf="@id/layoutAccountYardOwner"
+                android:layout_alignStart="@+id/txtUserNameYard"
                 android:text="santhieunhi"
                 android:textColor="#000000"
                 android:textSize="20dp" />

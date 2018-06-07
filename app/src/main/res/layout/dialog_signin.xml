@@ -92,8 +92,8 @@
             android:layout_marginEnd="23dp"
             android:ems="10"
             android:hint=">= 8 characters"
-            android:inputType="textPersonName"
-            android:textColor="#121211"/>
+            android:inputType="textPassword"
+            android:textColor="#121211" />
     </RelativeLayout>
 
     <RelativeLayout

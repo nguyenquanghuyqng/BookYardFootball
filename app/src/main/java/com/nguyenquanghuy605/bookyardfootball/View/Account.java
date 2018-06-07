@@ -211,18 +211,80 @@ public class Account extends AppCompatActivity implements FirebaseAuth.AuthState
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                databaseReferenceAccount.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+                        int i = 0;
+                        for (DataSnapshot data : nodeChild) {
+                            i++;
+                            // Lấy dữ liệu từ firebase xuống đưa vào model
+                            Accounts yard_owner = data.getValue(Accounts.class);
+                        }
+                        sizeList=i-1;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                databaseReferenceYard.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Iterable<DataSnapshot> nodeChild = dataSnapshot.getChildren();
+                        int i = 0;
+                        for (DataSnapshot data : nodeChild) {
+                            i++;
+                            // Lấy dữ liệu từ firebase xuống đưa vào model
+                            Yards yard_owner = data.getValue(Yards.class);
+                        }
+                        sizeYard=i;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        Log.d("Click","Vao");
+                        Container.getInstance().id=userArrayList.get(position).getId();
+                        //Container.getInstance().star =userArrayList.get(position).getRole();
+                        Container.getInstance().accountid=position;
+                        Log.d("Owner",String.valueOf(Container.getInstance().id));
+                        Intent intent = new Intent(Account.this, InformationOwner.class);
+
+                        startActivity(intent);
+
+                        //Toast.makeText(MainActivity.this, listValue[position], Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 username=eText_Accoutn_UserName.getText().toString();
                 pass=eText_account_pass.getText().toString();
-                Accounts account = new Accounts(sizeList+1,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
+                Accounts account = new Accounts(sizeList,eText_account_name.getText().toString(),eText_account_pass.getText().toString(),eText_account_phone.getText().toString(),Long.parseLong(eText_accountRole.getText().toString()),eText_Accoutn_UserName.getText().toString());
                 databaseReferenceAccount.child(String.valueOf(sizeList)).setValue(account);
+                Log.d("id Account tt",String.valueOf(sizeList+1));
+                Log.d("id Account tt",String.valueOf(sizeList+1));
                 try{
                     firebaseAuth.createUserWithEmailAndPassword(username,pass);
                     if(pass.length()>=8) {
-                        Owners owners = new Owners(sizeOwner + 1, null, null, eText_account_name.getText().toString(), null, eText_account_phone.getText().toString(), sizeList + 1);
-                        databaseReferenceOwner.child(String.valueOf(sizeOwner)).setValue(owners);
-                        Yards yard = new Yards(sizeYard + 1, null, eText_account_name.getText().toString(), sizeOwner + 1, 0, 0, 0, 0);
-                        databaseReferenceYard.child(String.valueOf(sizeYard + 1)).setValue(yard);
+                        Owners owners = new Owners(sizeOwner + 1, "", "", eText_account_name.getText().toString(), "", eText_account_phone.getText().toString(), sizeList + 1);
+                        databaseReferenceOwner.child(String.valueOf(sizeOwner+1)).setValue(owners);
+                        Yards yard = new Yards(sizeYard + 1, "", eText_account_name.getText().toString(), sizeOwner + 1, 0, 0, 0, 0);
+                        databaseReferenceYard.child(String.valueOf(sizeYard+1)).setValue(yard);
+                        Log.d("sizeOwner tt",String.valueOf(sizeOwner+1));
+                        Log.d("sizeYard tt",String.valueOf(sizeYard+1));
                         Toast.makeText(Account.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
                         myDialog.cancel();
 //                        lvUser.setAdapter(null);

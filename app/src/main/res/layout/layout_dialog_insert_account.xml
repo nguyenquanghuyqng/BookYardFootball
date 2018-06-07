@@ -15,14 +15,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            android:text="UserName :"
+            android:textColor="#121211"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/eText_Accoutn_UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="45dp"
+            android:layout_marginEnd="15dp"
             android:ems="10"
             android:hint="UserName (abc@gamil.com)"
             android:inputType="textEmailAddress" />
@@ -36,13 +45,23 @@
         android:layout_marginTop="79dp"
         android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/eText_account_pass"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="49dp"
+            android:layout_marginStart="13dp"
+            android:text="PassWord :"
+            android:textColor="#121211"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/eText_account_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="14dp"
             android:ems="10"
             android:hint="PassWord"
             android:inputType="textPersonName" />
@@ -55,13 +74,23 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="161dp">
 
-        <EditText
-            android:id="@+id/eText_account_name"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="13dp"
+            android:text="Name Yard:"
+            android:textColor="#121211"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/eText_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="NameYard"
             android:inputType="textPersonName" />
@@ -74,13 +103,23 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="183dp">
 
-        <EditText
-            android:id="@+id/eText_account_phone"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="13dp"
+            android:text="Phone :"
+            android:textColor="#121211"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/eText_account_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
             android:ems="10"
             android:hint="Phone Number"
             android:inputType="textPersonName" />
@@ -93,14 +132,23 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="98dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            android:text="Role :"
+            android:textColor="#121211"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/eText_accountRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="47dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="11dp"
             android:ems="10"
             android:hint="Role"
             android:inputType="textPersonName" />
